@@ -20,7 +20,6 @@ nav {
 	font-size: .8em;
 	width: 100%;
 	font-weight: bolder;
-	color: navy;
 
 	@media #{$mid-point} {
 		text-align: center;
@@ -35,7 +34,7 @@ nav {
 		margin: 0 3px;
 		padding: 20px 10px;
 		border-bottom: 1px solid rgba(255,255,255,0);
-		color: rgba(255,255,255,.8);
+		color: rgba(10, 16, 45, 0.8);
 		transition: .2s ease-in-out;
 		display: none;
 
