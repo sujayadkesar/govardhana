@@ -3,18 +3,28 @@
 	margin-top: 0;
 
 	.btn {
-		border: 0;
-		border-radius: 2px;
-		width: 100%;
-		max-width: 500px;
-		box-sizing: border-box;
-		font-size: 2rem;
-		text-decoration: none;
-		padding: 10px 15px;
-		margin: 0;
-		font-size: 18px;
+		// border: 0;
+		// border-radius: 2px;
+		// width: 100%;
+		// max-width: 500px;
+		// box-sizing: border-box;
+		// font-size: 2rem;
+		// text-decoration: none;
+		// padding: 10px 15px;
+		// margin: 0;
+		// font-size: 18px;
+		padding: 15px 30px;
+		font-size: 14px;
+		border: none;
+		cursor: pointer;
+		transition: all 0.3s ease-in-out;
+		color: #fff;
+		border-radius: 5px;
 	}
-
+	
+    .btn-10 { background-color: #d35400; }
+    .btn-10:hover { background-color: #e67e22; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); }
+	
 	nav &, .btn {
 		cursor: pointer;
 		background-color: #f7e064;
