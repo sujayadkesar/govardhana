@@ -6,24 +6,43 @@ description: Govardhana Goshale Karadolli
 	<div class="text-container">
 	  <h1 class="editable"><strong>Shree Govardhana Goshale</strong></h1>
 	  <p class="subtext editable">Karadolli Yellapur UttaraKannada.</p>
-	  <div>
-		<a href="{{ site.baseurl }}/contact/" 
-		   style="background-color: #d35400; padding: 15px 30px; font-size: 14px; 
-				  border: none; cursor: pointer; transition: all 0.3s ease-in-out; 
-				  color: #fff; border-radius: 5px; text-decoration: none;" 
-		   onmouseover="this.style.backgroundColor='#e67e22'; 
-						this.style.boxShadow='0 10px 20px rgba(0, 0, 0, 0.3)';" 
-		   onmouseout="this.style.backgroundColor='#d35400'; 
-					   this.style.boxShadow='none';">
-		  Let’s Give a shelter to these innocents!
-		</a>
-	  </div>
+  
 	  <div>
 		<img src="{{ site.baseurl }}/images/vikas-makwana-UETquu-C_98-unsplash.jpg" 
 			 alt="Screenshot" class="screenshot editable" />
 	  </div>
+
+	  <div>
+		<a href="{{ site.baseurl }}/contact/" 
+		   class="pulse-button"
+		   style="background-color: #ef6eae; padding: 15px 30px; font-size: 14px; 
+				  border: none; cursor: pointer; transition: all 0.3s ease-in-out; 
+				  color: #fff; border-radius: 5px; text-decoration: none;">
+		  Let’s Give a shelter to these innocents!
+		</a>
+	  </div>
+	  
 	</div>
   </section>
+  
+  <style>
+	@keyframes pulse {
+	  0% {
+		box-shadow: 0 0 0 0 rgba(239, 110, 174, 1);
+	  }
+	  70% {
+		box-shadow: 0 0 0 20px rgba(239, 110, 174, 0);
+	  }
+	  100% {
+		box-shadow: 0 0 0 0 rgba(239, 110, 174, 0);
+	  }
+	}
+  
+	.pulse-button:hover {
+	  animation: pulse 1s infinite;
+	}
+  </style>
+  
   
 <div class="content">
 	<section>
