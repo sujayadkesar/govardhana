@@ -7,3 +7,178 @@ description:
 <div class="eleven">
   <h1>Opportunities to Engage in <strong>GoSeva</strong></h1>
 </div>
+
+<div class="card-basic">
+  <div class="card-header header-basic">
+    <h1>Adopt a Cow</h1>
+  </div>
+  <div class="card-body">
+    <p><h2>11,000</h2></p>
+    <div class="card-element-hidden-basic">
+      <ul class="card-element-container">
+        <li class="card-element">2 team members</li>
+        <li class="card-element">2GB storage</li>
+        <li class="card-element">1000 request per day</li>
+        <li class="card-element">20000 users</li>
+      </ul>
+      <button class="btn btn-basic">Order now</button>
+    </div>
+  </div>
+</div>
+
+<div class="card-standard">
+  <div class="card-header header-standard">
+    <h1>Standard</h1>
+  </div>
+  <div class="card-body">
+    <p><h2>$10 / mo</h2></p>
+    <div class="card-element-hidden-standard">
+      <ul class="card-element-container">
+        <li class="card-element">5 team members</li>
+        <li class="card-element">5GB storage</li>
+        <li class="card-element">2000 request per day</li>
+        <li class="card-element">40000 users</li>
+      </ul>
+      <button class="btn btn-standard">Order now</button>
+    </div>
+  </div>
+</div>
+<div class="card-premium">
+  <div class="card-header header-premium">
+    <h1>Premium</h1>
+  </div>
+  <div class="card-body">
+    <p><h2>$20 / mo</h2></p>
+    <div class="card-element-hidden-premium">
+      <ul class="card-element-container">
+        <li class="card-element">Unlimited team members</li>
+        <li class="card-element">10GB storage</li>
+        <li class="card-element">5000 request per day</li>
+        <li class="card-element">Unlimited users</li>
+      </ul>
+      <button class="btn btn-premium">Order now</button>
+    </div>
+  </div>
+</div>
+
+
+<style>
+
+
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  background: #f5f6f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  line-height: 1.8;
+  font-family: 'Open Sans', sans-serif;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.card-basic,
+.card-premium,
+.card-standard {
+  margin: 0 2rem 1rem 0;
+  padding: 0 0 0.5rem 0;
+  width: 15rem;
+  background: #fff;
+  color: #444;
+  text-align: center;
+  border-radius: 1rem;
+  box-shadow: 0.5rem 0.5rem 1rem rgba(51, 51, 51, 0.2);
+  overflow: hidden;
+  transition: all 0.1ms ease-in-out;
+}
+.card-basic:hover,
+.card-premium:hover,
+.card-standard:hover {
+  transform: scale(1.02);
+}
+
+.card-header {
+  height: 5rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.8rem;
+  padding: 1rem 0;
+  color: #fff;
+  clip-path: polygon(0 0, 100% 0%, 100% 85%, 0% 100%);
+}
+
+.header-basic,
+.btn-basic {
+  background: linear-gradient(135deg, rgb(0, 119, 238), #06c766);
+}
+
+.header-standard,
+.btn-standard {
+  background: linear-gradient(135deg, #b202c9, #cf087c);
+}
+
+.header-premium,
+.btn-premium {
+  background: linear-gradient(135deg, #eea300, #ee5700);
+}
+
+.card-body {
+  padding: 0.5rem 0;
+}
+.card-body h2 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.card-element-container {
+  color: #444;
+  list-style: none;
+}
+
+.btn {
+  margin: 0.5rem 0;
+  padding: 0.7rem 1rem;
+  outline: none;
+  border-radius: 1rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.1ms ease-in-out;
+}
+
+.btn:hover {
+  transform: scale(0.95);
+}
+
+.btn:active {
+  transform: scale(1);
+}
+
+.card-element-hidden {
+  display: none;
+}
+
+
+
+</style>
