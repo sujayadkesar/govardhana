@@ -6,8 +6,8 @@
   link: /blog/
   new_window: false
   highlight: false
-- name: About
-  link: /about/
+- name: About-Us
+  link: /about_us/
   new_window: false
   highlight: false
 - name: Contact
@@ -15,7 +15,7 @@
   new_window: false
   highlight: false
 - name: Committee
-  link: /
+  link: /about
   new_window: true
   highlight: false
 # - name: Sign Up
