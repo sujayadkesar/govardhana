@@ -18,7 +18,7 @@
   link: /about
   new_window: true
   highlight: false
-# - name: Sign Up
-  # link: /
-  # new_window: true
-  # highlight: false
+- name: Home
+  link: /
+  new_window: true
+  highlight: false
