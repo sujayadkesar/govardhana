@@ -17,10 +17,10 @@ description:
       <p><h2>11,000</h2></p>
       <div class="card-element-hidden-basic">
         <ul class="card-element-container">
-          <li class="card-elementt">Adopt a cow for one year</li>
-          <li class="card-elementt">Certificate of adoption</li>
-          <li class="card-elementt">Tax exemption under 80G</li>
-          <li class="card-elementt"></li>
+          <li class="card-element">Adopt a cow for one year</li>
+          <li class="card-element">Certificate of adoption</li>
+          <li class="card-element">Tax exemption under 80G</li>
+          <li class="card-element"></li>
         </ul>
         <button class="btn btn-basic">Order now</button>
       </div>
@@ -74,6 +74,20 @@ description:
   flex-wrap: wrap; /* Ensure cards wrap if the screen size is small */
   margin: 2rem 0;
 }
+
+.card-element-container {
+  color: #444;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centers the elements vertically */
+  align-items: center; /* Centers the elements horizontally */
+  gap: 0.5rem; /* Adds space between the elements */
+  height: 100%; /* Ensures the list fills the available space */
+}
+
 
 .card-basic,
 .card-premium,
