@@ -8,89 +8,77 @@ description:
   <h1>Opportunities to Engage in <strong>GoSeva</strong></h1>
 </div>
 
-<div class="card-basic">
-  <div class="card-header header-basic">
-    <h1>Adopt a Cow</h1>
-  </div>
-  <div class="card-body">
-    <p><h2>11,000</h2></p>
-    <div class="card-element-hidden-basic">
-      <ul class="card-element-container">
-        <li class="card-element">2 team members</li>
-        <li class="card-element">2GB storage</li>
-        <li class="card-element">1000 request per day</li>
-        <li class="card-element">20000 users</li>
-      </ul>
-      <button class="btn btn-basic">Order now</button>
+<div class="card-container">
+  <div class="card-basic">
+    <div class="card-header header-basic">
+      <h1>Adopt a Cow</h1>
+    </div>
+    <div class="card-body">
+      <p><h2>11,000</h2></p>
+      <div class="card-element-hidden-basic">
+        <ul class="card-element-container">
+          <li class="card-element">2 team members</li>
+          <li class="card-element">2GB storage</li>
+          <li class="card-element">1000 requests per day</li>
+          <li class="card-element">20,000 users</li>
+        </ul>
+        <button class="btn btn-basic">Order now</button>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="card-standard">
-  <div class="card-header header-standard">
-    <h1>Standard</h1>
-  </div>
-  <div class="card-body">
-    <p><h2>$10 / mo</h2></p>
-    <div class="card-element-hidden-standard">
-      <ul class="card-element-container">
-        <li class="card-element">5 team members</li>
-        <li class="card-element">5GB storage</li>
-        <li class="card-element">2000 request per day</li>
-        <li class="card-element">40000 users</li>
-      </ul>
-      <button class="btn btn-standard">Order now</button>
+  <div class="card-standard">
+    <div class="card-header header-standard">
+      <h1>Standard</h1>
+    </div>
+    <div class="card-body">
+      <p><h2>$10 / mo</h2></p>
+      <div class="card-element-hidden-standard">
+        <ul class="card-element-container">
+          <li class="card-element">5 team members</li>
+          <li class="card-element">5GB storage</li>
+          <li class="card-element">2000 requests per day</li>
+          <li class="card-element">40,000 users</li>
+        </ul>
+        <button class="btn btn-standard">Order now</button>
+      </div>
     </div>
   </div>
-</div>
-<div class="card-premium">
-  <div class="card-header header-premium">
-    <h1>Premium</h1>
-  </div>
-  <div class="card-body">
-    <p><h2>$20 / mo</h2></p>
-    <div class="card-element-hidden-premium">
-      <ul class="card-element-container">
-        <li class="card-element">Unlimited team members</li>
-        <li class="card-element">10GB storage</li>
-        <li class="card-element">5000 request per day</li>
-        <li class="card-element">Unlimited users</li>
-      </ul>
-      <button class="btn btn-premium">Order now</button>
-    </div>
-  </div>
-</div>
 
+  <div class="card-premium">
+    <div class="card-header header-premium">
+      <h1>Premium</h1>
+    </div>
+    <div class="card-body">
+      <p><h2>$20 / mo</h2></p>
+      <div class="card-element-hidden-premium">
+        <ul class="card-element-container">
+          <li class="card-element">Unlimited team members</li>
+          <li class="card-element">10GB storage</li>
+          <li class="card-element">5000 requests per day</li>
+          <li class="card-element">Unlimited users</li>
+        </ul>
+        <button class="btn btn-premium">Order now</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <style>
-
-
-
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap');
 
-
-body {
-  background: #f5f6f7;
+.card-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  height: 100vh;
-  line-height: 1.8;
-  font-family: 'Open Sans', sans-serif;
-}
-
-main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  justify-content: center; /* Center cards horizontally */
+  gap: 2rem; /* Add space between cards */
+  flex-wrap: wrap; /* Ensure cards wrap if the screen size is small */
+  margin: 2rem 0;
 }
 
 .card-basic,
 .card-premium,
 .card-standard {
-  margin: 0 2rem 1rem 0;
+  margin: 0;
   padding: 0 0 0.5rem 0;
   width: 15rem;
   background: #fff;
@@ -101,6 +89,7 @@ main {
   overflow: hidden;
   transition: all 0.1ms ease-in-out;
 }
+
 .card-basic:hover,
 .card-premium:hover,
 .card-standard:hover {
@@ -135,6 +124,7 @@ main {
 .card-body {
   padding: 0.5rem 0;
 }
+
 .card-body h2 {
   font-size: 2rem;
   font-weight: 700;
@@ -169,7 +159,4 @@ main {
 .card-element-hidden {
   display: none;
 }
-
-
-
 </style>
