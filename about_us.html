@@ -44,8 +44,8 @@ description: >-
 	};
 
     // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app); // Get the database instance
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.database(); // Initialize database reference
 </script>
 
 <script>
