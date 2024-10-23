@@ -63,32 +63,33 @@ description: >-
 
 
 
-  
 <script>
-	document.addEventListener('DOMContentLoaded', function () {
-	  document.getElementById('contactForm').addEventListener('submit', function (e) {
-		e.preventDefault(); // Prevent form from reloading the page
-  
-	  const name = document.getElementById('name').value;
-	  const phone = document.getElementById('phone').value;
-	  const email = document.getElementById('email').value;
-	  const dob = document.getElementById('dob').value;
-  
-	  // Push data to Firebase
-	  db.ref('contacts').push({
-		name: name,
-		phone: phone,
-		email: email,
-		dob: dob
-	  }).then(() => {
-		document.getElementById('statusMessage').textContent = 'Data submitted successfully!';
-		document.getElementById('contactForm').reset();
-	  }).catch((error) => {
-		document.getElementById('statusMessage').textContent = 'Error: ' + error.message;
-	  });
-	});
-  </script>
+    document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+        e.preventDefault(); // Prevent form from reloading the page
+
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const dob = document.getElementById('dob').value;
+
+        // Push data to Firebase
+        db.ref('contacts').push({
+            name: name,
+            phone: phone,
+            email: email,
+            dob: dob
+        }).then(() => {
+            document.getElementById('statusMessage').textContent = 'Data submitted successfully!';
+            document.getElementById('contactForm').reset();
+        }).catch((error) => {
+            document.getElementById('statusMessage').textContent = 'Error: ' + error.message;
+        });
+    }); // <-- Closing bracket added here
+});
+
+</script>
 
 
-  
+
 {% include contact-form.html %}
