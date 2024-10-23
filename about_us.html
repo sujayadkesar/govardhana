@@ -64,6 +64,9 @@ description: >-
 
 
 <script>
+
+const db = firebase.database(); // Initialize the database reference
+
     document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('contactForm').addEventListener('submit', function (e) {
         e.preventDefault(); // Prevent form from reloading the page
