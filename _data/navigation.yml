@@ -1,15 +1,15 @@
-- name: GoSeva
-  link: /goseva/
-  new_window: false
-  highlight: true
-- name: Blog
-  link: /blog/
+- name: Gallery
+  link: /gallery/
   new_window: false
   highlight: false
 - name: About-Us
   link: /about_us/
   new_window: false
   highlight: false
+- name: GoSeva
+  link: /goseva/
+  new_window: false
+  highlight: true
 - name: Contact
   link: /contact/
   new_window: false
