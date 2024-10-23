@@ -4,9 +4,8 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js"></script>
-		<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database.js"></script>
-		
+		<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
 
 		
 <!-- FIREBASEEEEEEEEEEEEEEEEE -->
@@ -41,9 +40,11 @@
 
 
 
+  
 <script>
-	document.getElementById('contactForm').addEventListener('submit', function (e) {
-	  e.preventDefault(); // Prevent form from reloading the page
+	document.addEventListener('DOMContentLoaded', function () {
+	  document.getElementById('contactForm').addEventListener('submit', function (e) {
+		e.preventDefault(); // Prevent form from reloading the page
   
 	  const name = document.getElementById('name').value;
 	  const phone = document.getElementById('phone').value;
