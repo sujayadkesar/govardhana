@@ -77,7 +77,7 @@ description: Submit your details and generate a UPI QR code for payment
         <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
           <div style="text-align: center;">
             <h2>Scan to Pay</h2>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=400x4000&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D${amount}%26cu%3DINR&tn=${adharNumber}" alt="UPI Payment QR Code" style="width: 200px; height: 200px;">
+            <img src="${qrCodeUrl}" alt="UPI Payment QR Code" style="width: 200px; height: 200px;">
           </div>
         </body>
       </html>
