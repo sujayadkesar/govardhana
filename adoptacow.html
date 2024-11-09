@@ -40,7 +40,7 @@ description: Submit your details and generate a UPI QR code for payment
   document.getElementById('generateQrButton').onclick = function() {
     // Get the Aadhar number entered by the user
     const adharNumber = document.getElementById('adhar').value;
-
+    
     // Validate if the Aadhar number is entered
     if (!adharNumber) {
       alert("Please enter your Aadhar number.");
@@ -50,8 +50,17 @@ description: Submit your details and generate a UPI QR code for payment
     // Define amount (can be dynamically set, but I am setting it to 11500 for now)
     const amount = 11500;
 
+    // Ensure the amount is a valid number
+    if (isNaN(amount) || amount <= 0) {
+      alert("Invalid amount!");
+      return;
+    }
+
     // Create the UPI QR code URL with the Aadhar number as the transaction note
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=upi://pay?pa=govardhana@sbi&pn=GoDattu&am=${amount}&cu=INR&tn=${encodeURIComponent(adharNumber)}`;
+
+    // Log the URL for debugging
+    console.log("Generated QR Code URL:", qrCodeUrl);
 
     // Open the QR code in a new window
     openQrWindow(qrCodeUrl);
