@@ -1,133 +1,95 @@
+---
 title:
 heading: 
 description: 
 ---
 
 <div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
-	<form action="https://formspree.io/f/your-form-id" method="post" class="contact-form" id="paymentForm">
-		<input type="hidden" name="_to" value="govardhangoshale@gmail.com" />
-		<input type="text" name="_gotcha" style="display: none;">
+  <form class="contact-form" id="paymentForm">
+    <label for="name">Full Name</label>
+    <input type="text" name="name" id="name" placeholder="Enter your name..." required />
 
-		<label for="name">Full Name</label>
-		<input type="text" name="name" id="name" placeholder="Enter your name..." required />
+    <label for="email">Email Address</label>
+    <input type="email" name="email" id="email" placeholder="Enter your email..." required />
 
-		<label for="email">Email Address</label>
-		<input type="email" name="email" id="email" placeholder="Enter your email..." required />
+    <label for="pan">Pan Number</label>
+    <input type="text" name="pan" id="pan" placeholder="Enter your Pan..." required />
 
-        <label for="pan">Pan Number</label>
-		<input type="text" name="pan" id="pan" placeholder="Enter your Pan..." required />
+    <label for="adhar">Aadhar Number</label>
+    <input type="text" name="adhar" id="adhar" placeholder="Enter your Aadhar..." required />
 
-        <label for="adhar">Aadhar Number</label>
-		<input type="text" name="adhar" id="adhar" placeholder="Enter your Aadhar..." required />
+    <label for="message">Phone Number</label>
+    <input type="text" name="text" id="message" placeholder="Enter your phone number..." />
 
-		<label for="message">Phone Number</label>
-		<textarea name="text" id="message" placeholder="Enter your valid phone number..."></textarea>
-
-		<input type="submit" value="Submit" />
-	</form>
+    <input type="submit" value="Submit" />
+  </form>
 </div>
+
 <br><br><br>
+
 <div style="text-align: center;">
-	<button 
-	   id="generateQrButton"
-	   onclick="openQrWindow()"
-	   class="pulse-button"
-	   style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
-			  border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
-			  color: #050829; border-radius: 8px;">
-	  Generate QR Code!
-	</button>
+  <button 
+    id="generateQrButton"
+    class="pulse-button"
+    style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
+           border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
+           color: #050829; border-radius: 8px;">
+    Generate QR Code!
+  </button>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
 <script>
-  // Event listener to update QR code URL when form is submitted
+  // Initialize EmailJS
+  (function() {
+    emailjs.init("UO8DtNyjq6OOawpu-"); // Replace with your EmailJS User ID
+  })();
+
   document.getElementById('paymentForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent default form submission
 
     const adharNumber = document.getElementById('adhar').value;
-    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi://pay?pa=8762406259@ybl&pn=GoDattu&am=11500&cu=INR&tn=${encodeURIComponent(adharNumber)}`;
 
-    // Update the QR code generation function with the new URL
+    // Prepare EmailJS parameters
+    const templateParams = {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      pan: document.getElementById('pan').value,
+      adhar: adharNumber,
+      text: document.getElementById('message').value,
+    };
+
+    // Send form data via EmailJS
+    emailjs.send("service_en4q6jk", "template_pu3q5zw", templateParams)
+      .then(function(response) {
+         alert('Form submitted successfully!');
+      }, function(error) {
+         alert('Failed to send form. Try again.');
+      });
+
+    // Generate the QR code URL
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi://pay?pa=govardhana@sbi&pn=GoDattu&am=11500&cu=INR&tn=${encodeURIComponent(adharNumber)}`;
     document.getElementById('generateQrButton').onclick = function() {
       openQrWindow(qrCodeUrl);
     };
-
-    // Submit the form to Formspree
-    this.submit();
   });
 
-//   // Function to open QR code in a new window
-//   function openQrWindow(qrCodeUrl) {
-//     const qrWindow = window.open('', '_blank', 'width=400,height=400');
-//     qrWindow.document.write(`
-//       <html>
-//         <head>
-//           <title>UPI Payment QR Code</title>
-//         </head>
-//         <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
-//           <div style="text-align: center;">
-//             <h2>Scan to Pay</h2>
-//             <img src="${qrCodeUrl}" alt="UPI Payment QR Code" style="width: 200px; height: 200px;">
-//           </div>
-//         </body>
-//       </html>
-//     `);
-//     qrWindow.document.close();
-//   }
-// </script>
- <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
- <script>
-   (function() {
-	 emailjs.init("service_en4q6jk"); // Replace with your EmailJS User ID
-   })();
- 
-   document.getElementById('paymentForm').addEventListener('submit', function(event) {
-	 event.preventDefault(); // Prevent form default submission
- 
-	 const adharNumber = document.getElementById('adhar').value;
-	 const panNumber = document.getElementById('pan').value;
- 
-	 // Prepare EmailJS parameters
-	 const templateParams = {
-	   name: document.getElementById('name').value,
-	   email: document.getElementById('email').value,
-	   pan: panNumber,
-	   adhar: adharNumber,
-	   text: document.getElementById('message').value,
-	 };
- 
-	 // Send email via EmailJS
-	 emailjs.send("service_en4q6jk", "template_pu3q5zw", templateParams)
-	   .then(function(response) {
-		  alert('Form submitted successfully!');
-	   }, function(error) {
-		  alert('Failed to send form. Try again.');
-	   });
- 
-	 // Generate the QR code with Aadhar as the transaction note
-	 const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi://pay?pa=8762406259@ybl&pn=GoDattu&am=11500&cu=INR&tn=${encodeURIComponent(adharNumber)}`;
-	 document.getElementById('generateQrButton').onclick = function() {
-	   openQrWindow(qrCodeUrl);
-	 };
-   });
- 
-   // Function to open QR code in a new window
-   function openQrWindow(qrCodeUrl) {
-	 const qrWindow = window.open('', '_blank', 'width=400,height=400');
-	 qrWindow.document.write(`
-	   <html>
-		 <head>
-		   <title>UPI Payment QR Code</title>
-		 </head>
-		 <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
-		   <div style="text-align: center;">
-			 <h2>Scan to Pay</h2>
-			 <img src="${qrCodeUrl}" alt="UPI Payment QR Code" style="width: 200px; height: 200px;">
-		   </div>
-		 </body>
-	   </html>
-	 `);
-	 qrWindow.document.close();
-   }
- </script>
- 
+  // Function to open QR code in a new window
+  function openQrWindow(qrCodeUrl) {
+    const qrWindow = window.open('', '_blank', 'width=400,height=400');
+    qrWindow.document.write(`
+      <html>
+        <head>
+          <title>UPI Payment QR Code</title>
+        </head>
+        <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+          <div style="text-align: center;">
+            <h2>Scan to Pay</h2>
+            <img src="${qrCodeUrl}" alt="UPI Payment QR Code" style="width: 200px; height: 200px;">
+          </div>
+        </body>
+      </html>
+    `);
+    qrWindow.document.close();
+  }
+</script>
