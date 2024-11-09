@@ -109,7 +109,7 @@ description:
     const adharNumber = document.getElementById('adhar').value;
 
     // Construct the QR code URL with the Aadhar number as the transaction note
-    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi://pay?pa=8762406259@ybl&pn=GoDattu&am=11500&cu=INR&tn=${encodeURIComponent(adharNumber)}`;
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi://pay?pa=govardhanylp@sbi&pn=GoDattu&am=11500&cu=INR&tn=${encodeURIComponent(adharNumber)}`;
 
     // Open a new window with the QR code
     const qrWindow = window.open('', '_blank', 'width=400,height=400');
