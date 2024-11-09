@@ -57,7 +57,7 @@ description: Submit your details and generate a UPI QR code for payment
     }
 
     // Create the UPI QR code URL with the Aadhar number as the transaction note
-    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=upi://pay?pa=govardhana@sbi&pn=GoDattu&am=${amount}&cu=INR&tn=${encodeURIComponent(adharNumber)}`;
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=upi://pay?pa=govardhana@sbi&am=11500&cu=INR&tn=${encodeURIComponent(adharNumber)}`;
 
     // Log the URL for debugging
     console.log("Generated QR Code URL:", qrCodeUrl);
