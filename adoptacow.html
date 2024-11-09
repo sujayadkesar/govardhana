@@ -3,162 +3,58 @@ title:
 heading: 
 description: 
 ---
-<div class="contact-box" style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
-    <form id="contact-form" action="{{ site.baseurl }}/contact-success/" method="post" class="contact-form">
-        <input type="hidden" name="_to" value="govardhangoshale@gmail.com" />
-        <input type="text" name="_gotcha" style="display: none;">
 
-        <label for="name">Full Name</label>
-        <input type="text" name="name" id="name" placeholder="Enter your name..." />
+<div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
+	<form action="{{ site.baseurl }}/contact-success/" method="post" class="contact-form">
+		<input type="hidden" name="_to" value="govardhangoshale@gmail.com" />
+		<input type="text" name="_gotcha" style="display: none;">
 
-        <label for="email">Email Address</label>
-        <input type="email" name="email" id="email" placeholder="Enter your email..." required />
+		<label for="name">Full Name</label>
+		<input type="text" name="name" id="name" placeholder="Enter your name..." />
+
+		<label for="email">Email Address</label>
+		<input type="email" name="email" id="email" placeholder="Enter your email..." required />
 
         <label for="pan">Pan Number</label>
-        <input type="text" name="pan" id="pan" placeholder="Enter your Pan..." required />
+		<input type="text" name="pan" id="pan" placeholder="Enter your Pan..." required />
 
         <label for="adhar">Adhar Number</label>
-        <input type="text" name="adhar" id="adhar" placeholder="Enter your Adhar..." required />
+		<input type="text" name="adhar" id="adhar" placeholder="Enter your Adhar..." required />
 
-        <label for="phone">Phone Number</label>
-        <input type="text" name="phone" id="phone" placeholder="Enter your valid phone number..." required />
+		<label for="message">Phone Number</label>
+		<textarea name="text" id="message" placeholder="Enter your valid phone number..."></textarea>
 
-        <input type="submit" value="Submit" />
-    </form>
-
-    <div id="donate-section" style="display: none; margin-top: 20px;">
-        <a href="#" id="donate-button"
-           class="pulse-button"
-           style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
-                  border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
-                  color: #050829; border-radius: 8px; text-decoration: none;">
-          Donate Now!!
-        </a>
-    </div>
+		<input type="submit" value="Submit" />
+	</form>
 </div>
 
-<!-- QR Code Modal -->
-<div id="qr-modal" style="display: none; position: fixed; top: 50%; left: 50%; 
-     transform: translate(-50%, -50%); background-color: white; padding: 20px; 
-     border: 2px solid #ddd; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.2); z-index: 1000;">
-    <h3>Scan to Donate</h3>
-    <img id="qr-code" src="" alt="UPI Payment QR Code" style="width: 200px; height: 200px;" />
-    <p id="payment-status">Waiting for payment...</p>
-    <button id="close-qr" style="margin-top: 10px; padding: 10px 20px;">Close</button>
+<div>
+	<button 
+	   onclick="openQrWindow()"
+	   class="pulse-button"
+	   style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
+			  border: none;font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
+			  color: #050829; border-radius: 8px;">
+	  Donate now!!
+	</button>
 </div>
-
-<!-- Overlay -->
-<div id="overlay" style="display: none; position: fixed; top: 0; left: 0; 
-     width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 999;"></div>
-
 
 <script>
-	// Wait for the DOM to load
-	document.addEventListener('DOMContentLoaded', function() {
-		const contactForm = document.getElementById('contact-form');
-		const donateSection = document.getElementById('donate-section');
-		const donateButton = document.getElementById('donate-button');
-		const qrModal = document.getElementById('qr-modal');
-		const overlay = document.getElementById('overlay');
-		const qrCodeImg = document.getElementById('qr-code');
-		const paymentStatus = document.getElementById('payment-status');
-		const closeQrButton = document.getElementById('close-qr');
-	
-		// Handle form submission
-		contactForm.addEventListener('submit', function(e) {
-			e.preventDefault(); // Prevent default form submission
-	
-			// Collect form data
-			const formData = new FormData(contactForm);
-			const data = {};
-			formData.forEach((value, key) => {
-				data[key] = value;
-			});
-	
-			// Send data to the server via Fetch API
-			fetch('{{ site.baseurl }}/submit-form', { // Replace with your backend endpoint
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify(data)
-			})
-			.then(response => response.json())
-			.then(result => {
-				if(result.success){
-					// Show the donate button
-					donateSection.style.display = 'block';
-					alert('Form submitted successfully!');
-				} else {
-					alert('There was an error submitting the form.');
-				}
-			})
-			.catch(error => {
-				console.error('Error:', error);
-				alert('An error occurred while submitting the form.');
-			});
-		});
-	
-		// Handle Donate Button Click
-		donateButton.addEventListener('click', function(e) {
-			e.preventDefault();
-	
-			// Request QR code from the server
-			fetch('{{ site.baseurl }}/generate-qr', { // Replace with your backend endpoint
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ /* Include any necessary data */ })
-			})
-			.then(response => response.json())
-			.then(data => {
-				if(data.success){
-					// Set QR code image source
-					qrCodeImg.src = data.qrCodeUrl;
-	
-					// Show the modal and overlay
-					overlay.style.display = 'block';
-					qrModal.style.display = 'block';
-	
-					// Start polling for payment status
-					pollPaymentStatus(data.paymentId);
-				} else {
-					alert('Failed to generate QR Code.');
-				}
-			})
-			.catch(error => {
-				console.error('Error:', error);
-				alert('An error occurred while generating the QR Code.');
-			});
-		});
-	
-		// Handle Close QR Modal
-		closeQrButton.addEventListener('click', function() {
-			qrModal.style.display = 'none';
-			overlay.style.display = 'none';
-		});
-	
-		// Function to Poll Payment Status
-		function pollPaymentStatus(paymentId) {
-			const interval = setInterval(() => {
-				fetch(`{{ site.baseurl }}/payment-status/${paymentId}`) // Replace with your backend endpoint
-				.then(response => response.json())
-				.then(statusData => {
-					if(statusData.status === 'success'){
-						paymentStatus.textContent = 'Payment Successful! Thank you for your donation.';
-						clearInterval(interval);
-					} else if(statusData.status === 'failed'){
-						paymentStatus.textContent = 'Payment Failed. Please try again.';
-						clearInterval(interval);
-					}
-					// You can add more statuses as needed
-				})
-				.catch(error => {
-					console.error('Error:', error);
-				});
-			}, 5000); // Poll every 5 seconds
-		}
-	});
-	</script>
-	
+  function openQrWindow() {
+    const qrWindow = window.open('', '_blank', 'width=400,height=400');
+    qrWindow.document.write(`
+      <html>
+        <head>
+          <title>UPI Payment QR Code</title>
+        </head>
+        <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+          <div style="text-align: center;">
+            <h2>Scan to Pay</h2>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi%3A%2F%2Fpay%3Fpa%3D8762406259%40ybl%26pn%3DGoDattu%26am%3D11500%26cu%3DINR" alt="UPI Payment QR Code" style="width: 200px; height: 200px;">
+          </div>
+        </body>
+      </html>
+    `);
+    qrWindow.document.close();
+  }
+</script>
