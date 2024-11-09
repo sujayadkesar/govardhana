@@ -68,7 +68,7 @@ description: Submit your details and generate a UPI QR code for payment
 
   // Function to open QR code in a new window
   function openQrWindow(qrCodeUrl) {
-    const qrWindow = window.open('', '_blank', 'width=400,height=400');
+    const qrWindow = window.open('', '_blank', 'width=500,height=500');
     qrWindow.document.write(`
       <html>
         <head>
@@ -79,6 +79,7 @@ description: Submit your details and generate a UPI QR code for payment
             <h2>Scan to Pay</h2>
             <img src="${qrCodeUrl}" alt="UPI Payment QR Code" style="width: 200px; height: 200px;">
           </div>
+		  <br>
 		  <p>Kindly Enter your Adhar Number as <strong>Transaction Note</strong></p>
 		  <p>It will help us to track your payment easily!</p>
         </body>
