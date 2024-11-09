@@ -1,19 +1,16 @@
 ---
-title:
-heading: 
-description: 
+title: Contact Form with UPI QR Code
+heading: Contact Us
+description: Submit your details and generate a UPI QR code for payment
 ---
 
 <div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
-  <form class="contact-form" id="paymentForm" action="https://formspree.io/f/xbljyjkn" method="POST" >
+  <form class="contact-form" id="paymentForm" action="https://formspree.io/f/xbljyjkn" method="POST">
     <label for="name">Full Name</label>
     <input type="text" name="name" id="name" placeholder="Enter your name..." required />
 
     <label for="email">Email Address</label>
     <input type="email" name="email" id="email" placeholder="Enter your email..." required />
-
-    <!-- <label for="pan">Pan Number</label> -->
-    <!-- <input type="text" name="pan" id="pan" placeholder="Enter your Pan..." required /> -->
 
     <label for="adhar">Aadhar Number</label>
     <input type="text" name="adhar" id="adhar" placeholder="Enter your Aadhar..." required />
@@ -38,13 +35,24 @@ description:
   </button>
 </div>
 
+<script>
+  // Function to generate the UPI QR code
+  document.getElementById('generateQrButton').onclick = function() {
+    // Get the Aadhar number entered by the user
+    const adharNumber = document.getElementById('adhar').value;
 
-    // Generate the QR code URL
+    // Validate if the Aadhar number is entered
+    if (!adharNumber) {
+      alert("Please enter your Aadhar number.");
+      return;
+    }
+
+    // Create the QR code URL with the Aadhar number as the transaction note
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi://pay?pa=govardhana@sbi&pn=GoDattu&am=11500&cu=INR&tn=${encodeURIComponent(adharNumber)}`;
-    document.getElementById('generateQrButton').onclick = function() {
-      openQrWindow(qrCodeUrl);
-    };
-  });
+
+    // Open the QR code in a new window
+    openQrWindow(qrCodeUrl);
+  };
 
   // Function to open QR code in a new window
   function openQrWindow(qrCodeUrl) {
