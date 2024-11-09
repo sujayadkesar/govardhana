@@ -5,15 +5,15 @@ description:
 ---
 
 <div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
-  <form class="contact-form" id="paymentForm">
+  <form class="contact-form" id="paymentForm" action="https://formspree.io/f/xbljyjkn" method="POST" >
     <label for="name">Full Name</label>
     <input type="text" name="name" id="name" placeholder="Enter your name..." required />
 
     <label for="email">Email Address</label>
     <input type="email" name="email" id="email" placeholder="Enter your email..." required />
 
-    <label for="pan">Pan Number</label>
-    <input type="text" name="pan" id="pan" placeholder="Enter your Pan..." required />
+    <!-- <label for="pan">Pan Number</label> -->
+    <!-- <input type="text" name="pan" id="pan" placeholder="Enter your Pan..." required /> -->
 
     <label for="adhar">Aadhar Number</label>
     <input type="text" name="adhar" id="adhar" placeholder="Enter your Aadhar..." required />
@@ -38,34 +38,6 @@ description:
   </button>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
-<script>
-  // Initialize EmailJS
-  (function() {
-    emailjs.init("UO8DtNyjq6OOawpu-"); // Replace with your EmailJS User ID
-  })();
-
-  document.getElementById('paymentForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
-
-    const adharNumber = document.getElementById('adhar').value;
-
-    // Prepare EmailJS parameters
-    const templateParams = {
-      name: document.getElementById('name').value,
-      email: document.getElementById('email').value,
-      pan: document.getElementById('pan').value,
-      adhar: adharNumber,
-      text: document.getElementById('message').value,
-    };
-
-    // Send form data via EmailJS
-    emailjs.send("service_en4q6jk", "template_pu3q5zw", templateParams)
-      .then(function(response) {
-         alert('Form submitted successfully!');
-      }, function(error) {
-         alert('Failed to send form. Try again.');
-      });
 
     // Generate the QR code URL
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=upi://pay?pa=govardhana@sbi&pn=GoDattu&am=11500&cu=INR&tn=${encodeURIComponent(adharNumber)}`;
