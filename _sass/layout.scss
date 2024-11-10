@@ -59,11 +59,18 @@ header {
 	max-width: 100%;
 	height: auto;
 	display: block;
+	margin: 0 auto; /* Center the image */
 	box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px; /* Soft shadow */
-	border-radius: 8px; /* Slightly larger border radius */
-	margin-left: auto;
-	margin-right: auto;
-	padding: 0; /* Remove any padding to avoid extra space around the image */
+	border-radius: 8px; /* Rounded corners */
+	padding: 0; /* Remove any padding around the image */
+	background-color: transparent; /* Ensure no background color */
+	border: none; /* Explicitly remove any borders */
+  }
+  
+  .parent-container {
+	padding: 0; /* Remove padding from the parent container */
+	margin: 0; /* Remove margin from the parent container */
+	background-color: transparent; /* Ensure no background color from the parent */
   }
   
   
