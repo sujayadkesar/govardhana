@@ -63,9 +63,9 @@ header {
 	border-radius: 8px; /* Slightly larger border radius */
 	margin-left: auto;
 	margin-right: auto;
-	padding: 15px; /* Optional padding around the image */
-	background-color: #f8f8f8; /* Light background color */
+	padding: 0; /* Remove any padding to avoid extra space around the image */
   }
+  
   
 
 section {
