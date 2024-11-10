@@ -9,7 +9,7 @@
     link: /contact/
 
 - logo:
-    image: {{ site.baseurl }}/images/logo.png  # Adjust the path as needed
+    image: /images/logo.png  # Adjust the path as needed
     link: /  # URL where the logo should redirect
     alt_text: "Site Logo"
 
