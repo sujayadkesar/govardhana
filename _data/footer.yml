@@ -10,7 +10,7 @@
 - links:
   - name: 
     link: /
-    image: /images/logo.png  # path to your logo image images/logo.png
+    image: images/logo.png  # path to your logo image images/logo.png
     alt_text: "Site Logo"  # Alternative text for accessibility
   # - name: Sign Up
   #   link: /
