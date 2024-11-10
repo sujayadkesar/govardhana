@@ -92,29 +92,23 @@ description: Submit your details and generate a UPI QR code for payment
 </script>
 
 <script>
-  function submitForm(event) {
-  if (event) {
-    event.preventDefault(); // Prevent the form from reloading the page
-  }
-
-  const formData = new FormData(document.getElementById("paymentForm"));
-
-  fetch("https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec", {
-    method: "POST",
+  function submitForm() {
+  const formData = new FormData(document.querySelector('.contact-form'));
+  const url = 'https://script.google.com/macros/s/AKfycbxYd2wLRvTXA6mdhYhp5lcL6w7jcDR_WJekOJ20gYOxhz33UhbCm/exec';
+  
+  fetch(url, {
+    method: 'POST',
     body: formData,
+    mode: 'no-cors',  // Add this line to disable CORS checking in the browser
   })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.status === "success") {
-        alert("Form submitted successfully!");
-      } else {
-        alert("There was an issue submitting the form. Please try again.");
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      alert("There was an issue submitting the form. Please try again.");
-    });
+  .then(response => {
+    console.log("Form submitted successfully");
+    alert("Form submitted successfully");
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert("There was an issue submitting the form. Please try again.");
+  });
 }
 
 </script>
