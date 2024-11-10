@@ -7,12 +7,6 @@
     link: /about_us/
   - name: Contact
     link: /contact/
-
-- logo:
-    image: /images/logo.png  # Adjust the path as needed
-    link: /  # URL where the logo should redirect
-    alt_text: "Site Logo"
-
 - links:
   - name: Facebook
     link: https://facebook.com/
