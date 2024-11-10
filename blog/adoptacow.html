@@ -18,8 +18,10 @@ description: Submit your details and generate a UPI QR code for payment
     <label for="message">Phone Number</label>
     <input type="text" name="text" id="message" placeholder="Enter your phone number..." />
   
+    <!-- Replace submit action with JavaScript -->
     <input type="button" value="Submit" onclick="submitForm()" />
   </form>
+  
 </div>
 
 <br><br><br>
@@ -89,10 +91,9 @@ description: Submit your details and generate a UPI QR code for payment
   }
 </script>
 
-
 <script>
   function submitForm() {
-    // Get form data
+    // Gather form data
     const formData = new FormData();
     formData.append("name", document.getElementById("name").value);
     formData.append("email", document.getElementById("email").value);
@@ -103,18 +104,14 @@ description: Submit your details and generate a UPI QR code for payment
     fetch('https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec', {
       method: 'POST',
       body: formData,
-      headers: {
-        'Accept': 'application/json'  // Optional: for better compatibility
-      }
     })
-    .then(response => {
-      if (response.ok) {
-        // Display a success popup message
+    .then(response => response.json())  // Parse JSON response
+    .then(data => {
+      if (data.status === "success") {
         alert("Form submitted successfully!");
-        // Reset form fields
         document.getElementById('paymentForm').reset();
       } else {
-        throw new Error("Form submission failed");
+        throw new Error(data.message || "Form submission failed");
       }
     })
     .catch(error => {
