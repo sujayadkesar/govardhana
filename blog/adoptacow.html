@@ -4,7 +4,7 @@ heading: गावः सुरभिर्नो मुर्धन
 description: Submit your details and generate a UPI QR code for payment
 ---
 
-<div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
+<div class="contact-box"  onsubmit="submitForm(event)" style="display: flex; justify-content: center; align-items: center;">
   <form class="contact-form" id="paymentForm" action="https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec" method="POST">
     <label for="name">Full Name</label>
     <input  type="text" name="name" id="name" placeholder="Enter your name..." required/>
