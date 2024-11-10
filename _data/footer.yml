@@ -7,11 +7,10 @@
     link: /about_us/
   - name: Contact
     link: /contact/
-- links:
-  - name: 
-    link: /
-    image: images/logo.png  # path to your logo image images/logo.png
-    alt_text: "Site Logo"  # Alternative text for accessibility
+- logo:
+    image: /assets/images/logo.png  # Path to the logo image
+    link: /                         # Link for the logo (home page or any preferred page)
+    alt_text: "Site Logo" 
   # - name: Sign Up
   #   link: /
   #   new_window: true
