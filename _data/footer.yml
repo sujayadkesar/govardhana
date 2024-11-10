@@ -8,9 +8,10 @@
   - name: Contact
     link: /contact/
 - links:
-  # # - name: Login
-  #   link: /
-  #   new_window: true
+  - name: 
+    link: /
+    image: /images/logo.png  # path to your logo image images/logo.png
+    alt_text: "Site Logo"  # Alternative text for accessibility
   # - name: Sign Up
   #   link: /
   #   new_window: true
