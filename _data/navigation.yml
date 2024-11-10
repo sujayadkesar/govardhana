@@ -1,5 +1,5 @@
-- name: Gallery
-  link: /gallery/
+- name: Home
+  link: /
   new_window: false
   highlight: false
 - name: About-Us
@@ -18,7 +18,7 @@
   link: /about
   new_window: true
   highlight: false
-- name: Home
-  link: /
+- name: Gallery
+  link: /gallery/
   new_window: false
   highlight: false
