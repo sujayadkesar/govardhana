@@ -5,22 +5,18 @@ description: Submit your details and generate a UPI QR code for payment
 ---
 
 <div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
-  <form class="contact-form" id="paymentForm" action="https://formsubmit.co/el/zipima" method="POST" onsubmit="return validateForm()" enctype="multipart/form-data">
-    <!-- Replace with your email in the action URL -->
+  <form class="contact-form" id="paymentForm" action="https://formspree.io/f/xbljyjkn" method="POST">
     <label for="name">Full Name</label>
-    <input type="text" name="name" id="name" placeholder="Enter your name..." required />
+    <input  type="text" name="name" id="name" placeholder="Enter your name..." required/>
 
     <label for="email">Email Address</label>
-    <input type="email" name="email" id="email" placeholder="Enter your email..." required pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" title="Please enter a valid email address." />
+    <input type="email" name="email" id="email" placeholder="Enter your email..." required />
 
     <label for="adhar">Aadhar Number</label>
-    <input type="text" name="adhar" id="adhar" placeholder="Enter your 12-digit Aadhar number" required pattern="^\d{12}$" title="Aadhar number should be 12 digits long and only contain numbers." />
+    <input type="text" name="adhar" id="adhar" placeholder="Enter your Aadhar..." required />
 
-    <label for="phone">Phone Number</label>
-    <input type="text" name="phone" id="phone" placeholder="Enter your 10-digit phone number" required pattern="^\d{10}$" title="Phone number should be 10 digits long and only contain numbers." />
-
-    <!-- Optional: Add any file inputs if necessary -->
-    <!-- <input type="file" name="attachment" accept="image/png, image/jpeg"> -->
+    <label for="message">Phone Number</label>
+    <input type="text" name="text" id="message" placeholder="Enter your phone number..." />
 
     <input type="submit" value="Submit" />
   </form>
@@ -52,7 +48,7 @@ description: Submit your details and generate a UPI QR code for payment
     }
 
     // Define amount (can be dynamically set, but I am setting it to 11500 for now)
-    const amount = 11500;
+    const amount = 11000;
 
     // Ensure the amount is a valid number
     if (isNaN(amount) || amount <= 0) {
@@ -90,25 +86,5 @@ description: Submit your details and generate a UPI QR code for payment
       </html>
     `);
     qrWindow.document.close();
-  }
-
-  // Function to validate the form inputs
-  function validateForm() {
-    const phone = document.getElementById('phone').value;
-    const adhar = document.getElementById('adhar').value;
-
-    // Validate phone number length
-    if (phone.length !== 10 || isNaN(phone)) {
-      alert("Please enter a valid 10-digit phone number.");
-      return false;
-    }
-
-    // Validate Aadhar number length
-    if (adhar.length !== 12 || isNaN(adhar)) {
-      alert("Please enter a valid 12-digit Aadhar number.");
-      return false;
-    }
-
-    return true; // Form is valid
   }
 </script>
