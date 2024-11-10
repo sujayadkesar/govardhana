@@ -58,16 +58,19 @@
 				  <a href="cloudcannon:collections/_data/footer.yml" class="btn"><strong>&#9998;</strong> Edit footer</a>
 			   </p>
 		 
-			   <!-- Logo Section -->
-			   {% for column in site.data.footer %}
-				  {% if column.logo %}
-					 <div class="footer-logo">
-						<a href="{{ column.logo.link }}">
-						   <img src="{{ column.logo.image }}" alt="{{ column.logo.alt_text }}" style="width: 150px; height: auto;" />
-						</a>
-					 </div>
-				  {% endif %}
-			   {% endfor %}
+<!-- Footer Logo Section -->
+<div class="footer" style="position: relative; padding-top: 20px; text-align: center;">
+	{% for column in site.data.footer %}
+	   {% if column.logo %}
+		  <div class="footer-logo" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);">
+			 <a href="{{ column.logo.link }}">
+				<img src="{{ column.logo.image }}" alt="{{ column.logo.alt_text }}" style="width: 150px; height: auto;" />
+			 </a>
+		  </div>
+	   {% endif %}
+	{% endfor %}
+ </div>
+ 
 		 
 			   <div class="footer-columns">
 				  {% for column in site.data.footer %}
