@@ -5,7 +5,7 @@ description: Submit your details and generate a UPI QR code for payment
 ---
 
 <div class="contact-box"  onsubmit="submitForm(event)" style="display: flex; justify-content: center; align-items: center;">
-  <form class="contact-form" id="paymentForm" action="https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec" method="POST">
+  <form class="contact-form" id="paymentForm">
     <label for="name">Full Name</label>
     <input  type="text" name="name" id="name" placeholder="Enter your name..." required/>
 
@@ -98,7 +98,7 @@ description: Submit your details and generate a UPI QR code for payment
     const formData = new FormData(document.getElementById('paymentForm'));
 
     // Send form data to Google Apps Script
-    fetch('YOUR_GOOGLE_APPS_SCRIPT_URL', {
+    fetch('https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec', {
       method: 'POST',
       body: formData
     })
