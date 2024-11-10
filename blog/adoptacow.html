@@ -88,3 +88,29 @@ description: Submit your details and generate a UPI QR code for payment
     qrWindow.document.close();
   }
 </script>
+
+
+<script>
+  function submitForm() {
+    // Get form data
+    const formData = new FormData(document.getElementById('paymentForm'));
+
+    // Send form data to Google Apps Script
+    fetch('https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.text())
+    .then(result => {
+      // Display a success popup message
+      alert("Form submitted successfully!");
+
+      // Optionally, reset the form fields
+      document.getElementById('paymentForm').reset();
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert("There was an issue submitting the form. Please try again.");
+    });
+  }
+</script>
