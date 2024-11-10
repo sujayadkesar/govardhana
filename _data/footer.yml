@@ -7,19 +7,12 @@
     link: /about_us/
   - name: Contact
     link: /contact/
+
 - logo:
     image: {{ site.baseurl }}/images/logo.png  # Adjust the path as needed
     link: /  # URL where the logo should redirect
     alt_text: "Site Logo"
-  # - name: Sign Up
-  #   link: /
-  #   new_window: true
-  # - name: Docs
-  #   link: /
-  #   new_window: true
-  # - name: Status
-  #   link: /
-  #   new_window: true
+
 - links:
   - name: Facebook
     link: https://facebook.com/
