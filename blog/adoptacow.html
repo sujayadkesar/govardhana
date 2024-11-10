@@ -5,7 +5,7 @@ description: Submit your details and generate a UPI QR code for payment
 ---
 
 <div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
-  <form class="contact-form" id="paymentForm">
+  <form class="contact-form" id="paymentForm" action="javascript:void(0);" onsubmit="submitForm(event)">
     <label for="name">Full Name</label>
     <input type="text" name="name" id="name" placeholder="Enter your name..." required/>
   
@@ -93,7 +93,7 @@ description: Submit your details and generate a UPI QR code for payment
 
 <script>
   function submitForm(event) {
-  event.preventDefault();
+  event.preventDefault(); // Prevent form from reloading the page
 
   const formData = new FormData(document.getElementById("paymentForm"));
 
