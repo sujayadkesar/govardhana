@@ -92,31 +92,27 @@ description: Submit your details and generate a UPI QR code for payment
 </script>
 
 <script>
-  function submitForm() {
-    // Gather form data
-    const formData = new FormData();
-    formData.append("name", document.getElementById("name").value);
-    formData.append("email", document.getElementById("email").value);
-    formData.append("adhar", document.getElementById("adhar").value);
-    formData.append("text", document.getElementById("message").value);
+  function submitForm(event) {
+  event.preventDefault();
 
-    // Send form data to Google Apps Script
-    fetch('https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec', {
-      method: 'POST',
-      body: formData,
-    })
-    .then(response => response.json())  // Parse JSON response
-    .then(data => {
+  const formData = new FormData(document.getElementById("paymentForm"));
+
+  fetch("https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec", {
+    method: "POST",
+    body: formData,
+  })
+    .then((response) => response.json())
+    .then((data) => {
       if (data.status === "success") {
         alert("Form submitted successfully!");
-        document.getElementById('paymentForm').reset();
       } else {
-        throw new Error(data.message || "Form submission failed");
+        alert("There was an issue submitting the form. Please try again.");
       }
     })
-    .catch(error => {
-      console.error('Error:', error);
+    .catch((error) => {
+      console.error("Error:", error);
       alert("There was an issue submitting the form. Please try again.");
     });
-  }
+}
+
 </script>
