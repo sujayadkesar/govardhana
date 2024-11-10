@@ -33,7 +33,7 @@
 			</div>
 		</header>
 		{{ content }}
-		<footer>
+		<!-- <footer>
 			<div class="container">
 				<p class="editor-link"><a href="cloudcannon:collections/_data/footer.yml" class="btn"><strong>&#9998;</strong> Edit footer</a></p>
 				<div class="footer-columns">
@@ -51,7 +51,46 @@
 				</div>
 				<p class="copyright">&copy; {{ site.time | date: '%Y' }} MyApp Ltd. • <a href="#">Terms</a> &amp; <a href="#">Privacy</a> • <a href="https://cloudcannon.com/">Template by CloudCannon</a></p>
 			</div>
-		</footer>
+		</footer> -->
+		<footer>
+			<div class="container">
+			   <p class="editor-link">
+				  <a href="cloudcannon:collections/_data/footer.yml" class="btn"><strong>&#9998;</strong> Edit footer</a>
+			   </p>
+		 
+			   <!-- Logo Section -->
+			   {% for column in site.data.footer %}
+				  {% if column.logo %}
+					 <div class="footer-logo">
+						<a href="{{ column.logo.link }}">
+						   <img src="{{ column.logo.image }}" alt="{{ column.logo.alt_text }}" style="width: 150px; height: auto;" />
+						</a>
+					 </div>
+				  {% endif %}
+			   {% endfor %}
+		 
+			   <div class="footer-columns">
+				  {% for column in site.data.footer %}
+					 <ul class="footer-links">
+						{% for link in column.links %}
+						   <li>
+							  <a {% if link.new_window %}target="_blank"{% endif %} href="{% include relative-src.html src=link.link %}" {% if link.social_icon %}class="{{ link.social_icon }}-icon"{% endif %}>
+								 {% if link.social_icon %}
+									{% include social-icon.html icon=link.social_icon %}
+								 {% endif %}
+								 {{ link.name }}
+							  </a>
+						   </li>
+						{% endfor %}
+					 </ul>
+				  {% endfor %}
+			   </div>
+		 
+			   <p class="copyright">
+				  &copy; {{ site.time | date: '%Y' }} MyApp Ltd. • <a href="#">Terms</a> &amp; <a href="#">Privacy</a> • <a href="https://cloudcannon.com/">Template by CloudCannon</a>
+			   </p>
+			</div>
+		 </footer>		 
 		<script>
 			document.getElementById("open-nav").onclick = function () {
 				document.body.classList.toggle("nav-open");
@@ -60,7 +99,13 @@
 		</script>
 
 
-  
+  <style>
+	.footer-logo {
+   text-align: center;
+   margin-bottom: 20px;
+}
+
+  </style>
 
 	</body>
 </html>

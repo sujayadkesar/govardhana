@@ -8,9 +8,9 @@
   - name: Contact
     link: /contact/
 - logo:
-    image: /assets/images/logo.png  # Path to the logo image
-    link: /                         # Link for the logo (home page or any preferred page)
-    alt_text: "Site Logo" 
+    image: /images/logo.png  # Adjust the path as needed
+    link: /  # URL where the logo should redirect
+    alt_text: "Site Logo"
   # - name: Sign Up
   #   link: /
   #   new_window: true
