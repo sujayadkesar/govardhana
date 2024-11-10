@@ -4,22 +4,57 @@ heading: गावः सुरभिर्नो मुर्धन
 description: Submit your details and generate a UPI QR code for payment
 ---
 
-<div class="contact-box"  onsubmit="submitForm(event)" style="display: flex; justify-content: center; align-items: center;">
+<div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
   <form class="contact-form" id="paymentForm">
     <label for="name">Full Name</label>
-    <input  type="text" name="name" id="name" placeholder="Enter your name..." required/>
-
+    <input type="text" name="name" id="name" placeholder="Enter your name..." required/>
+  
     <label for="email">Email Address</label>
     <input type="email" name="email" id="email" placeholder="Enter your email..." required />
-
+  
     <label for="adhar">Aadhar Number</label>
     <input type="text" name="adhar" id="adhar" placeholder="Enter your Aadhar..." required />
-
+  
     <label for="message">Phone Number</label>
     <input type="text" name="text" id="message" placeholder="Enter your phone number..." />
-
-    <input type="submit" value="Submit" />
+  
+    <input type="button" value="Submit" onclick="submitForm()" />
   </form>
+  
+  <script>
+    function submitForm() {
+      // Get form data
+      const formData = new FormData();
+      formData.append("name", document.getElementById("name").value);
+      formData.append("email", document.getElementById("email").value);
+      formData.append("adhar", document.getElementById("adhar").value);
+      formData.append("text", document.getElementById("message").value);
+  
+      // Send form data to Google Apps Script
+      fetch('https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'  // Optional: for better compatibility
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          // Display a success popup message
+          alert("Form submitted successfully!");
+          // Reset form fields
+          document.getElementById('paymentForm').reset();
+        } else {
+          throw new Error("Form submission failed");
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert("There was an issue submitting the form. Please try again.");
+      });
+    }
+  </script>
+  
 </div>
 
 <br><br><br>
@@ -86,33 +121,5 @@ description: Submit your details and generate a UPI QR code for payment
       </html>
     `);
     qrWindow.document.close();
-  }
-</script>
-
-
-<script>
-  function submitForm(event) {
-    event.preventDefault();  // Prevent the default form submission
-
-    // Get form data
-    const formData = new FormData(document.getElementById('paymentForm'));
-
-    // Send form data to Google Apps Script
-    fetch('https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => response.text())
-    .then(result => {
-      // Display a success popup message
-      alert("Form submitted successfully!");
-
-      // Optionally, reset the form fields
-      document.getElementById('paymentForm').reset();
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert("There was an issue submitting the form. Please try again.");
-    });
   }
 </script>
