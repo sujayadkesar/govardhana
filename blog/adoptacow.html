@@ -19,7 +19,7 @@ description: Submit your details and generate a UPI QR code for payment
     <input type="text" name="text" id="message" placeholder="Enter your phone number..." />
   
     <!-- Replace submit action with JavaScript -->
-    <input type="button" value="Submit" onclick="submitForm()" />
+    <input type="submit" value="Submit" />
   </form>
   
 </div>
@@ -93,7 +93,9 @@ description: Submit your details and generate a UPI QR code for payment
 
 <script>
   function submitForm(event) {
-  event.preventDefault(); // Prevent form from reloading the page
+  if (event) {
+    event.preventDefault(); // Prevent the form from reloading the page
+  }
 
   const formData = new FormData(document.getElementById("paymentForm"));
 
