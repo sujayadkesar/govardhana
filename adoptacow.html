@@ -57,7 +57,7 @@ description: Submit your details and generate a UPI QR code for payment
     }
 
     // Create the UPI QR code URL with the Aadhar number as the transaction note
-    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x4000&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D${amount}%26cu%3DINR&tn=${adharNumber}`;
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D${amount}%26cu%3DINR%26tn%3D${adharNumber}`;
     
     // Log the URL for debugging
     console.log("Generated QR Code URL:", qrCodeUrl);
@@ -65,26 +65,27 @@ description: Submit your details and generate a UPI QR code for payment
     // Open the QR code in a new window
     openQrWindow(qrCodeUrl);
   };
-// Function to open QR code in a new window
-function openQrWindow(qrCodeUrl) {
-  const qrWindow = window.open('', '_blank', 'width=500,height=600');
-  qrWindow.document.write(`
-    <html>
-      <head>
-        <title>UPI Payment QR Code</title>
-      </head>
-      <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
-        <div style="text-align: center;">
-          <h2>Scan to Pay</h2>
-          <div style="display: flex; flex-direction: column; align-items: center;">
-            <img src="${qrCodeUrl}" alt="UPI Payment QR Code" style="width: 200px; height: 200px; margin-bottom: 10px;">
-            <p>Kindly Enter your Aadhar Number as <strong>Transaction Note</strong></p>
-            <p>It will help us to track your payment easily!</p>
+
+  // Function to open QR code in a new window
+  function openQrWindow(qrCodeUrl) {
+    const qrWindow = window.open('', '_blank', 'width=500,height=600');
+    qrWindow.document.write(`
+      <html>
+        <head>
+          <title>UPI Payment QR Code</title>
+        </head>
+        <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+          <div style="text-align: center;">
+            <h2>Scan to Pay</h2>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <img src="${qrCodeUrl}" alt="UPI Payment QR Code" style="width: 200px; height: 200px; margin-bottom: 10px;">
+              <p>Kindly enter your Aadhar Number as <strong>Transaction Note</strong></p>
+              <p>It will help us to track your payment easily!</p>
+            </div>
           </div>
-        </div>
-      </body>
-    </html>
-  `);
-  qrWindow.document.close();
-}
+        </body>
+      </html>
+    `);
+    qrWindow.document.close();
+  }
 </script>
