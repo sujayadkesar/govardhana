@@ -91,12 +91,14 @@ description: Submit your details and generate a UPI QR code for payment
 
 
 <script>
-  function submitForm() {
+  function submitForm(event) {
+    event.preventDefault();  // Prevent the default form submission
+
     // Get form data
     const formData = new FormData(document.getElementById('paymentForm'));
 
     // Send form data to Google Apps Script
-    fetch('https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec', {
+    fetch('YOUR_GOOGLE_APPS_SCRIPT_URL', {
       method: 'POST',
       body: formData
     })
