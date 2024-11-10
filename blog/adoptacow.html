@@ -5,9 +5,8 @@ description: Submit your details and generate a UPI QR code for payment
 ---
 
 <div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
-  <form class="contact-form" id="paymentForm" action="https://formsubmit.co/el/zipima" method="POST" onsubmit="return validateForm()">
-    <!-- https://formsubmit.co/el/zipima -->
-    <!-- https://formspree.io/f/xbljyjkn -->
+  <form class="contact-form" id="paymentForm" action="https://formsubmit.co/el/zipima" method="POST" onsubmit="return validateForm()" enctype="multipart/form-data">
+    <!-- Replace with your email in the action URL -->
     <label for="name">Full Name</label>
     <input type="text" name="name" id="name" placeholder="Enter your name..." required />
 
@@ -17,8 +16,11 @@ description: Submit your details and generate a UPI QR code for payment
     <label for="adhar">Aadhar Number</label>
     <input type="text" name="adhar" id="adhar" placeholder="Enter your 12-digit Aadhar number" required pattern="^\d{12}$" title="Aadhar number should be 12 digits long and only contain numbers." />
 
-    <label for="message">Phone Number</label>
+    <label for="phone">Phone Number</label>
     <input type="text" name="phone" id="phone" placeholder="Enter your 10-digit phone number" required pattern="^\d{10}$" title="Phone number should be 10 digits long and only contain numbers." />
+
+    <!-- Optional: Add any file inputs if necessary -->
+    <!-- <input type="file" name="attachment" accept="image/png, image/jpeg"> -->
 
     <input type="submit" value="Submit" />
   </form>
