@@ -1,0 +1,90 @@
+---
+title: Contact Form with UPI QR Code
+heading: गावः सुरभिर्नो मुर्धन
+description: Submit your details and generate a UPI QR code for payment
+---
+
+<div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
+  <form class="contact-form" id="paymentForm" action="https://formspree.io/f/xbljyjkn" method="POST">
+    <label for="name">Full Name</label>
+    <input  type="text" name="name" id="name" placeholder="Enter your name..." required/>
+
+    <label for="email">Email Address</label>
+    <input type="email" name="email" id="email" placeholder="Enter your email..." required />
+
+    <label for="adhar">Aadhar Number</label>
+    <input type="text" name="adhar" id="adhar" placeholder="Enter your Aadhar..." required />
+
+    <label for="message">Phone Number</label>
+    <input type="text" name="text" id="message" placeholder="Enter your phone number..." />
+
+    <input type="submit" value="Submit" />
+  </form>
+</div>
+
+<br><br><br>
+
+<div style="text-align: center;">
+  <button 
+    id="generateQrButton"
+    class="pulse-button"
+    style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
+           border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
+           color: #050829; border-radius: 8px;">
+    Generate QR Code!
+  </button>
+</div>
+
+<script>
+  // Function to generate the UPI QR code
+  document.getElementById('generateQrButton').onclick = function() {
+    // Get the Aadhar number entered by the user
+    const adharNumber = document.getElementById('adhar').value;
+    
+    // Validate if the Aadhar number is entered
+    if (!adharNumber) {
+      alert("Please enter your Aadhar number.");
+      return;
+    }
+
+    // Define amount (can be dynamically set, but I am setting it to 11500 for now)
+    const amount = 1250;
+
+    // Ensure the amount is a valid number
+    if (isNaN(amount) || amount <= 0) {
+      alert("Invalid amount!");
+      return;
+    }
+
+    // Create the UPI QR code URL with the Aadhar number as the transaction note
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D${amount}%26cu%3DINR%26tn%3D${adharNumber}`;
+    
+    // Log the URL for debugging
+    console.log("Generated QR Code URL:", qrCodeUrl);
+
+    // Open the QR code in a new window
+    openQrWindow(qrCodeUrl);
+  };
+
+  // Function to open QR code in a new window
+  function openQrWindow(qrCodeUrl) {
+    const qrWindow = window.open('', '_blank', 'width=500,height=600');
+    qrWindow.document.write(`
+      <html>
+        <head>
+          <title>UPI Payment QR Code</title>
+        </head>
+        <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+          <div style="text-align: center;">
+            <h2>Scan to Pay</h2>
+            <div style="display: flex; flex-direction: column; align-items: center;">
+              <img src="${qrCodeUrl}" alt="UPI Payment QR Code" style="width: 200px; height: 200px; margin-bottom: 10px;">
+              <p><strong>“गावो विश्वस्य मातर:”</strong></p>
+            </div>
+          </div>
+        </body>
+      </html>
+    `);
+    qrWindow.document.close();
+  }
+</script>
