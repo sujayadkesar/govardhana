@@ -93,13 +93,26 @@ description: Submit your details and generate a UPI QR code for payment
 
 <script>
   function submitForm() {
-  const formData = new FormData(document.querySelector('.contact-form'));
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const adhar = document.getElementById('adhar').value;
+  const phone = document.getElementById('message').value;
+
+  const formData = {
+    "name": name,
+    "email": email,
+    "adhar": adhar,
+    "text": phone
+  };
+
   const url = 'https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec';
-  
+
   fetch(url, {
     method: 'POST',
-    body: formData,
-    mode: 'no-cors',  // Add this line to disable CORS checking in the browser
+    headers: {
+      'Content-Type': 'application/json'  // Ensures the request is properly formatted as JSON
+    },
+    body: JSON.stringify(formData),
   })
   .then(response => {
     console.log("Form submitted successfully");
