@@ -94,7 +94,6 @@ description: Submit your details and generate a UPI QR code for payment
     qrWindow.document.close();
   }
 </script>
-
 <script>
   function submitForm(event) {
     event.preventDefault(); // Prevent default form submission
@@ -112,8 +111,7 @@ description: Submit your details and generate a UPI QR code for payment
     .then(data => {
       // Show confirmation message
       document.getElementById("confirmationMessage").style.display = "block";
-      // Optionally, reset the form
-      document.getElementById("paymentForm").reset();
+      // Do not reset the form to retain values for QR code generation
     })
     .catch(error => {
       console.error("Error submitting form:", error);
