@@ -112,7 +112,17 @@ description: Submit your details and generate a UPI QR code for payment
     });
   }
   </script>
+<script>
+  function submitForm() {
+    // Show popup message as soon as the submit button is clicked
+    alert("Form submitted successfully!");
 
+    // Delay form submission by 0.7 seconds to prevent redirection immediately
+    setTimeout(() => {
+      document.getElementById("paymentForm").submit();
+    }, 700);
+  }
+</script>
 
 <!-- 
 <script>
