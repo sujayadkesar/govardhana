@@ -16,7 +16,8 @@ description: Submit your details and generate a UPI QR code for payment
     <input type="text" name="adhar" id="adhar" placeholder="Enter your Aadhar..." required />
 
     <label for="text">Phone Number</label>
-    <input type="text" name="text" id="text" placeholder="Enter your phone number..." required />
+    <input type="text" name="phone" id="text" placeholder="Enter your phone number..." required />
+    <input type="hidden" name="amount" value="2000" />
 
     <input type="submit" value="Submit" />
   </form>
@@ -40,6 +41,50 @@ description: Submit your details and generate a UPI QR code for payment
 </div>
 
 <script>
+  // Verhoeff Algorithm for Aadhar number validation
+  function verhoeffValidation(num) {
+    const d = [
+      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+      [2, 3, 4, 5, 6, 7, 8, 9, 0, 1],
+      [3, 4, 5, 6, 7, 8, 9, 0, 1, 2],
+      [4, 5, 6, 7, 8, 9, 0, 1, 2, 3],
+      [5, 6, 7, 8, 9, 0, 1, 2, 3, 4],
+      [6, 7, 8, 9, 0, 1, 2, 3, 4, 5],
+      [7, 8, 9, 0, 1, 2, 3, 4, 5, 6],
+      [8, 9, 0, 1, 2, 3, 4, 5, 6, 7],
+      [9, 0, 1, 2, 3, 4, 5, 6, 7, 8]
+    ];
+
+    const p = [
+      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
+      [2, 3, 4, 5, 6, 7, 8, 9, 0, 1],
+      [3, 4, 5, 6, 7, 8, 9, 0, 1, 2],
+      [4, 5, 6, 7, 8, 9, 0, 1, 2, 3],
+      [5, 6, 7, 8, 9, 0, 1, 2, 3, 4],
+      [6, 7, 8, 9, 0, 1, 2, 3, 4, 5],
+      [7, 8, 9, 0, 1, 2, 3, 4, 5, 6],
+      [8, 9, 0, 1, 2, 3, 4, 5, 6, 7],
+      [9, 0, 1, 2, 3, 4, 5, 6, 7, 8]
+    ];
+
+    const inv = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const c = [];
+
+    let check = 0;
+    num = num.split('').reverse();
+    for (let i = 0; i < num.length; i++) {
+      c[i] = parseInt(num[i]);
+    }
+    
+    for (let i = 0; i < c.length; i++) {
+      check = d[check][p[(i % 8)][c[i]]];
+    }
+
+    return check === 0;
+  }
+
   // Function to validate input fields
   function validateInputs() {
     const email = document.getElementById('email').value;
@@ -53,10 +98,9 @@ description: Submit your details and generate a UPI QR code for payment
       return false;
     }
 
-    // Aadhar validation (12 digits)
-    const adharPattern = /^\d{12}$/;
-    if (!adharPattern.test(adhar)) {
-      alert("Please enter a valid 12-digit Aadhar number.");
+    // Aadhar validation (Verhoeff algorithm)
+    if (!verhoeffValidation(adhar)) {
+      alert("Please enter a valid Aadhar number.");
       return false;
     }
 
@@ -72,31 +116,23 @@ description: Submit your details and generate a UPI QR code for payment
 
   // Function to generate the UPI QR code
   document.getElementById('generateQrButton').onclick = function() {
-    // Get the Aadhar number entered by the user
     const adharNumber = document.getElementById('adhar').value;
     
-    // Validate if the Aadhar number is entered
     if (!adharNumber) {
       alert("Please enter your Aadhar number.");
       return;
     }
 
-    // Define amount (can be dynamically set, but I am setting it to 11500 for now)
-    const amount = 11000;
+    const amount = 2000;
 
-    // Ensure the amount is a valid number
     if (isNaN(amount) || amount <= 0) {
       alert("Invalid amount!");
       return;
     }
 
-    // Create the UPI QR code URL with the Aadhar number as the transaction note
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D${amount}%26cu%3DINR%26tn%3D${adharNumber}`;
-    
-    // Log the URL for debugging
     console.log("Generated QR Code URL:", qrCodeUrl);
 
-    // Open the QR code in a new window
     openQrWindow(qrCodeUrl);
   };
 
@@ -123,28 +159,23 @@ description: Submit your details and generate a UPI QR code for payment
   }
 
   function submitForm(event) {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
 
-    // Run validation before submission
     if (!validateInputs()) return;
 
-    // Gather form data
     const formData = new FormData(document.getElementById("paymentForm"));
-    const url = "https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec"; // Replace with your Google Apps Script URL
+    const url = "https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec";
 
-    // Send form data via fetch (AJAX)
     fetch(url, {
       method: "POST",
       body: formData
     })
     .then(response => response.text())
     .then(data => {
-      // Show confirmation message
       document.getElementById("confirmationMessage").style.display = "block";
-      // Do not reset the form to retain values for QR code generation
     })
     .catch(error => {
-      console.error("Error submitting form:", error);
+      console.error("Error submitting the form:", error);
     });
   }
 </script>
