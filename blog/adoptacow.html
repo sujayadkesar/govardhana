@@ -5,7 +5,7 @@ description: Submit your details and generate a UPI QR code for payment
 ---
 
 <div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
-  <form class="contact-form" id="paymentForm" action="https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec" method="post" target="_self">
+  <form class="contact-form" id="paymentForm" action="javascript:void(0);">
     <label for="name">Full Name</label>
     <input type="text" name="name" id="name" placeholder="Enter your name..." required/>
 
@@ -18,9 +18,8 @@ description: Submit your details and generate a UPI QR code for payment
     <label for="text">Phone Number</label>
     <input type="text" name="text" id="text" placeholder="Enter your phone number..." required />
 
-    <input type="submit" value="Submit" />
-  </form>
-  
+    <input type="submit" value="Submit" onclick="submitForm(event)" />
+  </form>  
 </div>
 
 <br><br><br>
@@ -91,7 +90,30 @@ description: Submit your details and generate a UPI QR code for payment
 </script>
 
 
+<script>
+  // Function to handle form submission without redirecting
+  function submitForm(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
 
+    const formData = new FormData(document.getElementById('paymentForm'));
+    const url = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+
+    // Send the form data asynchronously using fetch
+    fetch(url, {
+      method: 'POST',
+      body: formData,
+      mode: 'no-cors'  // Use no-cors mode
+    })
+    .then(response => {
+      console.log("Form submitted successfully");
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+  </script>
+
+  
 <!-- 
 <script>
   // Function to generate the UPI QR code
