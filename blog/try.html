@@ -41,141 +41,164 @@ description: Submit your details and generate a UPI QR code for payment
 </div>
 
 <script>
-  // Verhoeff Algorithm for Aadhar number validation
-  function verhoeffValidation(num) {
-    const d = [
-      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
-      [2, 3, 4, 5, 6, 7, 8, 9, 0, 1],
-      [3, 4, 5, 6, 7, 8, 9, 0, 1, 2],
-      [4, 5, 6, 7, 8, 9, 0, 1, 2, 3],
-      [5, 6, 7, 8, 9, 0, 1, 2, 3, 4],
-      [6, 7, 8, 9, 0, 1, 2, 3, 4, 5],
-      [7, 8, 9, 0, 1, 2, 3, 4, 5, 6],
-      [8, 9, 0, 1, 2, 3, 4, 5, 6, 7],
-      [9, 0, 1, 2, 3, 4, 5, 6, 7, 8]
-    ];
+// Multiplication table 'd'
+var d = [
+  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+  [1, 2, 3, 4, 0, 6, 7, 8, 9, 5], 
+  [2, 3, 4, 0, 1, 7, 8, 9, 5, 6], 
+  [3, 4, 0, 1, 2, 8, 9, 5, 6, 7], 
+  [4, 0, 1, 2, 3, 9, 5, 6, 7, 8], 
+  [5, 9, 8, 7, 6, 0, 4, 3, 2, 1], 
+  [6, 5, 9, 8, 7, 1, 0, 4, 3, 2], 
+  [7, 6, 5, 9, 8, 2, 1, 0, 4, 3], 
+  [8, 7, 6, 5, 9, 3, 2, 1, 0, 4], 
+  [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+];
 
-    const p = [
-      [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-      [1, 2, 3, 4, 5, 6, 7, 8, 9, 0],
-      [2, 3, 4, 5, 6, 7, 8, 9, 0, 1],
-      [3, 4, 5, 6, 7, 8, 9, 0, 1, 2],
-      [4, 5, 6, 7, 8, 9, 0, 1, 2, 3],
-      [5, 6, 7, 8, 9, 0, 1, 2, 3, 4],
-      [6, 7, 8, 9, 0, 1, 2, 3, 4, 5],
-      [7, 8, 9, 0, 1, 2, 3, 4, 5, 6],
-      [8, 9, 0, 1, 2, 3, 4, 5, 6, 7],
-      [9, 0, 1, 2, 3, 4, 5, 6, 7, 8]
-    ];
+// Permutation table 'p'
+var p = [
+  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 
+  [1, 5, 7, 6, 2, 8, 3, 0, 9, 4], 
+  [5, 8, 0, 3, 7, 9, 6, 1, 4, 2], 
+  [8, 9, 1, 6, 0, 4, 3, 5, 2, 7], 
+  [9, 4, 5, 3, 1, 2, 6, 8, 7, 0], 
+  [4, 2, 8, 6, 5, 7, 3, 9, 0, 1], 
+  [2, 7, 9, 3, 8, 0, 6, 4, 1, 5], 
+  [7, 0, 4, 6, 9, 1, 3, 2, 5, 8]
+];
 
-    const inv = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-    const c = [];
+// Inverse table 'inv'
+var inv = [0, 4, 3, 2, 1, 5, 6, 7, 8, 9];
 
-    let check = 0;
-    num = num.split('').reverse();
-    for (let i = 0; i < num.length; i++) {
-      c[i] = parseInt(num[i]);
+// Function to invert an array
+function invArray(array){
+  if (Object.prototype.toString.call(array) == "[object Number]") {
+    array = String(array);
+  }
+  if (Object.prototype.toString.call(array) == "[object String]") {
+    array = array.split("").map(Number);
+  }
+  return array.reverse();
+}
+
+// Function to generate checksum
+function generate(array){
+  var c = 0;
+  var invertedArray = invArray(array);
+
+  for (var i = 0; i < invertedArray.length; i++) {
+    c = d[c][p[((i + 1) % 8)][invertedArray[i]]];
+  }
+  return inv[c];
+}
+
+// Function to validate checksum
+function validate(array) {
+  var c = 0;
+  var invertedArray = invArray(array);
+
+  for (var i = 0; i < invertedArray.length; i++) {
+    c = d[c][p[(i % 8)][invertedArray[i]]];
+  }
+  return (c === 0);
+}
+
+// Function to validate Aadhar number
+function validate_adhar(adhar) {
+  console.clear();
+  // Check if the Aadhar number is 12 digits
+  if (adhar >= 100000000000 && adhar <= 999999999999) {
+    if (validate(adhar) == false) {
+      console.log("Invalid Aadhar Number");
+      return false;
+    } else {
+      return true;
     }
-    
-    for (let i = 0; i < c.length; i++) {
-      check = d[check][p[(i % 8)][c[i]]];
-    }
+  } else {
+    console.log("Aadhar Number Should Be 12 Digits");
+    return false;
+  }
+}
 
-    return check === 0;
+// Function to validate inputs and handle form submission
+function validateInputs() {
+  const email = document.getElementById('email').value;
+  const adhar = document.getElementById('adhar').value;
+  const phone = document.getElementById('text').value;
+
+  // Email validation (basic pattern)
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(email)) {
+    alert("Please enter a valid email address.");
+    return false;
   }
 
-  // Function to validate input fields
-  function validateInputs() {
-    const email = document.getElementById('email').value;
-    const adhar = document.getElementById('adhar').value;
-    const phone = document.getElementById('text').value;
-    
-    // Email validation (basic pattern)
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-      alert("Please enter a valid email address.");
-      return false;
-    }
-
-    // Aadhar validation (Verhoeff algorithm)
-    if (!verhoeffValidation(adhar)) {
-      alert("Please enter a valid Aadhar number.");
-      return false;
-    }
-
-    // Phone number validation (10 digits only)
-    const phonePattern = /^\d{10}$/;
-    if (!phonePattern.test(phone)) {
-      alert("Please enter a valid 10-digit phone number.");
-      return false;
-    }
-
-    return true;
+  // Aadhar validation
+  if (!validate_adhar(adhar)) {
+    alert("Please enter a valid Aadhar number.");
+    return false;
   }
 
-  // Function to generate the UPI QR code
-  document.getElementById('generateQrButton').onclick = function() {
-    const adharNumber = document.getElementById('adhar').value;
-    
-    if (!adharNumber) {
-      alert("Please enter your Aadhar number.");
-      return;
-    }
+  // Phone number validation (10 digits only)
+  const phonePattern = /^\d{10}$/;
+  if (!phonePattern.test(phone)) {
+    alert("Please enter a valid 10-digit phone number.");
+    return false;
+  }
 
-    const amount = 2000;
+  return true;
+}
 
-    if (isNaN(amount) || amount <= 0) {
-      alert("Invalid amount!");
-      return;
-    }
+// Function to generate the UPI QR code
+document.getElementById('generateQrButton').onclick = function() {
+  const adharNumber = document.getElementById('adhar').value;
 
-    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D${amount}%26cu%3DINR%26tn%3D${adharNumber}`;
-    console.log("Generated QR Code URL:", qrCodeUrl);
+  if (!adharNumber) {
+    alert("Please enter your Aadhar number.");
+    return;
+  }
 
-    openQrWindow(qrCodeUrl);
-  };
+  const amount = 2000;
 
-  // Function to open QR code in a new window
-  function openQrWindow(qrCodeUrl) {
-    const qrWindow = window.open('', '_blank', 'width=500,height=600');
-    qrWindow.document.write(`
-      <html>
-        <head>
-          <title>UPI Payment QR Code</title>
-        </head>
-        <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
-          <div style="text-align: center;">
-            <h2>Scan to Pay</h2>
-            <div style="display: flex; flex-direction: column; align-items: center;">
-              <img src="${qrCodeUrl}" alt="UPI Payment QR Code" style="width: 200px; height: 200px; margin-bottom: 10px;">
-              <p><strong>“गावो विश्वस्य मातर:”</strong></p>
-            </div>
+  if (isNaN(amount) || amount <= 0) {
+    alert("Invalid amount!");
+    return;
+  }
+
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D${amount}%26cu%3DINR%26tn%3D${adharNumber}`;
+  console.log("Generated QR Code URL:", qrCodeUrl);
+
+  openQrWindow(qrCodeUrl);
+};
+
+// Function to open QR code in a new window
+function openQrWindow(qrCodeUrl) {
+  const qrWindow = window.open('', '_blank', 'width=500,height=600');
+  qrWindow.document.write(`
+    <html>
+      <head>
+        <title>UPI Payment QR Code</title>
+      </head>
+      <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+        <div style="text-align: center;">
+          <h2>Scan to Pay</h2>
+          <div style="display: flex; flex-direction: column; align-items: center;">
+            <img src="${qrCodeUrl}" alt="UPI Payment QR Code" style="width: 200px; height: 200px; margin-bottom: 10px;"/>
+            <p>Scan this code to make the payment</p>
           </div>
-        </body>
-      </html>
-    `);
-    qrWindow.document.close();
+        </div>
+      </body>
+    </html>
+  `);
+}
+
+// Form submission handler
+function submitForm(event) {
+  event.preventDefault(); // Prevent default form submission
+
+  // Validate form inputs
+  if (validateInputs()) {
+    document.getElementById('confirmationMessage').style.display = "block";
   }
-
-  function submitForm(event) {
-    event.preventDefault();
-
-    if (!validateInputs()) return;
-
-    const formData = new FormData(document.getElementById("paymentForm"));
-    const url = "https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec";
-
-    fetch(url, {
-      method: "POST",
-      body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById("confirmationMessage").style.display = "block";
-    })
-    .catch(error => {
-      console.error("Error submitting the form:", error);
-    });
-  }
+}
 </script>
