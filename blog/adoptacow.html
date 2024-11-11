@@ -26,8 +26,6 @@ description: Submit your details and generate a UPI QR code for payment
   </div>
 </div>
 
-
-
 <br><br><br>
 
 <div style="text-align: center;">
@@ -42,6 +40,36 @@ description: Submit your details and generate a UPI QR code for payment
 </div>
 
 <script>
+  // Function to validate input fields
+  function validateInputs() {
+    const email = document.getElementById('email').value;
+    const adhar = document.getElementById('adhar').value;
+    const phone = document.getElementById('text').value;
+    
+    // Email validation (basic pattern)
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      alert("Please enter a valid email address.");
+      return false;
+    }
+
+    // Aadhar validation (12 digits)
+    const adharPattern = /^\d{12}$/;
+    if (!adharPattern.test(adhar)) {
+      alert("Please enter a valid 12-digit Aadhar number.");
+      return false;
+    }
+
+    // Phone number validation (10 digits only)
+    const phonePattern = /^\d{10}$/;
+    if (!phonePattern.test(phone)) {
+      alert("Please enter a valid 10-digit phone number.");
+      return false;
+    }
+
+    return true;
+  }
+
   // Function to generate the UPI QR code
   document.getElementById('generateQrButton').onclick = function() {
     // Get the Aadhar number entered by the user
@@ -93,10 +121,12 @@ description: Submit your details and generate a UPI QR code for payment
     `);
     qrWindow.document.close();
   }
-</script>
-<script>
+
   function submitForm(event) {
     event.preventDefault(); // Prevent default form submission
+
+    // Run validation before submission
+    if (!validateInputs()) return;
 
     // Gather form data
     const formData = new FormData(document.getElementById("paymentForm"));

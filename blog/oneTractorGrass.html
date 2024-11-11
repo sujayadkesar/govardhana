@@ -5,9 +5,9 @@ description: Submit your details and generate a UPI QR code for payment
 ---
 
 <div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
-  <form class="contact-form" id="paymentForm" action="https://formspree.io/f/xbljyjkn" method="POST">
+  <form id="paymentForm" onsubmit="submitForm(event)">
     <label for="name">Full Name</label>
-    <input type="text" name="name" id="name" placeholder="Enter your name..." required />
+    <input type="text" name="name" id="name" placeholder="Enter your name..." required/>
 
     <label for="email">Email Address</label>
     <input type="email" name="email" id="email" placeholder="Enter your email..." required />
@@ -15,11 +15,15 @@ description: Submit your details and generate a UPI QR code for payment
     <label for="adhar">Aadhar Number</label>
     <input type="text" name="adhar" id="adhar" placeholder="Enter your Aadhar..." required />
 
-    <label for="message">Phone Number</label>
-    <input type="text" name="text" id="message" placeholder="Enter your phone number..." />
+    <label for="text">Phone Number</label>
+    <input type="text" name="text" id="text" placeholder="Enter your phone number..." required />
 
     <input type="submit" value="Submit" />
   </form>
+
+  <div id="confirmationMessage" style="display:none; color: green;">
+    <br><br>Form submitted successfully! Kindly generate the QR and complete the payment 
+  </div>
 </div>
 
 <br><br><br>
@@ -36,6 +40,36 @@ description: Submit your details and generate a UPI QR code for payment
 </div>
 
 <script>
+  // Function to validate input fields
+  function validateInputs() {
+    const email = document.getElementById('email').value;
+    const adhar = document.getElementById('adhar').value;
+    const phone = document.getElementById('text').value;
+    
+    // Email validation (basic pattern)
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      alert("Please enter a valid email address.");
+      return false;
+    }
+
+    // Aadhar validation (12 digits)
+    const adharPattern = /^\d{12}$/;
+    if (!adharPattern.test(adhar)) {
+      alert("Please enter a valid 12-digit Aadhar number.");
+      return false;
+    }
+
+    // Phone number validation (10 digits only)
+    const phonePattern = /^\d{10}$/;
+    if (!phonePattern.test(phone)) {
+      alert("Please enter a valid 10-digit phone number.");
+      return false;
+    }
+
+    return true;
+  }
+
   // Function to generate the UPI QR code
   document.getElementById('generateQrButton').onclick = function() {
     // Get the Aadhar number entered by the user
@@ -86,5 +120,31 @@ description: Submit your details and generate a UPI QR code for payment
       </html>
     `);
     qrWindow.document.close();
+  }
+
+  function submitForm(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Run validation before submission
+    if (!validateInputs()) return;
+
+    // Gather form data
+    const formData = new FormData(document.getElementById("paymentForm"));
+    const url = "https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec"; // Replace with your Google Apps Script URL
+
+    // Send form data via fetch (AJAX)
+    fetch(url, {
+      method: "POST",
+      body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+      // Show confirmation message
+      document.getElementById("confirmationMessage").style.display = "block";
+      // Do not reset the form to retain values for QR code generation
+    })
+    .catch(error => {
+      console.error("Error submitting form:", error);
+    });
   }
 </script>
