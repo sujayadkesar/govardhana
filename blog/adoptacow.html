@@ -5,7 +5,7 @@ description: Submit your details and generate a UPI QR code for payment
 ---
 
 <div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
-  <form class="contact-form" id="paymentForm" action="https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec" method="post">
+  <form class="contact-form" id="paymentForm" action="javascript:void(0);" onsubmit="submitForm(event)">
     <label for="name">Full Name</label>
     <input type="text" name="name" id="name" placeholder="Enter your name..." required/>
 
@@ -91,6 +91,32 @@ description: Submit your details and generate a UPI QR code for payment
 </script>
 
 <script>
+  // Function to handle form submission without redirection
+  function submitForm(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+
+    const formData = new FormData(document.querySelector('.contact-form'));
+    const url = 'https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec';
+
+    fetch(url, {
+      method: 'POST',
+      body: formData,
+      mode: 'cors',
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "success") {
+        alert("Form submitted successfully!");
+      } else {
+        alert("There was an issue with your submission: " + data.message);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert("An error occurred. Please try again later.");
+    });
+  }
+
   // Function to generate the UPI QR code
   document.getElementById('generateQrButton').onclick = function() {
     const adharNumber = document.getElementById('adhar').value;
@@ -122,3 +148,38 @@ description: Submit your details and generate a UPI QR code for payment
     qrWindow.document.close();
   }
 </script>
+
+
+<!-- 
+<script>
+  // Function to generate the UPI QR code
+  document.getElementById('generateQrButton').onclick = function() {
+    const adharNumber = document.getElementById('adhar').value;
+    if (!adharNumber) {
+      alert("Please enter your Aadhar number.");
+      return;
+    }
+    const amount = 11000;
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D${amount}%26cu%3DINR%26tn%3D${adharNumber}`;
+    openQrWindow(qrCodeUrl);
+  };
+
+  function openQrWindow(qrCodeUrl) {
+    const qrWindow = window.open('', '_blank', 'width=500,height=600');
+    qrWindow.document.write(`
+      <html>
+        <head>
+          <title>UPI Payment QR Code</title>
+        </head>
+        <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+          <div style="text-align: center;">
+            <h2>Scan to Pay</h2>
+            <img src="${qrCodeUrl}" alt="UPI Payment QR Code" style="width: 200px; height: 200px; margin-bottom: 10px;">
+            <p><strong>“गावो विश्वस्य मातर:”</strong></p>
+          </div>
+        </body>
+      </html>
+    `);
+    qrWindow.document.close();
+  }
+</script> -->
