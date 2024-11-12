@@ -228,37 +228,37 @@ function openQrWindow(qrCodeUrl) {
 //   }
 
 
-
-function submitForm(event) {
+  function submitForm(event) {
     event.preventDefault(); // Prevent default form submission
 
-    // Run validation before submission
     if (!validateInputs()) return;
 
     // Gather form data
-    const formData = new FormData(document.getElementById("paymentForm"));
-    
-    // Append the amount to the form data
-    formData.append("amount", "100"); // Replace "100" with the specific amount for each page
+    const formData = new URLSearchParams(); // Use URLSearchParams to format data
+    formData.append("name", document.getElementById("name").value);
+    formData.append("email", document.getElementById("email").value);
+    formData.append("aadhar", document.getElementById("aadhar").value);
+    formData.append("phone", document.getElementById("phone").value);
+    formData.append("amount", document.getElementById("amount").value); // Add amount field
 
-    // Define the Google Apps Script URL
     const url = "https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec"; // Replace with your actual Google Apps Script URL
 
-    // Send form data via fetch (AJAX)
+    // Send form data via fetch with URL-encoded format
     fetch(url, {
-      method: "POST",
-      body: formData
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: formData.toString()
     })
     .then(response => response.text())
     .then(data => {
-      // Show confirmation message
-      document.getElementById("confirmationMessage").style.display = "block";
-      // Do not reset the form to retain values for QR code generation
+        document.getElementById("confirmationMessage").style.display = "block";
     })
     .catch(error => {
-      console.error("Error submitting form:", error);
+        console.error("Error submitting form:", error);
     });
-  }
+}
 
 
 </script>
