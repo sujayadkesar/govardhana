@@ -193,8 +193,16 @@ document.getElementById('generateQrButton').onclick = function() {
   openQrWindow(qrCodeUrl);
 };
 
+let formSubmitted = false;
+
+
 function submitForm(event) {
     event.preventDefault(); // Prevent default form submission
+
+    if (formSubmitted) {
+      alert("You have already submitted the form.");
+      return;
+    }
 
     // Run validation before submission
     if (!validateInputs()) return;
@@ -211,15 +219,16 @@ function submitForm(event) {
     .then(response => response.text())
     .then(data => {
       // Show confirmation message
+      formSubmitted = true;
       document.getElementById("confirmationMessage").style.display = "block";
       // Do not reset the form to retain values for QR code generation
     })
+    
     .catch(error => {
       console.error("Error submitting form:", error);
     });
   }
 </script>
-
 
 
 <script>
