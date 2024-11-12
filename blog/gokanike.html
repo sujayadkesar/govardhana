@@ -216,9 +216,15 @@ function submitForm(event) {
 
 
 <script>
-  // Function to check if the user is on a mobile device
+  // Function to check if the user is on a mobile device, even in desktop mode
 function isMobileDevice() {
-  return /Mobi|Android/i.test(navigator.userAgent);
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  const isMobileUserAgent = /Mobi|Android|iPhone|iPad|iPod/i.test(userAgent);
+  
+  // Check if the device has touch capability (often a sign of a mobile device)
+  const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  
+  return isMobileUserAgent || hasTouchScreen;
 }
 
 // Function to generate the UPI QR code or direct link based on the device type
