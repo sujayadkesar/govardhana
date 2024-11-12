@@ -31,6 +31,7 @@ description: Submit your details and generate a UPI QR code for payment
 
 <br><br><br>
 
+
 <div style="text-align: center;">
   <button 
     id="generateQrButton"
@@ -173,10 +174,17 @@ document.getElementById('generateQrButton').onclick = function() {
   openQrWindow(qrCodeUrl);
 };
 
+let formSubmitted = false;
+
 
 function submitForm(event) {
     event.preventDefault(); // Prevent default form submission
 
+    if (formSubmitted) {
+      alert("You have already submitted the form.");
+      return;
+    }
+    
     // Run validation before submission
     if (!validateInputs()) return;
 
