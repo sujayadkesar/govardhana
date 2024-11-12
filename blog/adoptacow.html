@@ -38,7 +38,7 @@ description: Submit your details and generate a UPI QR code for payment
     style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
            border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
            color: #050829; border-radius: 8px;">
-    Generate QR Code!
+    Click here to Pay!
   </button>
 </div>
 
@@ -173,26 +173,6 @@ document.getElementById('generateQrButton').onclick = function() {
   openQrWindow(qrCodeUrl);
 };
 
-// Function to open QR code in a new window
-function openQrWindow(qrCodeUrl) {
-  const qrWindow = window.open('', '_blank', 'width=500,height=600');
-  qrWindow.document.write(`
-    <html>
-      <head>
-        <title>UPI Payment QR Code</title>
-      </head>
-      <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
-        <div style="text-align: center;">
-          <h2>Scan to Pay</h2>
-          <div style="display: flex; flex-direction: column; align-items: center;">
-            <img src="${qrCodeUrl}" alt="UPI Payment QR Code" style="width: 200px; height: 200px; margin-bottom: 10px;"/>
-            <p>Scan this code to make the payment</p>
-          </div>
-        </div>
-      </body>
-    </html>
-  `);
-}
 
 function submitForm(event) {
     event.preventDefault(); // Prevent default form submission
@@ -219,4 +199,65 @@ function submitForm(event) {
       console.error("Error submitting form:", error);
     });
   }
+</script>
+
+
+
+
+<script>
+  // Function to check if the user is on a mobile device
+function isMobileDevice() {
+  return /Mobi|Android/i.test(navigator.userAgent);
+}
+
+// Function to generate the UPI QR code or direct link based on the device type
+document.getElementById('generateQrButton').onclick = function() {
+  const adharNumber = document.getElementById('adhar').value;
+
+  if (!adharNumber) {
+    alert("Please enter your Aadhar number.");
+    return;
+  }
+
+  const amount = 11000;
+
+  if (isNaN(amount) || amount <= 0) {
+    alert("Invalid amount!");
+    return;
+  }
+
+  // UPI data for QR code and link
+  const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(upiData)}`;
+
+  if (isMobileDevice()) {
+    // Open UPI link directly for mobile users
+    window.location.href = upiData;
+  } else {
+    // Display QR code in a new window for non-mobile users
+    openQrWindow(qrCodeUrl);
+  }
+};
+
+// Function to open QR code in a new window
+function openQrWindow(qrCodeUrl) {
+  const qrWindow = window.open('', '_blank', 'width=500,height=600');
+  qrWindow.document.write(`
+    <html>
+      <head>
+        <title>UPI Payment QR Code</title>
+      </head>
+      <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+        <div style="text-align: center;">
+          <h2>Scan to Pay</h2>
+          <div style="display: flex; flex-direction: column; align-items: center;">
+            <img src="${qrCodeUrl}" alt="UPI Payment QR Code" style="width: 200px; height: 200px; margin-bottom: 10px;"/>
+            <p>Scan this code to make the payment</p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `);
+}
+
 </script>
