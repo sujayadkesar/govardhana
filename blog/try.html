@@ -201,6 +201,34 @@ function openQrWindow(qrCodeUrl) {
   `);
 }
 
+// function submitForm(event) {
+//     event.preventDefault(); // Prevent default form submission
+
+//     // Run validation before submission
+//     if (!validateInputs()) return;
+
+//     // Gather form data
+//     const formData = new FormData(document.getElementById("paymentForm"));
+//     const url = "https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec"; // Replace with your Google Apps Script URL
+
+//     // Send form data via fetch (AJAX)
+//     fetch(url, {
+//       method: "POST",
+//       body: formData
+//     })
+//     .then(response => response.text())
+//     .then(data => {
+//       // Show confirmation message
+//       document.getElementById("confirmationMessage").style.display = "block";
+//       // Do not reset the form to retain values for QR code generation
+//     })
+//     .catch(error => {
+//       console.error("Error submitting form:", error);
+//     });
+//   }
+
+
+
 function submitForm(event) {
     event.preventDefault(); // Prevent default form submission
 
@@ -209,7 +237,12 @@ function submitForm(event) {
 
     // Gather form data
     const formData = new FormData(document.getElementById("paymentForm"));
-    const url = "https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec"; // Replace with your Google Apps Script URL
+    
+    // Append the amount to the form data
+    formData.append("amount", "100"); // Replace "100" with the specific amount for each page
+
+    // Define the Google Apps Script URL
+    const url = "https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec"; // Replace with your actual Google Apps Script URL
 
     // Send form data via fetch (AJAX)
     fetch(url, {
@@ -226,4 +259,6 @@ function submitForm(event) {
       console.error("Error submitting form:", error);
     });
   }
+
+
 </script>
