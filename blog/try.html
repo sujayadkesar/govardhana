@@ -85,8 +85,8 @@ function submitForm(event) {
 
     // Gather form data
     const formData = new FormData(document.getElementById("paymentForm"));
-    const url = "https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec"; // Replace with your Google Apps Script URL
-
+    // const url = "https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec"; // Replace with your Google Apps Script URL
+    const url = "https://script.google.com/macros/s/AKfycbzZAy-Fdpyx6XiWnyRdbUr3ZLdkg5iSooaBG0I1rrAta02x-X1MKQUbOoNRkNHtoKVWag/exec";
     // Send form data via fetch (AJAX)
     fetch(url, {
       method: "POST",
