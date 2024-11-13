@@ -1,4 +1,4 @@
----
+<!-- ---
 title: Contact Form with UPI QR Code
 heading: गावः सुरभिर्नो मुर्धन
 description: Submit your details and generate a UPI QR code for payment
@@ -302,4 +302,142 @@ function openQrWindow(qrCodeUrl) {
   `);
 }
 
+</script> -->
+
+
+---
+title: Contact Form with UPI QR Code
+heading: गावः सुरभिर्नो मुर्धन
+description: Submit your details and generate a UPI QR code for payment
+---
+
+<div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
+  <form id="paymentForm" onsubmit="submitForm(event)">
+    <label for="name">Full Name</label>
+    <input type="text" name="name" id="name" placeholder="Enter your name..." required />
+
+    <label for="dob">Date of Birth</label>
+    <input type="date" name="dob" id="dob" placeholder="Enter your date of birth..." required />
+
+    <label for="email">Email Address</label>
+    <input type="email" name="email" id="email" placeholder="Enter your email..." required />
+
+    <label for="phone">Phone Number</label>
+    <input type="text" name="phone" id="phone" placeholder="Enter your phone number..." required />
+  
+    <label for="category">Category:</label>
+    <select id="category" name="category" required>
+      <option value="Birthday">Birthday</option>
+      <option value="Anniversary">Anniversary</option>
+      <option value="Tithi">Tithi</option>
+      <option value="Others">Others</option>
+    </select>
+
+    <label for="adhar">Aadhar Number</label>
+    <input type="text" name="adhar" id="adhar" placeholder="Enter your Aadhar..." required />
+
+    <input type="submit" value="Submit" />
+  </form>
+
+  <div id="confirmationMessage" style="display:none; color: green;">
+    <br><br>Form submitted successfully! Kindly generate the QR and complete the payment 
+  </div>
+</div>
+
+<br><br><br>
+
+<div style="text-align: center;">
+  <button 
+    id="generateQrButton"
+    class="pulse-button"
+    style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
+           border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
+           color: #050829; border-radius: 8px;">
+    Click here to Pay!
+  </button>
+</div>
+
+<script>
+// Function to validate Aadhar number
+function validate_adhar(adhar) {
+  console.clear();
+  // Check if the Aadhar number is 12 digits
+  if (adhar >= 100000000000 && adhar <= 999999999999) {
+    return true;
+  } else {
+    console.log("Aadhar Number Should Be 12 Digits");
+    return false;
+  }
+}
+
+// Function to validate inputs
+function validateInputs() {
+  const email = document.getElementById('email').value;
+  const adhar = document.getElementById('adhar').value;
+  const phone = document.getElementById('phone').value; // Fixed phone number reference
+
+  // Email validation (basic pattern)
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(email)) {
+    alert("Please enter a valid email address.");
+    return false;
+  }
+
+  // Aadhar validation
+  if (!validate_adhar(adhar)) {
+    alert("Please enter a valid Aadhar number.");
+    return false;
+  }
+
+  // Phone number validation (10 digits only)
+  const phonePattern = /^\d{10}$/;
+  if (!phonePattern.test(phone)) {
+    alert("Please enter a valid 10-digit phone number.");
+    return false;
+  }
+
+  return true;
+}
+
+// Function to generate the UPI QR code
+document.getElementById('generateQrButton').onclick = function() {
+  const adharNumber = document.getElementById('adhar').value;
+  const donorName = document.getElementById('name').value;
+  const donorPhone = document.getElementById('phone').value; // Fixed phone reference
+  const donorEmail = document.getElementById('email').value;
+
+  if (!adharNumber || !donorName || !donorPhone || !donorEmail) {
+    alert("Please fill in all the details!");
+    return;
+  }
+
+  const amount = 11000;
+
+  if (isNaN(amount) || amount <= 0) {
+    alert("Invalid amount!");
+    return;
+  }
+
+  // UPI data for QR code and link
+  const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}&mc=0000`;
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(upiData)}&size=250x250`;
+
+  const qrContainer = document.createElement("div");
+  qrContainer.innerHTML = `<img src="${qrCodeUrl}" alt="UPI QR Code" />`;
+
+  document.body.appendChild(qrContainer);
+
+  // Display confirmation message
+  document.getElementById("confirmationMessage").style.display = "block";
+};
+
+// Form submission handler
+function submitForm(event) {
+  event.preventDefault(); // Prevent form from submitting
+  if (validateInputs()) {
+    // After validation, reset the form and show confirmation message
+    document.getElementById('paymentForm').reset();
+    document.getElementById('confirmationMessage').style.display = "block";
+  }
+}
 </script>
