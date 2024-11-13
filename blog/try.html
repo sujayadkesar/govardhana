@@ -74,36 +74,36 @@ function validate_adhar(adhar) {
 }
 
 let formSubmitted = false;
-
 function submitForm(event) {
-    event.preventDefault(); // Prevent default form submission
+  event.preventDefault(); // Prevent default form submission
 
-    if (formSubmitted) {
-      alert("You have already submitted the form.");
-      return;
-    }
+  if (formSubmitted) {
+    alert("You have already submitted the form.");
+    return;
+  }
 
-    // Run validation before submission
-    if (!validateInputs()) return;
+  console.log("Running validation...");
+  if (!validateInputs()) {
+    console.log("Validation failed.");
+    return;
+  }
 
-    // Gather form data
-    const formData = new FormData(document.getElementById("paymentForm"));
-    // const url = "https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec"; // Replace with your Google Apps Script URL
-    const url = "https://script.google.com/macros/s/AKfycbzZAy-Fdpyx6XiWnyRdbUr3ZLdkg5iSooaBG0I1rrAta02x-X1MKQUbOoNRkNHtoKVWag/exec";
-    // Send form data via fetch (AJAX)
-    fetch(url, {
-      method: "POST",
-      body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-      // Show confirmation message
-      formSubmitted = true;
-      document.getElementById("confirmationMessage").style.display = "block";
-      // Do not reset the form to retain values for QR code generation
-    })
-    .catch(error => {
-      console.error("Error submitting form:", error);
-    });
+  console.log("Validation successful. Preparing form data...");
+  const formData = new FormData(document.getElementById("paymentForm"));
+  const url = "https://script.google.com/macros/s/AKfycbzZAy-Fdpyx6XiWnyRdbUr3ZLdkg5iSooaBG0I1rrAta02x-X1MKQUbOoNRkNHtoKVWag/exec";
+
+  fetch(url, {
+    method: "POST",
+    body: formData
+  })
+  .then(response => response.text())
+  .then(data => {
+    console.log("Response received:", data);  // Log response for confirmation
+    formSubmitted = true;
+    document.getElementById("confirmationMessage").style.display = "block";
+  })
+  .catch(error => {
+    console.error("Error submitting form:", error);
+  });
 }
 </script>
