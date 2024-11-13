@@ -15,7 +15,7 @@ description: Submit your details and generate a UPI QR code for payment
     <label for="adhar">Aadhar Number</label>
     <input type="text" name="adhar" id="adhar" placeholder="Enter your Aadhar..." required />
 
-    <label for="text">Phone Number</label>
+    <label for="phone">Phone Number</label>
     <input type="text" name="phone" id="phoneNumber" placeholder="Enter your phone number..." required />
   
     <label for="category">Category:</label>
@@ -34,37 +34,12 @@ description: Submit your details and generate a UPI QR code for payment
   </div>
 </div>
 
-<br><br><br>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script>
-  
 // Function to validate inputs and handle form submission
 function validateInputs() {
   const email = document.getElementById('email').value;
   const adhar = document.getElementById('adhar').value;
-  const phone = document.getElementById('text').value;
+  const phone = document.getElementById('phoneNumber').value;  // Corrected ID
 
   // Email validation (basic pattern)
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -89,10 +64,13 @@ function validateInputs() {
   return true;
 }
 
-
+// Basic Aadhar validation function
+function validate_adhar(adhar) {
+  const adharPattern = /^\d{12}$/;  // Assuming Aadhar has 12 digits
+  return adharPattern.test(adhar);
+}
 
 let formSubmitted = false;
-
 
 function submitForm(event) {
     event.preventDefault(); // Prevent default form submission
@@ -121,10 +99,8 @@ function submitForm(event) {
       document.getElementById("confirmationMessage").style.display = "block";
       // Do not reset the form to retain values for QR code generation
     })
-    
     .catch(error => {
       console.error("Error submitting form:", error);
     });
-  }
+}
 </script>
-
