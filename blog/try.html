@@ -1,124 +1,179 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Go-Pooja Registration Form</title>
-</head>
-<body>
+---
+title: Contact Form with UPI QR Code
+heading: गावः सुरभिर्नो मुर्धन
+description: Submit your details and generate a UPI QR code for payment
+---
 
-<div class="form-container">
-  <h2>Go-Pooja Registration</h2>
-  <form id="registrationForm" onsubmit="submitForm(event)">
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" required placeholder="Enter your name">
+<div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
+  <form id="paymentForm" onsubmit="submitForm(event)">
+    <label for="name">Full Name</label>
+    <input type="text" name="name" id="name" placeholder="Enter your name..." required/>
 
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email" required placeholder="Enter your email">
-
-    <label for="phone">Phone Number</label>
-    <input type="text" id="phone" name="phone" required placeholder="Enter your phone number">
+    <label for="email">Email Address</label>
+    <input type="email" name="email" id="email" placeholder="Enter your email..." required />
 
     <label for="adhar">Aadhar Number</label>
-    <input type="text" id="adhar" name="adhar" required placeholder="Enter your Aadhar number">
+    <input type="text" name="adhar" id="adhar" placeholder="Enter your Aadhar..." required />
 
-    <label for="occasion">Occasion</label>
-    <select id="occasion" name="occasion" required>
-      <option value="">Select Occasion</option>
+    <label for="text">Phone Number</label>
+    <input type="text" name="phone" id="phoneNumber" placeholder="Enter your phone number..." required />
+  
+    <label for="category">Category:</label>
+    <select id="category" name="category" required>
       <option value="Birthday">Birthday</option>
       <option value="Anniversary">Anniversary</option>
-      <option value="PunyaTithi">Punya Tithi</option>
-      <option value="Other">Other</option>
+      <option value="Tithi">Tithi</option>
+      <option value="Others">Others</option>
     </select>
 
-    <button type="submit">Submit</button>
-    <div id="confirmationMessage">Form submitted successfully!</div>
+    <input type="submit" value="Submit" />
   </form>
+
+  <div id="confirmationMessage" style="display:none; color: green;">
+    <br><br>Form submitted successfully! Kindly generate the QR and complete the payment 
+  </div>
 </div>
 
+<br><br><br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <script>
-  // Function to validate the Aadhar number format
-  function validateAadhar(adhar) {
-    return /^\d{12}$/.test(adhar); // Aadhar must be exactly 12 digits
+  
+// Function to validate inputs and handle form submission
+function validateInputs() {
+  const email = document.getElementById('email').value;
+  const adhar = document.getElementById('adhar').value;
+  const phone = document.getElementById('text').value;
+
+  // Email validation (basic pattern)
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(email)) {
+    alert("Please enter a valid email address.");
+    return false;
   }
 
-  // Function to validate the phone number format
-  function validatePhone(phone) {
-    return /^\d{10}$/.test(phone); // Phone must be exactly 10 digits
+  // Aadhar validation
+  if (!validate_adhar(adhar)) {
+    alert("Please enter a valid Aadhar number.");
+    return false;
   }
 
-  // Flag to prevent multiple submissions
-  let isSubmitted = false;
+  // Phone number validation (10 digits only)
+  const phonePattern = /^\d{10}$/;
+  if (!phonePattern.test(phone)) {
+    alert("Please enter a valid 10-digit phone number.");
+    return false;
+  }
 
-  function submitForm(event) {
-    event.preventDefault();
-    
-    if (isSubmitted) {
-      alert("Form has already been submitted.");
+  return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let formSubmitted = false;
+
+
+function submitForm(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    if (formSubmitted) {
+      alert("You have already submitted the form.");
       return;
     }
 
-    // Basic validation for Aadhar and phone
-    const adhar = document.getElementById('adhar').value;
-    const phone = document.getElementById('phone').value;
+    // Run validation before submission
+    if (!validateInputs()) return;
 
-    if (!validateAadhar(adhar)) {
-      alert("Please enter a valid 12-digit Aadhar number.");
-      return;
-    }
-    if (!validatePhone(phone)) {
-      alert("Please enter a valid 10-digit phone number.");
-      return;
-    }
+    // Gather form data
+    const formData = new FormData(document.getElementById("paymentForm"));
+    const url = "https://script.google.com/macros/s/AKfycbyPXAL2fP2UQKyu50zZkBTMSN41N7LjoWQflSWIYReO3P1Lg3SBeEuoRJqboDLy2dX-Kw/exec"; // Replace with your Google Apps Script URL
 
-    // Set form data
-    const formData = new FormData(document.getElementById("registrationForm"));
-    const url = "https://script.google.com/macros/s/AKfycbzZAy-Fdpyx6XiWnyRdbUr3ZLdkg5iSooaBG0I1rrAta02x-X1MKQUbOoNRkNHtoKVWag/exec"; // Replace with your Google Apps Script URL
-
-    // Send form data via AJAX (fetch)
+    // Send form data via fetch (AJAX)
     fetch(url, {
       method: "POST",
       body: formData
     })
     .then(response => response.text())
     .then(data => {
+      // Show confirmation message
+      formSubmitted = true;
       document.getElementById("confirmationMessage").style.display = "block";
-      isSubmitted = true; // Prevent further submissions
+      // Do not reset the form to retain values for QR code generation
     })
+    
     .catch(error => {
       console.error("Error submitting form:", error);
     });
   }
 </script>
-<style>
-  .form-container {
-    max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+
+
+let formSubmitted = false;
+<script>
+function submitForm(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    if (formSubmitted) {
+      alert("You have already submitted the form.");
+      return;
+    }
+
+    // Run validation before submission
+    if (!validateInputs()) return;
+
+    // Gather form data
+    const formData = new FormData(document.getElementById("paymentForm"));
+    const url = "https://script.google.com/macros/s/AKfycbzZAy-Fdpyx6XiWnyRdbUr3ZLdkg5iSooaBG0I1rrAta02x-X1MKQUbOoNRkNHtoKVWag/exec"; // Replace with your Google Apps Script URL
+
+    // Send form data via fetch (AJAX)
+    fetch(url, {
+      method: "POST",
+      body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+      // Show confirmation message
+      formSubmitted = true;
+      document.getElementById("confirmationMessage").style.display = "block";
+      // Do not reset the form to retain values for QR code generation
+    })
+    
+    .catch(error => {
+      console.error("Error submitting form:", error);
+    });
   }
-  .form-container label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: bold;
-  }
-  .form-container input,
-  .form-container select,
-  .form-container button {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    box-sizing: border-box;
-  }
-  #confirmationMessage {
-    display: none;
-    color: green;
-    font-weight: bold;
-    text-align: center;
-  }
-</style>
-</body>
-</html>
+</script>
+
