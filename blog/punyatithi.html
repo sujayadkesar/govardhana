@@ -7,7 +7,7 @@ description: Submit your details and generate a UPI QR code for payment
 <div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
   <form id="paymentForm" onsubmit="submitForm(event)">
     <label for="name">Full Name</label>
-    <input type="text" name="name" id="name" placeholder="Enter your name..." required/>
+    <input type="text" name="name" id="name" placeholder="Enter your name." required/>
 
     <label for="email">Email Address</label>
     <input type="email" name="email" id="email" placeholder="Enter your email..." required />
@@ -20,6 +20,21 @@ description: Submit your details and generate a UPI QR code for payment
 
     <label for="punyatithi">Date of Punya Tithi </label>
     <input type="date" name="punyatithi" id="punyatithi"  required />
+
+    <label for="nameOfPunyatithi">Name of the person for Punya Tithi</label>
+    <input type="text" name="nameOfPunyatithi" id="nameOfPunyatithi" required>
+    <label for="relation">Relation with the person</label>
+    <select name="relation" id="relation" required>
+        <option value="">Select Relation</option>
+        <option value="Sister">Sister</option>
+        <option value="Mother">Mother</option>
+        <option value="Brother">Brother</option>
+        <option value="Father">Father</option>
+        <option value="Grandfather">Grandfather</option>
+        <option value="Grandmother">Grandmother</option>
+        <option value="Other">Other</option>
+    </select>
+    
   
     <label for="amount" style="display: none;">Donated for Birthday go pooja</label>
     <input type="text" name="amount" id="amount" value="1250" style="display: none;" />
