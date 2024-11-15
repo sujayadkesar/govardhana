@@ -5,7 +5,28 @@ description: Submit your details and generate a UPI QR code for payment
 ---
 
 <link rel="stylesheet" href="{{ '/css/custom_footer.css' | relative_url }}">
-
+<style>
+  /* Add your footer styling here to see if it applies directly */
+  .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-direction: row;
+      text-align: center;
+  }
+  
+  .footer-logo {
+      margin-bottom: 10px;
+  }
+  
+  @media (max-width: 768px) {
+      .footer-content {
+          flex-direction: column;
+          text-align: center;
+      }
+  }
+  </style>
+  
 <div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
   <form id="paymentForm" onsubmit="submitForm(event)">
     <label for="name">Full Name</label>
