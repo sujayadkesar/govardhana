@@ -17,9 +17,9 @@ description: Submit your details and generate a UPI QR code for payment
 
     <label for="text">Phone Number</label>
     <input type="text" name="phone" id="text" placeholder="Enter your phone number..." required />
-  
-    <label for="amount" style="display: none;">Donated for Birthday go pooja</label>
-    <input type="text" name="amount" id="amount" value="1250" style="display: none;" />
+
+    <label for="amount" style="display: none;">Donated for adoption of GoVatsa</label>
+    <input type="text" name="amount" id="amount" value="3000" style="display: none;" />
 
     <input type="submit" value="Submit" />
   </form>
@@ -31,7 +31,6 @@ description: Submit your details and generate a UPI QR code for payment
 
 <br><br><br>
 
-
 <div style="text-align: center;">
   <button 
     id="generateQrButton"
@@ -39,7 +38,7 @@ description: Submit your details and generate a UPI QR code for payment
     style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
            border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
            color: #050829; border-radius: 8px;">
-    Click here to Pay!
+    Generate QR Code!
   </button>
 </div>
 
@@ -152,27 +151,28 @@ function validateInputs() {
   return true;
 }
 
-// Function to generate the UPI QR code
-document.getElementById('generateQrButton').onclick = function() {
-  const adharNumber = document.getElementById('adhar').value;
 
-  if (!adharNumber) {
-    alert("Please enter your Aadhar number.");
-    return;
-  }
+// Function to open QR code in a new window
+function openQrWindow(qrCodeUrl) {
+  const qrWindow = window.open('', '_blank', 'width=500,height=600');
+  qrWindow.document.write(`
+    <html>
+      <head>
+        <title>UPI Payment QR Code</title>
+      </head>
+      <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+        <div style="text-align: center;">
+          <h2>Scan to Pay</h2>
+          <div style="display: flex; flex-direction: column; align-items: center;">
+            <img src="${qrCodeUrl}" alt="UPI Payment QR Code" style="width: 200px; height: 200px; margin-bottom: 10px;"/>
+            <p>Scan this code to make the payment</p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `);
+}
 
-  const amount = 11000;
-
-  if (isNaN(amount) || amount <= 0) {
-    alert("Invalid amount!");
-    return;
-  }
-
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D${amount}%26cu%3DINR%26tn%3D${adharNumber}`;
-  console.log("Generated QR Code URL:", qrCodeUrl);
-
-  openQrWindow(qrCodeUrl);
-};
 
 let formSubmitted = false;
 
@@ -190,7 +190,7 @@ function submitForm(event) {
 
     // Gather form data
     const formData = new FormData(document.getElementById("paymentForm"));
-    const url = "https://script.google.com/macros/s/AKfycbybnUF69Uus2f9e9y4lZZZHz67vcL-hM5j08_JxmD-kdbEUgayrhug_6rVA-rV_Cc4A-A/exec"; // Replace with your Google Apps Script URL
+    const url = "https://script.google.com/macros/s/AKfycbwE3W4PdSfSve2DrhHPhXMq_7sj453UcSTqDTNjj3AtWduShhRZAk63o3JyIpUqLLrmOw/exec"; // Replace with your Google Apps Script URL
 
     // Send form data via fetch (AJAX)
     fetch(url, {
@@ -250,6 +250,11 @@ document.getElementById('generateQrButton').onclick = function() {
 
   if(!donorPhone){
     alert("Please enter your phone number!");
+    return;
+  }
+  
+  if (!formSubmitted) {
+    alert("Please fill all details and submit the form before generating the QR code.");
     return;
   }
 
