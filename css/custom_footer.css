@@ -1,0 +1,22 @@
+/* Ensure this CSS applies only to mobile screens */
+@media (max-width: 767px) {
+    /* Center the footer content */
+    .footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    /* Adjust spacing and alignment for icons */
+    .footer-social-icons {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+    }
+  
+    /* Adjust spacing for other footer items if needed */
+    .footer-links {
+      margin-top: 10px;
+    }
+  }
+  

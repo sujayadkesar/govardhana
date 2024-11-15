@@ -111,20 +111,3 @@ h1 em {
 }
 
 
-/* Footer adjustments for mobile view */
-@media (max-width: 768px) {
-  .footer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .footer .social-links {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 15px; /* Adjust spacing between icons */
-    margin-top: 10px;
-  }
-}
