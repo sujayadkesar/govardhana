@@ -269,6 +269,12 @@ description: Submit your details and generate a UPI QR code for payment
       return;
     }
 
+
+    if (!formSubmitted) {
+    alert("Please submit the form before generating the QR code.");
+    return;
+  }
+  
     const amount = 11000;
 
     if (isNaN(amount) || amount <= 0) {

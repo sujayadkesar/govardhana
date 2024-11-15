@@ -253,6 +253,11 @@ document.getElementById('generateQrButton').onclick = function() {
     return;
   }
 
+  if (!formSubmitted) {
+    alert("Please submit the form before generating the QR code.");
+    return;
+  }
+  
   const amount = 11000;
 
   if (isNaN(amount) || amount <= 0) {
