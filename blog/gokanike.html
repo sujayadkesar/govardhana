@@ -263,7 +263,7 @@ document.getElementById('generateQrButton').onclick = function() {
   }
 
   // UPI data for QR code and link
-  const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
+  const upiData = `upi://pay?pa=govardhanylp@sbi&tn=${adharNumber}`;
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(upiData)}`;
 
   if (isMobileDevice()) {
