@@ -4,19 +4,39 @@ heading: गावः सुरभिर्नो मुर्धन
 description: Submit your details and generate a UPI QR code for payment
 ---
     <!-- Background Music -->
-    <audio id="background-music" autoplay loop muted>
-      <source src="/images/background.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-  </audio>
-<script>
-  const backgroundMusic = document.getElementById('background-music');
+    <audio id="background-music" loop>
+        <source src="path-to-your-music-file.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    <!-- JavaScript to Start Playback -->
+    <script>
+        const backgroundMusic = document.getElementById('background-music');
 
-  // Listen for any user interaction to unmute
-  document.addEventListener('click', () => {
-      backgroundMusic.muted = false;
-      backgroundMusic.volume = 0.1; // Set desired volume
-  });
-</script>
+        // Play music on first user interaction
+        document.addEventListener('click', () => {
+            backgroundMusic.play().then(() => {
+                backgroundMusic.volume = 0.1; // Set desired volume
+                console.log('Music is playing!');
+            }).catch(error => {
+                console.error('Playback failed:', error);
+            });
+        }, { once: true }); // Ensure it runs only once
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <link rel="stylesheet" href="{{ '/css/custom_footer.css' | relative_url }}">
 <style>
   /* Add your footer styling here to see if it applies directly */
