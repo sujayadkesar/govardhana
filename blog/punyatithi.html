@@ -196,7 +196,11 @@ description: Submit your details and generate a UPI QR code for payment
   function submitForm(event) {
     event.preventDefault(); // Prevent default form submission
 
-
+    
+    if (formSubmitted) {
+      alert("You have already submitted the form.");
+      return;
+    }
 
     // Run validation before submission
     if (!validateInputs()) return;
@@ -210,17 +214,14 @@ description: Submit your details and generate a UPI QR code for payment
       method: "POST",
       body: formData
     })
-      .then(response => response.text())
-      .then(data => {
+    
+    // Simulate server-side processing with a 3-second delay
+    setTimeout(() => {
         // Show confirmation message
         formSubmitted = true;
         document.getElementById("confirmationMessage").style.display = "block";
         // Do not reset the form to retain values for QR code generation
-      })
-
-      .catch(error => {
-        console.error("Error submitting form:", error);
-      });
+    }, 3000); // 3 seconds delay
   }
 </script>
 

@@ -189,7 +189,11 @@ let formSubmitted = false;
 
 function submitForm(event) {
     event.preventDefault(); // Prevent default form submission
-
+    
+    if (formSubmitted) {
+      alert("You have already submitted the form.");
+      return;
+    }
 
     // Run validation before submission
     if (!validateInputs()) return;
