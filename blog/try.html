@@ -17,9 +17,9 @@ description: Submit your details and generate a UPI QR code for payment
 
     <label for="text">Phone Number</label>
     <input type="text" name="phone" id="text" placeholder="Enter your phone number..." required />
-  
-    <label for="amount" style="display: none;">Donated for adoption of Cow</label>
-    <input type="text" name="amount" id="amount" value="11000" style="display: none;" />
+
+    <label for="amount" style="display: none;">Donation for One Tractor Grass</label>
+    <input type="text" name="amount" id="amount" value="13000" style="display: none;" />
 
     <input type="submit" value="Submit" />
   </form>
@@ -31,7 +31,6 @@ description: Submit your details and generate a UPI QR code for payment
 
 <br><br><br>
 
-
 <div style="text-align: center;">
   <button 
     id="generateQrButton"
@@ -39,7 +38,7 @@ description: Submit your details and generate a UPI QR code for payment
     style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
            border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
            color: #050829; border-radius: 8px;">
-    Click here to Pay!
+    Generate QR Code!
   </button>
 </div>
 
@@ -161,7 +160,7 @@ document.getElementById('generateQrButton').onclick = function() {
     return;
   }
 
-  const amount = 11000;
+  const amount = 13000;
 
   if (isNaN(amount) || amount <= 0) {
     alert("Invalid amount!");
@@ -173,6 +172,9 @@ document.getElementById('generateQrButton').onclick = function() {
 
   openQrWindow(qrCodeUrl);
 };
+
+
+
 
 let formSubmitted = false;
 
@@ -216,35 +218,35 @@ function submitForm(event) {
 
 <script>
   // Function to check if the user is on a mobile device, even in desktop mode
-function isMobileDevice() {
-  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-  const isMobileUserAgent = /Mobi|Android|iPhone|iPad|iPod/i.test(userAgent);
+  function isMobileDevice() {
+  const userAgent = navigator.userAgent.toLowerCase();
   
-  // Check if the device has touch capability (often a sign of a mobile device)
+  // Check if it's a touchscreen device
   const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+  // Check for common mobile user agents
+  const isMobile = /iphone|ipod|android|windows phone/i.test(userAgent);
   
-  return isMobileUserAgent || hasTouchScreen;
+  // If it's a touchscreen and matches mobile user agent, classify as mobile
+  if (hasTouchScreen && isMobile) {
+    return true;
+  }
+
+  // If it's a touchscreen, but not a mobile user agent (e.g., touchscreen laptop), classify as desktop
+  if (hasTouchScreen && !isMobile) {
+    return false;
+  }
+
+  // If no touchscreen, classify as desktop
+  return false;
 }
 
-function isMobileDevice() {
-    // Check if device is mobile
-    const isMobileDevice = /android|iphone|kindle|ipad/i.test(navigator.userAgent);[4]
-    
-    // Check if in desktop mode
-    const screenWidth = screen.availWidth;
-    const currentWidth = window.innerWidth;
-    const isDesktopMode = currentWidth !== screenWidth;
-    
-    return {
-        isMobile: isMobileDevice,
-        isDesktopMode: isDesktopMode
-    };
-}
 
 
 // Function to generate the UPI QR code or direct link based on the device type
 document.getElementById('generateQrButton').onclick = function() {
   const adharNumber = document.getElementById('adhar').value;
+
   const donorName = document.getElementById('name').value;
   const donorPhone = document.getElementById('text').value;
   const donorEmail = document.getElementById('email').value;
