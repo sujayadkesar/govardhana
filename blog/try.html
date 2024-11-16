@@ -215,16 +215,32 @@ function submitForm(event) {
 
 
 <script>
-function isDesktopMode() {
-  // Check if screen width is larger than typical mobile widths
-  const isWideScreen = window.innerWidth > 1024;
+  // Function to check if the user is on a mobile device, even in desktop mode
+function isMobileDevice() {
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  const isMobileUserAgent = /Mobi|Android|iPhone|iPad|iPod/i.test(userAgent);
   
-  // Check if user agent contains mobile keywords
-  const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  // Check if the device has touch capability (often a sign of a mobile device)
+  const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   
-  // If wide screen but mobile UA, likely desktop mode
-  return isWideScreen && isMobileUA;
+  return isMobileUserAgent || hasTouchScreen;
 }
+
+function isMobileDevice() {
+    // Check if device is mobile
+    const isMobileDevice = /android|iphone|kindle|ipad/i.test(navigator.userAgent);[4]
+    
+    // Check if in desktop mode
+    const screenWidth = screen.availWidth;
+    const currentWidth = window.innerWidth;
+    const isDesktopMode = currentWidth !== screenWidth;
+    
+    return {
+        isMobile: isMobileDevice,
+        isDesktopMode: isDesktopMode
+    };
+}
+
 
 // Function to generate the UPI QR code or direct link based on the device type
 document.getElementById('generateQrButton').onclick = function() {
