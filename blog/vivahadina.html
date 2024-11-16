@@ -177,16 +177,12 @@ document.getElementById('generateQrButton').onclick = function() {
   openQrWindow(qrCodeUrl);
 };
 
-let formSubmitted = false;
+let formSubmitted = true;
 
 
 function submitForm(event) {
     event.preventDefault(); // Prevent default form submission
 
-    if (formSubmitted) {
-      alert("You have already submitted the form.");
-      return;
-    }
 
     // Run validation before submission
     if (!validateInputs()) return;
