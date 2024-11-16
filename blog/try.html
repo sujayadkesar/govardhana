@@ -3,22 +3,18 @@ title: Contact Form with UPI QR Code
 heading: गावः सुरभिर्नो मुर्धन
 description: Submit your details and generate a UPI QR code for payment
 ---
-<audio id="background-music" autoplay loop>
-  <source src="images/background.mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
+    <!-- Background Music -->
+    <audio id="background-music" autoplay loop muted>
+      <source src="path-to-your-music-file.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+  </audio>
 <script>
-  // Get the audio element
   const backgroundMusic = document.getElementById('background-music');
-  
-  // Set the volume to a low level (e.g., 10%)
-  backgroundMusic.volume = 0.1;
 
-  // Ensure the audio starts playing (some browsers require this)
-  document.addEventListener('DOMContentLoaded', () => {
-      backgroundMusic.play().catch(error => {
-          console.log('Autoplay might be blocked:', error);
-      });
+  // Listen for any user interaction to unmute
+  document.addEventListener('click', () => {
+      backgroundMusic.muted = false;
+      backgroundMusic.volume = 0.1; // Set desired volume
   });
 </script>
 <link rel="stylesheet" href="{{ '/css/custom_footer.css' | relative_url }}">
