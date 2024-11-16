@@ -218,9 +218,27 @@ function submitForm(event) {
 
 <script>
   // Function to check if the user is on a mobile device, even in desktop mode
-function isMobileDevice() {
+  function isMobileDevice() {
+  const userAgent = navigator.userAgent.toLowerCase();
+  
+  // Check if it's a touchscreen device
   const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  return hasTouchScreen;
+
+  // Check for common mobile user agents
+  const isMobile = /iphone|ipod|android|windows phone/i.test(userAgent);
+  
+  // If it's a touchscreen and matches mobile user agent, classify as mobile
+  if (hasTouchScreen && isMobile) {
+    return true;
+  }
+
+  // If it's a touchscreen, but not a mobile user agent (e.g., touchscreen laptop), classify as desktop
+  if (hasTouchScreen && !isMobile) {
+    return false;
+  }
+
+  // If no touchscreen, classify as desktop
+  return false;
 }
 
 
