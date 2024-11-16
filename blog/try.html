@@ -7,6 +7,20 @@ description: Submit your details and generate a UPI QR code for payment
   <source src="images/background.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
+<script>
+  // Get the audio element
+  const backgroundMusic = document.getElementById('background-music');
+  
+  // Set the volume to a low level (e.g., 10%)
+  backgroundMusic.volume = 0.1;
+
+  // Ensure the audio starts playing (some browsers require this)
+  document.addEventListener('DOMContentLoaded', () => {
+      backgroundMusic.play().catch(error => {
+          console.log('Autoplay might be blocked:', error);
+      });
+  });
+</script>
 <link rel="stylesheet" href="{{ '/css/custom_footer.css' | relative_url }}">
 <style>
   /* Add your footer styling here to see if it applies directly */
