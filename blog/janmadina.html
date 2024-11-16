@@ -184,7 +184,7 @@ document.getElementById('generateQrButton').onclick = function() {
   openQrWindow(qrCodeUrl);
 };
 
-let formSubmitted = true;
+let formSubmitted = false;
 
 
 function submitForm(event) {
@@ -205,13 +205,13 @@ function submitForm(event) {
     })
 
     
-    .then(response => response.text())
-    .then(data => {
-      // Show confirmation message
-      formSubmitted = true;
-      document.getElementById("confirmationMessage").style.display = "block";
-      // Do not reset the form to retain values for QR code generation
-    })
+    // Simulate server-side processing with a 3-second delay
+    setTimeout(() => {
+        // Show confirmation message
+        formSubmitted = true;
+        document.getElementById("confirmationMessage").style.display = "block";
+        // Do not reset the form to retain values for QR code generation
+    }, 3000); // 3 seconds delay
     
     .catch(error => {
       console.error("Error submitting form:", error);
