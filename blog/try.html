@@ -3,26 +3,53 @@ title: Contact Form with UPI QR Code
 heading: गावः सुरभिर्नो मुर्धन
 description: Submit your details and generate a UPI QR code for payment
 ---
+
+    <style>
+        #unmute-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
+    </style>
+</head>
+<body>
     <!-- Background Music -->
-    <audio id="background-music" loop>
+    <audio id="background-music" autoplay loop muted>
         <source src="path-to-your-music-file.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-    <!-- JavaScript to Start Playback -->
+
+    <!-- Website Content -->
+    <h1>Welcome to Govardhana</h1>
+    <p>Enjoy the peaceful vibes while browsing!</p>
+
+    <!-- Unmute Button -->
+    <button id="unmute-btn">Unmute Music</button>
+
+    <!-- JavaScript for Unmuting -->
     <script>
         const backgroundMusic = document.getElementById('background-music');
+        const unmuteBtn = document.getElementById('unmute-btn');
 
-        // Play music on first user interaction
-        document.addEventListener('click', () => {
-            backgroundMusic.play().then(() => {
-                backgroundMusic.volume = 0.1; // Set desired volume
-                console.log('Music is playing!');
-            }).catch(error => {
-                console.error('Playback failed:', error);
-            });
-        }, { once: true }); // Ensure it runs only once
+        // Show unmute button after page loads
+        window.addEventListener('DOMContentLoaded', () => {
+            unmuteBtn.style.display = 'block';
+        });
+
+        // Unmute music on button click
+        unmuteBtn.addEventListener('click', () => {
+            backgroundMusic.muted = false;
+            backgroundMusic.volume = 0.1;
+            unmuteBtn.style.display = 'none'; // Hide button after unmuting
+        });
     </script>
-
 
 
 
