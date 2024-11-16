@@ -192,45 +192,42 @@ description: Submit your details and generate a UPI QR code for payment
 
   let formSubmitted = false;
 
+
+
   function submitForm(event) {
-  event.preventDefault(); // Prevent default form submission
+    event.preventDefault(); // Prevent default form submission
 
-  if (formSubmitted) {
-    alert("You have already submitted the form.");
-    return;
-  }
+    if (formSubmitted) {
+      alert("You have already submitted the form.");
+      return;
+    }
 
-  // Run validation before submission
-  if (!validateInputs()) return;
+    // Run validation before submission
+    if (!validateInputs()) return;
 
-  // Gather form data
-  const formData = new FormData(document.getElementById("paymentForm"));
-  const url = "https://script.google.com/macros/s/AKfycbw9sCWUIHy8usvXPp2L5CVPjoSglIWLRA3OMGECO1Thm10FfoxGwBLAl8rJiHFOa1Es/exec";
+    // Gather form data
+    const formData = new FormData(document.getElementById("paymentForm"));
+    const url = "https://script.google.com/macros/u/6/s/AKfycbw9sCWUIHy8usvXPp2L5CVPjoSglIWLRA3OMGECO1Thm10FfoxGwBLAl8rJiHFOa1Es/exec"; // Replace with your Google Apps Script URL
 
-  fetch(url, {
-    method: "POST",
-    body: formData
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Server error: ${response.statusText}`);
-      }
-      return response.text();
+    // Send form data via fetch (AJAX)
+    fetch(url, {
+      method: "POST",
+      body: formData
     })
+    .then(response => response.text())
     .then(data => {
-      console.log("Form submission response:", data);
+      // Show confirmation message
       formSubmitted = true;
       document.getElementById("confirmationMessage").style.display = "block";
+      // Do not reset the form to retain values for QR code generation
     })
+    
     .catch(error => {
       console.error("Error submitting form:", error);
-      alert("An error occurred while submitting the form. Please try again.");
     });
-}
-
-
-
+  }
 </script>
+
 
 
 
