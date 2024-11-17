@@ -159,13 +159,15 @@ description: Submit your details and generate a UPI QR code for payment
     }
 
     // Phone number validation (10 digits only)
-    const phonePattern = /^\d{10}$/;
-    if (!phonePattern.test(phone)) {
-      alert("Please enter a valid 10-digit phone number.");
+    const phonePattern = /^[6-9]\d{9}$/;
+
+    if (!phonePattern.test(phone) || /^(\d)\1{9}$/.test(phone)) {
+      alert("Please enter a valid 10-digit Indian mobile number.");
       return false;
     }
 
     return true;
+
   }
 
   // Function to generate the UPI QR code
@@ -196,7 +198,7 @@ description: Submit your details and generate a UPI QR code for payment
   function submitForm(event) {
     event.preventDefault(); // Prevent default form submission
 
-    
+
     if (formSubmitted) {
       alert("You have already submitted the form.");
       return;
@@ -214,13 +216,13 @@ description: Submit your details and generate a UPI QR code for payment
       method: "POST",
       body: formData
     })
-    
+
     // Simulate server-side processing with a 3-second delay
     setTimeout(() => {
-        // Show confirmation message
-        formSubmitted = true;
-        document.getElementById("confirmationMessage").style.display = "block";
-        // Do not reset the form to retain values for QR code generation
+      // Show confirmation message
+      formSubmitted = true;
+      document.getElementById("confirmationMessage").style.display = "block";
+      // Do not reset the form to retain values for QR code generation
     }, 3000); // 3 seconds delay
   }
 </script>
@@ -231,27 +233,27 @@ description: Submit your details and generate a UPI QR code for payment
 <script>
   // Function to check if the user is on a mobile device, even in desktop mode
   function isMobileDevice() {
-  const userAgent = navigator.userAgent.toLowerCase();
-  
-  // Check if it's a touchscreen device
-  const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    const userAgent = navigator.userAgent.toLowerCase();
 
-  // Check for common mobile user agents
-  const isMobile = /iphone|ipod|android|windows phone/i.test(userAgent);
-  
-  // If it's a touchscreen and matches mobile user agent, classify as mobile
-  if (hasTouchScreen && isMobile) {
-    return true;
-  }
+    // Check if it's a touchscreen device
+    const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-  // If it's a touchscreen, but not a mobile user agent (e.g., touchscreen laptop), classify as desktop
-  if (hasTouchScreen && !isMobile) {
+    // Check for common mobile user agents
+    const isMobile = /iphone|ipod|android|windows phone/i.test(userAgent);
+
+    // If it's a touchscreen and matches mobile user agent, classify as mobile
+    if (hasTouchScreen && isMobile) {
+      return true;
+    }
+
+    // If it's a touchscreen, but not a mobile user agent (e.g., touchscreen laptop), classify as desktop
+    if (hasTouchScreen && !isMobile) {
+      return false;
+    }
+
+    // If no touchscreen, classify as desktop
     return false;
   }
-
-  // If no touchscreen, classify as desktop
-  return false;
-}
 
 
   // Function to generate the UPI QR code or direct link based on the device type
@@ -283,10 +285,10 @@ description: Submit your details and generate a UPI QR code for payment
 
 
     if (!formSubmitted) {
-    alert("Please submit the form before generating the QR code.");
-    return;
-  }
-  
+      alert("Please submit the form before generating the QR code.");
+      return;
+    }
+
     const amount = 11000;
 
     if (isNaN(amount) || amount <= 0) {

@@ -142,13 +142,15 @@ function validateInputs() {
   }
 
   // Phone number validation (10 digits only)
-  const phonePattern = /^\d{10}$/;
-  if (!phonePattern.test(phone)) {
-    alert("Please enter a valid 10-digit phone number.");
-    return false;
-  }
+  const phonePattern = /^[6-9]\d{9}$/;
 
-  return true;
+if (!phonePattern.test(phone) || /^(\d)\1{9}$/.test(phone)) {
+  alert("Please enter a valid 10-digit Indian mobile number.");
+  return false;
+}
+
+return true;
+
 }
 
 
