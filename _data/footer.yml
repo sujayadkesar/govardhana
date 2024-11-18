@@ -12,20 +12,20 @@
     link: /  # URL where the logo should redirect
     alt_text: "Site Logo"
 
-# - links:
-#   - name: Facebook
-#     link: 
-#     new_window: true
-#     social_icon: Facebook
-#   - name: Twitter
-#     link: https://twitter.com/
-#     social_icon: Twitter
-#     new_window: true
-#   - name: YouTube
-#     link: https://youtube.com/
-#     social_icon: YouTube
-#     new_window: true
-#   - name: RSS
-#     link: /feed.xml
-#     social_icon: RSS
-#     new_window: false
+- links:
+  - name: Committee
+    link: /committee
+    new_window: false
+    # social_icon: Facebook
+  - name: Twitter
+    link: https://twitter.com/
+    social_icon: Twitter
+    new_window: true
+  - name: YouTube
+    link: https://youtube.com/
+    social_icon: YouTube
+    new_window: true
+  - name: Facebook
+    link: https://facebook.com
+    social_icon: Facebook
+    new_window: true
