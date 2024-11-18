@@ -4,7 +4,7 @@ description: Shri Govardhan [R] Goshala
 ---
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<div class="video-container" style="text-align: center; margin-top: 20px;">
+<!-- <div class="video-container" style="text-align: center; margin-top: 20px;">
     <video width="640" height="360" controls>
         <source src="{{ site.baseurl }}/images/flyin.mp4" type="video/mp4">
         Your browser does not support the video tag.
@@ -16,12 +16,52 @@ description: Shri Govardhan [R] Goshala
         <source src="{{ site.baseurl }}/images/Govardhana.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
-</div>
+</div> -->
 
+
+<div id="frame">
+    <div id="border">
+        <video width="640" height="360" controls>
+            <source src="{{ site.baseurl }}/images/Govardhana.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div><!-- #border -->
+  </div><!-- #frame -->
+
+  
 <style>
-    .video-container {
-        /* box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px; */
-        box-shadow:-50px -50px 0 -40px var(--red),
-                    50px 50px 0 -40px var(--red);
+    /* .video-container {
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    } */
+
+    
+  #frame{
+    position:relative;
+    padding:0;
+    margin:0;
+    border:solid 15px #555; 
+    max-width:600px;
+    margin:40px auto;
+    box-shadow:-3px -3px 12px #999;
+    
     }
+  #border{
+    position:relative;
+    padding:0;
+    margin:0;
+    border:solid 70px white;
+   box-shadow:-3px -3px 12px #999;
+       }  
+  video{
+    display:block;
+    padding:0;
+    margin:0;
+    width:100%;
+    height:auto;
+    border-top:solid 2px #aaa;
+    border-left:solid 2px #aaa;
+    border-bottom:solid 2px #ccc;
+    border-right:solid 2px #ccc;
+    }
+   
 </style>
