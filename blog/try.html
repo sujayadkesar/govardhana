@@ -218,31 +218,33 @@ function submitForm(event) {
 
 
 <script>
-  // Function to check if the user is on a mobile device, even in desktop mode
-  function isMobileDevice() {
-  const userAgent = navigator.userAgent.toLowerCase();
-  
-  // Check if it's a touchscreen device
-  const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+   function isMobileDevice() {
+      const userAgent = navigator.userAgent.toLowerCase();
+      
+      // Check for mobile-specific user agents
+      const isMobileUA = /iphone|ipod|android|windows phone|blackberry/i.test(userAgent);
+      
+      // Check if the device has a touchscreen
+      const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-  // Check for common mobile user agents
-  const isMobile = /iphone|ipod|android|windows phone/i.test(userAgent);
-  
-  const innerWidth = window.innerWidth <= 768 
+      // Check screen dimensions
+      const isSmallScreen = window.innerWidth <= 768;
 
-  // If it's a touchscreen and matches mobile user agent, classify as mobile
-  if (hasTouchScreen && isMobile && innerWidth) {
-    return true;
+      // If it's a touchscreen device with mobile user agent or small screen, classify as mobile
+      if ((isMobileUA || isSmallScreen) && hasTouchScreen) {
+          return true;
+      }
+
+      // If only desktop UA but still small screen (desktop mode on mobile), treat as mobile
+      if (!isMobileUA && isSmallScreen && hasTouchScreen) {
+          return true;
+      }
+
+      // Otherwise, classify as desktop
+      return false;
   }
 
-  // If it's a touchscreen, but not a mobile user agent (e.g., touchscreen laptop), classify as desktop
-  if (hasTouchScreen && !isMobile && !innerWidth) {
-    return false;
-  }
 
-  // If no touchscreen, classify as desktop
-  return false;
-}
 
 // Function to generate the UPI QR code or direct link based on the device type
 document.getElementById('generateQrButton').onclick = function() {
