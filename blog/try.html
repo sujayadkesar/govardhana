@@ -218,30 +218,35 @@ function submitForm(event) {
 
 
 <script>
-   function isMobileDevice() {
-      const userAgent = navigator.userAgent.toLowerCase();
-      
-      // Check for mobile-specific user agents
-      const isMobileUA = /iphone|ipod|android|windows phone|blackberry/i.test(userAgent);
-      
-      // Check if the device has a touchscreen
-      const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  function isMobileDevice() {
+    const userAgent = navigator.userAgent.toLowerCase();
+    
+    // Detect if the device is a mobile device or has touch support
+    const isMobileUA = /iphone|ipod|android|windows phone|blackberry/i.test(userAgent);
+    
+    // Check if the device supports touch events
+    const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    // Check screen width for small screens
+    const isSmallScreen = window.innerWidth <= 768;
 
-      // Check screen dimensions
-      const isSmallScreen = window.innerWidth <= 768;
+    // If it's a mobile user agent or a touchscreen device with small screen, treat as mobile
+    if ((isMobileUA && hasTouchScreen) || (isSmallScreen && hasTouchScreen)) {
+      return true;
+    }
 
-      // If it's a touchscreen device with mobile user agent or small screen, classify as mobile
-      if ((isMobileUA || isSmallScreen) && hasTouchScreen) {
-          return true;
-      }
+    // If it's a touchscreen device but not recognized as mobile (i.e., it might be a tablet or laptop)
+    if (hasTouchScreen && isSmallScreen) {
+      return true;
+    }
 
-      // If only desktop UA but still small screen (desktop mode on mobile), treat as mobile
-      if (!isMobileUA && isSmallScreen && hasTouchScreen) {
-          return true;
-      }
+    // Fallback to treat it as mobile if it's a touchscreen but desktop mode
+    if (hasTouchScreen && !isMobileUA && isSmallScreen) {
+      return true;
+    }
 
-      // Otherwise, classify as desktop
-      return false;
+    // Otherwise, treat as desktop
+    return false;
   }
 
 
