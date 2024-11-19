@@ -260,28 +260,44 @@ description: Submit your details and generate a UPI QR code for payment
     const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(upiData)}`;
 
-    const upiLinkforIphone = 'https://youtube.com'
+    const detectDeviceAndProceed = (amount, adharNumber, qrCodeUrl) => {
+  const userAgent = navigator.userAgent.toLowerCase();
+  const isTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-    const userAgent = navigator.userAgent.toLowerCase();
-    // Check for Android
-    const isAndroid = () => /android/.test(userAgent) && 'ontouchstart' in window;
-    // Check for iPhone
-    const isIphone = () => /iphone/.test(userAgent) && 'ontouchstart' in window;
-    // Check for Desktop (Windows or Mac)
-    const isDesktop = () => !('ontouchstart' in window) && /windows|macintosh|mac os x/.test(userAgent);
+  // Helper functions to determine devices
+  const isAndroid = () => /android/.test(userAgent) && isTouchScreen;
+  const isIphone = () =>
+    /iphone|ipad|ipod/.test(userAgent) && isTouchScreen;
+  const isDesktop = () => {
+    // A fallback mechanism: check for desktop platforms but ensure no touch input
+    return (
+      /windows|macintosh|mac os x/.test(userAgent) && !isTouchScreen
+    );
+  };
 
-    if (isAndroid()) {
-      window.location.href = upiData;
-    }
-    else {
-      openQrWindow(qrCodeUrl);
-    }
-    // if(isIphone()){
-    //   window.location.href = upiLinkforIphone;
-    // }
-    // if(isDesktop()){
-    //   openQrWindow(qrCodeUrl);
-    // }
+  // Device-specific behavior
+  if (isAndroid()) {
+    const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
+    console.log('Redirecting to Android UPI URL:', upiData);
+    window.location.href = upiData;
+  } else if (isIphone()) {
+    const iosDeepLink = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
+    console.log('Redirecting to iOS UPI URL:', iosDeepLink);
+    // Attempt to open UPI apps on iOS
+    window.location.href = iosDeepLink;
+  } else if (isDesktop()) {
+    console.log('Displaying QR Code for Desktop:', qrCodeUrl);
+    openQrWindow(qrCodeUrl);
+  } else {
+    console.log('Device not detected. Defaulting to QR Code.');
+    openQrWindow(qrCodeUrl); // Fallback to QR code for unidentified devices
+  }
+};
+
+
+detectDeviceAndProceed(amount , adharNumber, qrCodeUrl);
+
+  
   };
 
   // Function to open QR code in a new window
