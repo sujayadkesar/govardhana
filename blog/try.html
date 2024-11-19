@@ -279,12 +279,15 @@ const isDesktop = () => /windows|macintosh|mac os x/.test(userAgent);
   if(isAndroid()){
     window.location.href = upiData;
   }
-  if(isIphone()){
-    window.location.href = upiLinkforIphone;
-  }
-  if(isDesktop()){
+  else{
     openQrWindow(qrCodeUrl);
   }
+  // if(isIphone()){
+  //   window.location.href = upiLinkforIphone;
+  // }
+  // if(isDesktop()){
+  //   openQrWindow(qrCodeUrl);
+  // }
 };
 
 // Function to open QR code in a new window
