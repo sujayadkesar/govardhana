@@ -236,7 +236,7 @@ function submitForm(event) {
   }
 
   // If it's a touchscreen, but not a mobile user agent (e.g., touchscreen laptop), classify as desktop
-  if (hasTouchScreen && !isMobile) {
+  if (hasTouchScreen && !isMobile && !innerWidth) {
     return false;
   }
 
