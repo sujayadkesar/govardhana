@@ -43,6 +43,17 @@ description: Submit your details and generate a UPI QR code for payment
   </button>
 </div>
 
+<div style="text-align: center;">
+  <button 
+    id="payviaupi
+    class="pulse-button"
+    style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
+           border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
+           color: #050829; border-radius: 8px;">
+    Click here to Pay with UPI!
+  </button>
+</div>
+
 <script>
 // Multiplication table 'd'
 var d = [
@@ -152,6 +163,47 @@ if (!phonePattern.test(phone) || /^(\d)\1{9}$/.test(phone)) {
 
 return true;
 
+}
+
+document.getElementById('payviaupi').onclick = function(){
+  const adharNumber = document.getElementById('adhar').value;
+  const donorName = document.getElementById('name').value;
+  const donorPhone = document.getElementById('text').value;
+  const donorEmail = document.getElementById('email').value;
+  const amount = document.getElementById(amount).value;
+  if (!adharNumber) {
+    alert("Please enter your Aadhar number.");
+    return;
+  }
+
+  if(!donorEmail){
+    alert("Please enter your mail id!");
+    return;
+  }
+
+  if(!donorName){
+    alert("Please enter your name!");
+    return; 
+  }
+
+  if(!donorPhone){
+    alert("Please enter your phone number!");
+    return;
+  }
+
+  if (!formSubmitted) {
+    alert("Please submit the form before generating the QR code.");
+    return;
+  }
+  
+  if (isNaN(amount) || amount <= 0) {
+    alert("Invalid amount!");
+    return;
+  }
+
+  // UPI data for QR code and link
+  const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
+  window.location.href = upiData;
 }
 
 // Function to generate the UPI QR code
