@@ -228,8 +228,10 @@ function submitForm(event) {
   // Check for common mobile user agents
   const isMobile = /iphone|ipod|android|windows phone/i.test(userAgent);
   
+  const innerWidth = window.innerWidth <= 768 
+
   // If it's a touchscreen and matches mobile user agent, classify as mobile
-  if (hasTouchScreen && isMobile) {
+  if (hasTouchScreen && isMobile && innerWidth) {
     return true;
   }
 
