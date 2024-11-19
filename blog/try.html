@@ -17,9 +17,9 @@ description: Submit your details and generate a UPI QR code for payment
 
     <label for="text">Phone Number</label>
     <input type="text" name="phone" id="text" placeholder="Enter your phone number..." required />
-  
-    <label for="amount" style="display: none;">Donated for adoption of Cow</label>
-    <input type="text" name="amount" id="amount" value="11000" style="display: none;" />
+
+    <label for="amount" style="display: none;">Donated for one Jeep Grass</label>
+    <input type="text" name="amount" id="amount" value="6500" style="display: none;" />
 
     <input type="submit" value="Submit" />
   </form>
@@ -31,10 +31,6 @@ description: Submit your details and generate a UPI QR code for payment
 
 <br><br><br>
 
-
-
-
-
 <div style="text-align: center;">
   <button 
     id="generateQrButton"
@@ -42,20 +38,10 @@ description: Submit your details and generate a UPI QR code for payment
     style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
            border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
            color: #050829; border-radius: 8px;">
-    Click here to generate QR code!
+    Generate QR Code!
   </button>
 </div>
-<br><br>
-<div style="text-align: center;">
-  <button 
-    id="payviaupi"
-    class="pulse-button"
-    style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
-           border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
-           color: #050829; border-radius: 8px;">
-    Click here to Pay with UPI 
-  </button>
-</div>
+
 <script>
 // Multiplication table 'd'
 var d = [
@@ -176,19 +162,21 @@ document.getElementById('generateQrButton').onclick = function() {
     return;
   }
 
-  const amount = 11000;
+  const amount = 6500;
 
   if (isNaN(amount) || amount <= 0) {
     alert("Invalid amount!");
     return;
   }
-  const transactionNote = `${name} (${adharNumber})`;
 
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D${amount}%26cu%3DINR%26tn%3D${transactionNote}`;
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D${amount}%26cu%3DINR%26tn%3D${adharNumber}`;
   console.log("Generated QR Code URL:", qrCodeUrl);
 
   openQrWindow(qrCodeUrl);
 };
+
+
+
 
 let formSubmitted = false;
 
@@ -231,83 +219,35 @@ function submitForm(event) {
 
 
 <script>
+  // Function to check if the user is on a mobile device, even in desktop mode
   function isMobileDevice() {
-    const userAgent = navigator.userAgent.toLowerCase();
-    
-    // Detect if the device is a mobile device or has touch support
-    const isMobileUA = /iphone|ipod|android|windows phone|blackberry/i.test(userAgent);
-    
-    // Check if the device supports touch events
-    const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-    
-    // Check screen width for small screens
-    const isSmallScreen = window.innerWidth <= 768;
+  const userAgent = navigator.userAgent.toLowerCase();
+  
+  // Check if it's a touchscreen device
+  const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-    // If it's a mobile user agent or a touchscreen device with small screen, treat as mobile
-    if ((isMobileUA && hasTouchScreen) || (isSmallScreen && hasTouchScreen)) {
-      return true;
-    }
+  // Check for common mobile user agents
+  const isMobile = /iphone|ipod|android|windows phone/i.test(userAgent);
+  
+  // If it's a touchscreen and matches mobile user agent, classify as mobile
+  if (hasTouchScreen && isMobile) {
+    return true;
+  }
 
-    // If it's a touchscreen device but not recognized as mobile (i.e., it might be a tablet or laptop)
-    if (hasTouchScreen && isSmallScreen) {
-      return true;
-    }
-
-    // Fallback to treat it as mobile if it's a touchscreen but desktop mode
-    if (hasTouchScreen && !isMobileUA && isSmallScreen) {
-      return true;
-    }
-
-    // Otherwise, treat as desktop
+  // If it's a touchscreen, but not a mobile user agent (e.g., touchscreen laptop), classify as desktop
+  if (hasTouchScreen && !isMobile) {
     return false;
   }
 
-document.getElementById('payviaupi').onclick = function(){
-  const adharNumber = document.getElementById('adhar').value;
-  const donorName = document.getElementById('name').value;
-  const donorPhone = document.getElementById('text').value;
-  const donorEmail = document.getElementById('email').value;
-
-  if (!adharNumber) {
-    alert("Please enter your Aadhar number.");
-    return;
-  }
-
-  if(!donorEmail){
-    alert("Please enter your mail id!");
-    return;
-  }
-
-  if(!donorName){
-    alert("Please enter your name!");
-    return; 
-  }
-
-  if(!donorPhone){
-    alert("Please enter your phone number!");
-    return;
-  }
-
-  if (!formSubmitted) {
-    alert("Please submit the form before generating the QR code.");
-    return;
-  }
-  
-  const amount = 11000;
-
-  if (isNaN(amount) || amount <= 0) {
-    alert("Invalid amount!");
-    return;
-  }
-
-  // UPI data for QR code and link
-  const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
-  window.location.href = upiData;
+  // If no touchscreen, classify as desktop
+  return false;
 }
+
 
 // Function to generate the UPI QR code or direct link based on the device type
 document.getElementById('generateQrButton').onclick = function() {
   const adharNumber = document.getElementById('adhar').value;
+
   const donorName = document.getElementById('name').value;
   const donorPhone = document.getElementById('text').value;
   const donorEmail = document.getElementById('email').value;
@@ -347,8 +287,6 @@ document.getElementById('generateQrButton').onclick = function() {
   // UPI data for QR code and link
   const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(upiData)}`;
-
-
 
   if (isMobileDevice()) {
     // Open UPI link directly for mobile users
