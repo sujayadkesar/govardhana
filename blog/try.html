@@ -7,7 +7,7 @@ description: Submit your details and generate a UPI QR code for payment
 <div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
   <form id="paymentForm" onsubmit="submitForm(event)">
     <label for="name">Full Name</label>
-    <input type="text" name="name" id="name" placeholder="Enter your name..." required/>
+    <input type="text" name="name" id="name" placeholder="Enter your name..." required />
 
     <label for="email">Email Address</label>
     <input type="email" name="email" id="email" placeholder="Enter your email..." required />
@@ -25,17 +25,14 @@ description: Submit your details and generate a UPI QR code for payment
   </form>
 
   <div id="confirmationMessage" style="display:none; color: green;">
-    <br><br>Form submitted successfully! Kindly generate the QR and complete the payment 
+    <br><br>Form submitted successfully! Kindly generate the QR and complete the payment
   </div>
 </div>
 
 <br><br><br>
 
 <div style="text-align: center;">
-  <button 
-    id="generateQrButton"
-    class="pulse-button"
-    style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
+  <button id="generateQrButton" class="pulse-button" style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
            border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
            color: #050829; border-radius: 8px;">
     Generate QR Code!
@@ -43,145 +40,145 @@ description: Submit your details and generate a UPI QR code for payment
 </div>
 
 <script>
-// Multiplication table 'd'
-var d = [
-  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-  [1, 2, 3, 4, 0, 6, 7, 8, 9, 5], 
-  [2, 3, 4, 0, 1, 7, 8, 9, 5, 6], 
-  [3, 4, 0, 1, 2, 8, 9, 5, 6, 7], 
-  [4, 0, 1, 2, 3, 9, 5, 6, 7, 8], 
-  [5, 9, 8, 7, 6, 0, 4, 3, 2, 1], 
-  [6, 5, 9, 8, 7, 1, 0, 4, 3, 2], 
-  [7, 6, 5, 9, 8, 2, 1, 0, 4, 3], 
-  [8, 7, 6, 5, 9, 3, 2, 1, 0, 4], 
-  [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-];
+  // Multiplication table 'd'
+  var d = [
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    [1, 2, 3, 4, 0, 6, 7, 8, 9, 5],
+    [2, 3, 4, 0, 1, 7, 8, 9, 5, 6],
+    [3, 4, 0, 1, 2, 8, 9, 5, 6, 7],
+    [4, 0, 1, 2, 3, 9, 5, 6, 7, 8],
+    [5, 9, 8, 7, 6, 0, 4, 3, 2, 1],
+    [6, 5, 9, 8, 7, 1, 0, 4, 3, 2],
+    [7, 6, 5, 9, 8, 2, 1, 0, 4, 3],
+    [8, 7, 6, 5, 9, 3, 2, 1, 0, 4],
+    [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+  ];
 
-// Permutation table 'p'
-var p = [
-  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 
-  [1, 5, 7, 6, 2, 8, 3, 0, 9, 4], 
-  [5, 8, 0, 3, 7, 9, 6, 1, 4, 2], 
-  [8, 9, 1, 6, 0, 4, 3, 5, 2, 7], 
-  [9, 4, 5, 3, 1, 2, 6, 8, 7, 0], 
-  [4, 2, 8, 6, 5, 7, 3, 9, 0, 1], 
-  [2, 7, 9, 3, 8, 0, 6, 4, 1, 5], 
-  [7, 0, 4, 6, 9, 1, 3, 2, 5, 8]
-];
+  // Permutation table 'p'
+  var p = [
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+    [1, 5, 7, 6, 2, 8, 3, 0, 9, 4],
+    [5, 8, 0, 3, 7, 9, 6, 1, 4, 2],
+    [8, 9, 1, 6, 0, 4, 3, 5, 2, 7],
+    [9, 4, 5, 3, 1, 2, 6, 8, 7, 0],
+    [4, 2, 8, 6, 5, 7, 3, 9, 0, 1],
+    [2, 7, 9, 3, 8, 0, 6, 4, 1, 5],
+    [7, 0, 4, 6, 9, 1, 3, 2, 5, 8]
+  ];
 
-// Inverse table 'inv'
-var inv = [0, 4, 3, 2, 1, 5, 6, 7, 8, 9];
+  // Inverse table 'inv'
+  var inv = [0, 4, 3, 2, 1, 5, 6, 7, 8, 9];
 
-// Function to invert an array
-function invArray(array){
-  if (Object.prototype.toString.call(array) == "[object Number]") {
-    array = String(array);
-  }
-  if (Object.prototype.toString.call(array) == "[object String]") {
-    array = array.split("").map(Number);
-  }
-  return array.reverse();
-}
-
-// Function to generate checksum
-function generate(array){
-  var c = 0;
-  var invertedArray = invArray(array);
-
-  for (var i = 0; i < invertedArray.length; i++) {
-    c = d[c][p[((i + 1) % 8)][invertedArray[i]]];
-  }
-  return inv[c];
-}
-
-// Function to validate checksum
-function validate(array) {
-  var c = 0;
-  var invertedArray = invArray(array);
-
-  for (var i = 0; i < invertedArray.length; i++) {
-    c = d[c][p[(i % 8)][invertedArray[i]]];
-  }
-  return (c === 0);
-}
-
-// Function to validate Aadhar number
-function validate_adhar(adhar) {
-  console.clear();
-  // Check if the Aadhar number is 12 digits
-  if (adhar >= 100000000000 && adhar <= 999999999999) {
-    if (validate(adhar) == false) {
-      console.log("Invalid Aadhar Number");
-      return false;
-    } else {
-      return true;
+  // Function to invert an array
+  function invArray(array) {
+    if (Object.prototype.toString.call(array) == "[object Number]") {
+      array = String(array);
     }
-  } else {
-    console.log("Aadhar Number Should Be 12 Digits");
-    return false;
-  }
-}
-
-// Function to validate inputs and handle form submission
-function validateInputs() {
-  const email = document.getElementById('email').value;
-  const adhar = document.getElementById('adhar').value;
-  const phone = document.getElementById('text').value;
-
-  // Email validation (basic pattern)
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(email)) {
-    alert("Please enter a valid email address.");
-    return false;
+    if (Object.prototype.toString.call(array) == "[object String]") {
+      array = array.split("").map(Number);
+    }
+    return array.reverse();
   }
 
-  // Aadhar validation
-  if (!validate_adhar(adhar)) {
-    alert("Please enter a valid Aadhar number.");
-    return false;
+  // Function to generate checksum
+  function generate(array) {
+    var c = 0;
+    var invertedArray = invArray(array);
+
+    for (var i = 0; i < invertedArray.length; i++) {
+      c = d[c][p[((i + 1) % 8)][invertedArray[i]]];
+    }
+    return inv[c];
   }
 
-  // Phone number validation (10 digits only)
-  const phonePattern = /^[6-9]\d{9}$/;
+  // Function to validate checksum
+  function validate(array) {
+    var c = 0;
+    var invertedArray = invArray(array);
 
-if (!phonePattern.test(phone) || /^(\d)\1{9}$/.test(phone)) {
-  alert("Please enter a valid 10-digit Indian mobile number.");
-  return false;
-}
-
-return true;
-
-}
-
-// Function to generate the UPI QR code
-document.getElementById('generateQrButton').onclick = function() {
-  const adharNumber = document.getElementById('adhar').value;
-
-  if (!adharNumber) {
-    alert("Please enter your Aadhar number.");
-    return;
+    for (var i = 0; i < invertedArray.length; i++) {
+      c = d[c][p[(i % 8)][invertedArray[i]]];
+    }
+    return (c === 0);
   }
 
-  const amount = 6500;
-
-  if (isNaN(amount) || amount <= 0) {
-    alert("Invalid amount!");
-    return;
+  // Function to validate Aadhar number
+  function validate_adhar(adhar) {
+    console.clear();
+    // Check if the Aadhar number is 12 digits
+    if (adhar >= 100000000000 && adhar <= 999999999999) {
+      if (validate(adhar) == false) {
+        console.log("Invalid Aadhar Number");
+        return false;
+      } else {
+        return true;
+      }
+    } else {
+      console.log("Aadhar Number Should Be 12 Digits");
+      return false;
+    }
   }
 
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D${amount}%26cu%3DINR%26tn%3D${adharNumber}`;
-  console.log("Generated QR Code URL:", qrCodeUrl);
+  // Function to validate inputs and handle form submission
+  function validateInputs() {
+    const email = document.getElementById('email').value;
+    const adhar = document.getElementById('adhar').value;
+    const phone = document.getElementById('text').value;
 
-  openQrWindow(qrCodeUrl);
-};
+    // Email validation (basic pattern)
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+      alert("Please enter a valid email address.");
+      return false;
+    }
+
+    // Aadhar validation
+    if (!validate_adhar(adhar)) {
+      alert("Please enter a valid Aadhar number.");
+      return false;
+    }
+
+    // Phone number validation (10 digits only)
+    const phonePattern = /^[6-9]\d{9}$/;
+
+    if (!phonePattern.test(phone) || /^(\d)\1{9}$/.test(phone)) {
+      alert("Please enter a valid 10-digit Indian mobile number.");
+      return false;
+    }
+
+    return true;
+
+  }
+
+  // Function to generate the UPI QR code
+  document.getElementById('generateQrButton').onclick = function () {
+    const adharNumber = document.getElementById('adhar').value;
+
+    if (!adharNumber) {
+      alert("Please enter your Aadhar number.");
+      return;
+    }
+
+    const amount = 6500;
+
+    if (isNaN(amount) || amount <= 0) {
+      alert("Invalid amount!");
+      return;
+    }
+
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D${amount}%26cu%3DINR%26tn%3D${adharNumber}`;
+    console.log("Generated QR Code URL:", qrCodeUrl);
+
+    openQrWindow(qrCodeUrl);
+  };
 
 
 
 
-let formSubmitted = false;
+  let formSubmitted = false;
 
 
-function submitForm(event) {
+  function submitForm(event) {
     event.preventDefault(); // Prevent default form submission
 
     if (formSubmitted) {
@@ -201,17 +198,17 @@ function submitForm(event) {
       method: "POST",
       body: formData
     })
-    .then(response => response.text())
-    .then(data => {
-      // Show confirmation message
-      formSubmitted = true;
-      document.getElementById("confirmationMessage").style.display = "block";
-      // Do not reset the form to retain values for QR code generation
-    })
-    
-    .catch(error => {
-      console.error("Error submitting form:", error);
-    });
+      .then(response => response.text())
+      .then(data => {
+        // Show confirmation message
+        formSubmitted = true;
+        document.getElementById("confirmationMessage").style.display = "block";
+        // Do not reset the form to retain values for QR code generation
+      })
+
+      .catch(error => {
+        console.error("Error submitting form:", error);
+      });
   }
 </script>
 
@@ -219,82 +216,78 @@ function submitForm(event) {
 
 
 <script>
-// Function to generate the UPI QR code or direct link based on the device type
-document.getElementById('generateQrButton').onclick = function() {
-  const adharNumber = document.getElementById('adhar').value;
+  // Function to generate the UPI QR code or direct link based on the device type
+  document.getElementById('generateQrButton').onclick = function () {
+    const adharNumber = document.getElementById('adhar').value;
 
-  const donorName = document.getElementById('name').value;
-  const donorPhone = document.getElementById('text').value;
-  const donorEmail = document.getElementById('email').value;
+    const donorName = document.getElementById('name').value;
+    const donorPhone = document.getElementById('text').value;
+    const donorEmail = document.getElementById('email').value;
 
-  if (!adharNumber) {
-    alert("Please enter your Aadhar number.");
-    return;
-  }
+    if (!adharNumber) {
+      alert("Please enter your Aadhar number.");
+      return;
+    }
 
-  if(!donorEmail){
-    alert("Please enter your mail id!");
-    return;
-  }
+    if (!donorEmail) {
+      alert("Please enter your mail id!");
+      return;
+    }
 
-  if(!donorName){
-    alert("Please enter your name!");
-    return; 
-  }
+    if (!donorName) {
+      alert("Please enter your name!");
+      return;
+    }
 
-  if(!donorPhone){
-    alert("Please enter your phone number!");
-    return;
-  }
+    if (!donorPhone) {
+      alert("Please enter your phone number!");
+      return;
+    }
 
-  if (!formSubmitted) {
-    alert("Please submit the form before generating the QR code.");
-    return;
-  }
-  
-  const amount = 11000;
+    if (!formSubmitted) {
+      alert("Please submit the form before generating the QR code.");
+      return;
+    }
 
-  if (isNaN(amount) || amount <= 0) {
-    alert("Invalid amount!");
-    return;
-  }
+    const amount = 11000;
 
-  // UPI data for QR code and link
-  const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(upiData)}`;
+    if (isNaN(amount) || amount <= 0) {
+      alert("Invalid amount!");
+      return;
+    }
 
-  const upiLinkforIphone = 'https://youtube.com'
+    // UPI data for QR code and link
+    const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(upiData)}`;
 
-  const userAgent = navigator.userAgent.toLowerCase();
+    const upiLinkforIphone = 'https://youtube.com'
 
-// Check for Android
-const isAndroid = () => /android/.test(userAgent) && 'ontouchstart' in window;
+    const userAgent = navigator.userAgent.toLowerCase();
+    // Check for Android
+    const isAndroid = () => /android/.test(userAgent) && 'ontouchstart' in window;
+    // Check for iPhone
+    const isIphone = () => /iphone/.test(userAgent) && 'ontouchstart' in window;
+    // Check for Desktop (Windows or Mac)
+    const isDesktop = () => !('ontouchstart' in window) && /windows|macintosh|mac os x/.test(userAgent);
 
-// Check for iPhone
-const isIphone = () => /iphone/.test(userAgent) && 'ontouchstart' in window;
+    if (isAndroid()) {
+      window.location.href = upiData;
+    }
+    else {
+      openQrWindow(qrCodeUrl);
+    }
+    // if(isIphone()){
+    //   window.location.href = upiLinkforIphone;
+    // }
+    // if(isDesktop()){
+    //   openQrWindow(qrCodeUrl);
+    // }
+  };
 
-// Check for Desktop (Windows or Mac)
-const isDesktop = () => !('ontouchstart' in window) && /windows|macintosh|mac os x/.test(userAgent);
-
-
-  if(isAndroid()){
-    window.location.href = upiData;
-  }
-  else{
-    openQrWindow(qrCodeUrl);
-  }
-  // if(isIphone()){
-  //   window.location.href = upiLinkforIphone;
-  // }
-  // if(isDesktop()){
-  //   openQrWindow(qrCodeUrl);
-  // }
-};
-
-// Function to open QR code in a new window
-function openQrWindow(qrCodeUrl) {
-  const qrWindow = window.open('', '_blank', 'width=500,height=600');
-  qrWindow.document.write(`
+  // Function to open QR code in a new window
+  function openQrWindow(qrCodeUrl) {
+    const qrWindow = window.open('', '_blank', 'width=500,height=600');
+    qrWindow.document.write(`
     <html>
       <head>
         <title>UPI Payment QR Code</title>
@@ -310,6 +303,6 @@ function openQrWindow(qrCodeUrl) {
       </body>
     </html>
   `);
-}
+  }
 
 </script>
