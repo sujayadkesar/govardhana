@@ -17,8 +17,8 @@ description: Submit your details and generate a UPI QR code for payment
 
     <label for="text">Phone Number</label>
     <input type="text" name="phone" id="text" placeholder="Enter your phone number..." required />
-  
-    <label for="amount" style="display: none;">Donated for adoption of Cow</label>
+
+    <label for="amount" style="display: none;">Donated for adopting Cow</label>
     <input type="text" name="amount" id="amount" value="11000" style="display: none;" />
 
     <input type="submit" value="Submit" />
@@ -31,7 +31,6 @@ description: Submit your details and generate a UPI QR code for payment
 
 <br><br><br>
 
-
 <div style="text-align: center;">
   <button 
     id="generateQrButton"
@@ -39,18 +38,7 @@ description: Submit your details and generate a UPI QR code for payment
     style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
            border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
            color: #050829; border-radius: 8px;">
-    Click here to Pay!
-  </button>
-</div>
-
-<div style="text-align: center;">
-  <button 
-    id="payviaupi
-    class="pulse-button"
-    style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
-           border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
-           color: #050829; border-radius: 8px;">
-    Click here to Pay with UPI!
+    Generate QR Code!
   </button>
 </div>
 
@@ -165,12 +153,14 @@ return true;
 
 }
 
-document.getElementById('payviaupi').onclick = function(){
+// Function to generate the UPI QR code
+document.getElementById('generateQrButton').onclick = function() {
   const adharNumber = document.getElementById('adhar').value;
+
   const donorName = document.getElementById('name').value;
   const donorPhone = document.getElementById('text').value;
   const donorEmail = document.getElementById('email').value;
-  const amount = document.getElementById(amount).value;
+
   if (!adharNumber) {
     alert("Please enter your Aadhar number.");
     return;
@@ -191,29 +181,6 @@ document.getElementById('payviaupi').onclick = function(){
     return;
   }
 
-  if (!formSubmitted) {
-    alert("Please submit the form before generating the QR code.");
-    return;
-  }
-  
-  if (isNaN(amount) || amount <= 0) {
-    alert("Invalid amount!");
-    return;
-  }
-
-  // UPI data for QR code and link
-  const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
-  window.location.href = upiData;
-}
-
-// Function to generate the UPI QR code
-document.getElementById('generateQrButton').onclick = function() {
-  const adharNumber = document.getElementById('adhar').value;
-
-  if (!adharNumber) {
-    alert("Please enter your Aadhar number.");
-    return;
-  }
 
   const amount = 11000;
 
@@ -266,8 +233,6 @@ function submitForm(event) {
 </script>
 
 
-
-
 <script>
   // Function to check if the user is on a mobile device, even in desktop mode
   function isMobileDevice() {
@@ -293,38 +258,19 @@ function submitForm(event) {
   return false;
 }
 
+
 // Function to generate the UPI QR code or direct link based on the device type
 document.getElementById('generateQrButton').onclick = function() {
   const adharNumber = document.getElementById('adhar').value;
-  const donorName = document.getElementById('name').value;
-  const donorPhone = document.getElementById('text').value;
-  const donorEmail = document.getElementById('email').value;
 
   if (!adharNumber) {
     alert("Please enter your Aadhar number.");
     return;
   }
-
-  if(!donorEmail){
-    alert("Please enter your mail id!");
-    return;
-  }
-
-  if(!donorName){
-    alert("Please enter your name!");
-    return; 
-  }
-
-  if(!donorPhone){
-    alert("Please enter your phone number!");
-    return;
-  }
-
   if (!formSubmitted) {
     alert("Please submit the form before generating the QR code.");
     return;
   }
-  
   const amount = 11000;
 
   if (isNaN(amount) || amount <= 0) {
