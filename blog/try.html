@@ -48,7 +48,7 @@ description: Submit your details and generate a UPI QR code for payment
 <br><br>
 <div style="text-align: center;">
   <button 
-    id="redirectToUPI()"
+    id="generateQrButton"
     class="pulse-button"
     style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
            border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
@@ -308,10 +308,7 @@ document.getElementById('generateQrButton').onclick = function() {
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(upiData)}`;
 
 
-  function redirectToUPI() {
-    const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
-    window.location.href = upiData;
-  }
+  window.location.href = upiData;
 
   if (isMobileDevice()) {
     // Open UPI link directly for mobile users
