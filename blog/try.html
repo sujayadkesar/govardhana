@@ -31,6 +31,14 @@ description: Submit your details and generate a UPI QR code for payment
 
 <br><br><br>
 
+<button onclick="redirectToUPI()">Pay with UPI</button>
+
+<script>
+  function redirectToUPI() {
+    const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
+    window.location.href = upiData;
+  }
+</script>
 
 <div style="text-align: center;">
   <button 
