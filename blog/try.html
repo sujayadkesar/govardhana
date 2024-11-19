@@ -268,13 +268,14 @@ document.getElementById('generateQrButton').onclick = function() {
   const userAgent = navigator.userAgent.toLowerCase();
 
 // Check for Android
-const isAndroid = () => /android/.test(userAgent);
+const isAndroid = () => /android/.test(userAgent) && 'ontouchstart' in window;
 
 // Check for iPhone
-const isIphone = () => /iphone/.test(userAgent);
+const isIphone = () => /iphone/.test(userAgent) && 'ontouchstart' in window;
 
 // Check for Desktop (Windows or Mac)
-const isDesktop = () => /windows|macintosh|mac os x/.test(userAgent);
+const isDesktop = () => !('ontouchstart' in window) && /windows|macintosh|mac os x/.test(userAgent);
+
 
   if(isAndroid()){
     window.location.href = upiData;
