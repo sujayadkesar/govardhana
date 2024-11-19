@@ -261,43 +261,49 @@ description: Submit your details and generate a UPI QR code for payment
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(upiData)}`;
 
     const detectDeviceAndProceed = (amount, adharNumber, qrCodeUrl) => {
-  const userAgent = navigator.userAgent.toLowerCase();
-  const isTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-  // Helper functions to determine devices
-  const isAndroid = () => /android/.test(userAgent) && isTouchScreen;
-  const isIphone = () =>
-    /iphone|ipad|ipod/.test(userAgent) && isTouchScreen;
-  const isDesktop = () => {
-    // A fallback mechanism: check for desktop platforms but ensure no touch input
-    return (
-      /windows|macintosh|mac os x/.test(userAgent) && !isTouchScreen
-    );
-  };
+      // Use advanced checks to detect Android
+      const isAndroid = () => {
+        return /android/.test(userAgent) || (isTouchScreen && /linux/.test(userAgent));
+      };
 
-  // Device-specific behavior
-  if (isAndroid()) {
-    const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
-    console.log('Redirecting to Android UPI URL:', upiData);
-    window.location.href = upiData;
-  } else if (isIphone()) {
-    const iosDeepLink = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
-    console.log('Redirecting to iOS UPI URL:', iosDeepLink);
-    // Attempt to open UPI apps on iOS
-    window.location.href = iosDeepLink;
-  } else if (isDesktop()) {
-    console.log('Displaying QR Code for Desktop:', qrCodeUrl);
-    openQrWindow(qrCodeUrl);
-  } else {
-    console.log('Device not detected. Defaulting to QR Code.');
-    openQrWindow(qrCodeUrl); // Fallback to QR code for unidentified devices
-  }
-};
+      // Use advanced checks to detect iPhone/iOS
+      const isIphone = () => {
+        return /iphone|ipad|ipod/.test(userAgent) || (isTouchScreen && /mac os x/.test(userAgent) && navigator.maxTouchPoints > 1);
+      };
+
+      // Check for Desktop (Windows or Mac without touch capabilities)
+      const isDesktop = () => {
+        return (
+          !isTouchScreen &&
+          (/windows/.test(userAgent) || /macintosh|mac os x/.test(userAgent))
+        );
+      };
+
+      // Device-specific behavior
+      if (isAndroid()) {
+        const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
+        console.log('Redirecting to Android UPI URL:', upiData);
+        window.location.href = upiData;
+      } else if (isIphone()) {
+        const iosDeepLink = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
+        console.log('Redirecting to iOS UPI URL:', iosDeepLink);
+        window.location.href = iosDeepLink;
+      } else if (isDesktop()) {
+        console.log('Displaying QR Code for Desktop:', qrCodeUrl);
+        openQrWindow(qrCodeUrl);
+      } else {
+        console.log('Device not detected. Defaulting to QR Code.');
+        openQrWindow(qrCodeUrl); // Fallback to QR code for unidentified devices
+      }
+    };
 
 
-detectDeviceAndProceed(amount , adharNumber, qrCodeUrl);
+    detectDeviceAndProceed(amount, adharNumber, qrCodeUrl);
 
-  
+
   };
 
   // Function to open QR code in a new window
