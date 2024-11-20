@@ -237,17 +237,17 @@ description: Submit your details and generate a UPI QR code for payment
     // UPI data for QR code and link
     const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(upiData)}`;
-// Function to detect device type and launch UPI apps
+// Function to detect device type and proceed
 function detectDeviceAndProceed(amount, adharNumber, qrCodeUrl) {
   const userAgent = navigator.userAgent.toLowerCase();
   const isTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
   // Device detection
   const isAndroid = () => /android/.test(userAgent);
-  const isIphone = () => 
-    /iphone|ipad|ipod/.test(userAgent) || 
+  const isIphone = () =>
+    /iphone|ipad|ipod/.test(userAgent) ||
     (isTouchScreen && /mac os x/.test(userAgent) && navigator.maxTouchPoints > 1);
-  const isDesktop = () => 
+  const isDesktop = () =>
     !isTouchScreen && (/windows/.test(userAgent) || /macintosh|mac os x/.test(userAgent));
 
   const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
@@ -257,22 +257,8 @@ function detectDeviceAndProceed(amount, adharNumber, qrCodeUrl) {
     console.log('Redirecting to Android UPI URL:', upiData);
     window.location.href = upiData;
   } else if (isIphone()) {
-    console.log('Redirecting to iOS UPI URL:', upiData);
-    const iframe = document.createElement('iframe');
-    iframe.src = upiData;
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-
-    // Fallback for browsers that don't open iframe-based `upi://` URLs
-    setTimeout(() => {
-      const anchor = document.createElement('a');
-      anchor.href = upiData;
-      anchor.style.display = 'none';
-      document.body.appendChild(anchor);
-      anchor.click();
-      document.body.removeChild(anchor);
-      document.body.removeChild(iframe);
-    }, 1500);
+    console.log('Displaying UPI App options for iOS');
+    showUPIAppOptions(upiData);
   } else if (isDesktop()) {
     console.log('Displaying QR Code for Desktop:', qrCodeUrl);
     openQrWindow(qrCodeUrl);
@@ -281,7 +267,31 @@ function detectDeviceAndProceed(amount, adharNumber, qrCodeUrl) {
     openQrWindow(qrCodeUrl); // Fallback to QR code for unidentified devices
   }
 }
-  }
+
+// Function to display UPI app options for iPhone
+function showUPIAppOptions(upiData) {
+  const appListHtml = `
+    <div style="text-align: center; margin: 20px;">
+      <h2>Select a UPI App to Proceed</h2>
+      <ul style="list-style: none; padding: 0;">
+        <li><a href="${upiData}&pn=Paytm" style="text-decoration: none; color: #007bff;">Open in Paytm</a></li>
+        <li><a href="${upiData}&pn=PhonePe" style="text-decoration: none; color: #007bff;">Open in PhonePe</a></li>
+        <li><a href="${upiData}&pn=GooglePay" style="text-decoration: none; color: #007bff;">Open in Google Pay</a></li>
+        <li><a href="${upiData}" style="text-decoration: none; color: #007bff;">Other UPI Apps</a></li>
+      </ul>
+    </div>
+  `;
+
+  const appWindow = window.open('', '_blank', 'width=400,height=400');
+  appWindow.document.write(`
+    <html>
+      <head><title>UPI App Selection</title></head>
+      <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+        ${appListHtml}
+      </body>
+    </html>
+  `);
+}}
 
 
   // Function to open QR code in a new window
