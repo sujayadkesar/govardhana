@@ -277,10 +277,9 @@ function showUPIAppOptions(upiData) {
     <div style="text-align: center; margin: 20px;">
       <h2>Select a UPI App to Proceed</h2>
       <ul style="list-style: none; padding: 0;">
-        <li><a href="${upiData}&pn=Paytm" style="text-decoration: none; color: #007bff;">Open in Paytm</a></li>
-        <li><a href="${upiData}&pn=PhonePe" style="text-decoration: none; color: #007bff;">Open in PhonePe</a></li>
-        <li><a href="${upiData}&pn=GooglePay" style="text-decoration: none; color: #007bff;">Open in Google Pay</a></li>
-        <li><a href="${upiData}" style="text-decoration: none; color: #007bff;">Other UPI Apps</a></li>
+        <li><a href="phonepe://pay?pa=govardhanapl@sbi&am=${amount}&tn=${adharNumber}" style="text-decoration: none; color: #007bff;">Open in Paytm</a></li>
+        <li><a href="gpay://pay?pa=govardhanapl@sbi&am=${amount}&tn=${adharNumber}" style="text-decoration: none; color: #007bff;">Open in Paytm</a></li>
+        <li><a href="amzn://pay?pa=govardhanapl@sbi&am=${amount}&tn=${adharNumber}" style="text-decoration: none; color: #007bff;">Open in Paytm</a></li>
       </ul>
     </div>
   `;
