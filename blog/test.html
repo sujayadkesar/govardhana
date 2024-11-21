@@ -385,7 +385,7 @@ description: Submit your details and generate a UPI QR code for payment
             function openQrWindow(qrCodeUrl) {
                 const qrWindow = window.open('', '_blank', 'width=500,height=600');
                 qrWindow.document.write(`
-    <html>
+                     <html>
       <head>
         <title>UPI Payment QR Code</title>
       </head>
@@ -399,5 +399,6 @@ description: Submit your details and generate a UPI QR code for payment
         </div>
       </body>
     </html>
-  `);}
+  `);
+            }
 </script>
