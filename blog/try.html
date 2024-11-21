@@ -277,12 +277,19 @@ function showUPIAppOptions(upiData) {
     <div style="text-align: center; margin: 20px;">
       <h2>Select a UPI App to Proceed</h2>
       <ul style="list-style: none; padding: 0;">
-        <li><a href="phonepe://pay?pa=govardhanapl@sbi&am=${amount}&tn=${adharNumber}" style="text-decoration: none; color: #007bff;">Open in Paytm</a></li>
-        <li><a href="gpay://pay?pa=govardhanapl@sbi&am=${amount}&tn=${adharNumber}" style="text-decoration: none; color: #007bff;">Open in Paytm</a></li>
-        <li><a href="amzn://pay?pa=govardhanapl@sbi&am=${amount}&tn=${adharNumber}" style="text-decoration: none; color: #007bff;">Open in Paytm</a></li>
+               <li><a href="upi://pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}" style="text-decoration: none; color: #007bff;">Open in UPI App</a></li>
+        <li><a href="https://pay.google.com/gp/p/ui/pay?pa=govardhanylp@sbi&pn=Govardhan&am=${amount}&cu=INR" target="_blank" style="text-decoration: none; color: #007bff;">Google Pay</a></li>
+        <li><a href="https://phonepe.com/pay?pa=govardhanylp@sbi&pn=Govardhan&am=${amount}&cu=INR" target="_blank" style="text-decoration: none; color: #007bff;">PhonePe</a></li>
+        <li><a href="https://paytm.com/pay?pa=govardhanylp@sbi&pn=Govardhan&am=${amount}&cu=INR" target="_blank" style="text-decoration: none; color: #007bff;">Paytm</a></li>
+
       </ul>
     </div>
   `;
+
+
+
+
+
 
   const appWindow = window.open('', '_blank', 'width=400,height=400');
   appWindow.document.write(`
