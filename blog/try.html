@@ -240,12 +240,10 @@ description: Submit your details and generate a UPI QR code for payment
 // Function to detect device type and proceed
 
 detectDeviceAndProceed();
-
 function detectDeviceAndProceed(amount, adharNumber, qrCodeUrl) {
   const userAgent = navigator.userAgent.toLowerCase();
   const isTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-  // Device detection
   const isAndroid = () => /android/.test(userAgent);
   const isIphone = () =>
     /iphone|ipad|ipod/.test(userAgent) ||
@@ -255,52 +253,70 @@ function detectDeviceAndProceed(amount, adharNumber, qrCodeUrl) {
 
   const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
 
-  // Handling device-specific behavior
   if (isAndroid()) {
     console.log('Redirecting to Android UPI URL:', upiData);
     window.location.href = upiData;
   } else if (isIphone()) {
-    console.log('Displaying UPI App options for iOS');
-    showUPIAppOptions(upiData);
+    console.log('Handling iOS UPI redirection');
+    redirectToUPIAppOnIOS(adharNumber, amount);
   } else if (isDesktop()) {
     console.log('Displaying QR Code for Desktop:', qrCodeUrl);
     openQrWindow(qrCodeUrl);
   } else {
     console.log('Device not detected. Defaulting to QR Code.');
-    openQrWindow(qrCodeUrl); // Fallback to QR code for unidentified devices
+    openQrWindow(qrCodeUrl);
   }
 }
 
-// Function to display UPI app options for iPhone
-function showUPIAppOptions(upiData) {
-  const appListHtml = `
-    <div style="text-align: center; margin: 20px;">
-      <h2>Select a UPI App to Proceed</h2>
-      <ul style="list-style: none; padding: 0;">
-               <li><a href="upi://pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}" style="text-decoration: none; color: #007bff;">Open in UPI App</a></li>
-        <li><a href="https://pay.google.com/gp/p/ui/pay?pa=govardhanylp@sbi&pn=Govardhan&am=${amount}&cu=INR" target="_blank" style="text-decoration: none; color: #007bff;">Google Pay</a></li>
-        <li><a href="https://phonepe.com/pay?pa=govardhanylp@sbi&pn=Govardhan&am=${amount}&cu=INR" target="_blank" style="text-decoration: none; color: #007bff;">PhonePe</a></li>
-        <li><a href="https://paytm.com/pay?pa=govardhanylp@sbi&pn=Govardhan&am=${amount}&cu=INR" target="_blank" style="text-decoration: none; color: #007bff;">Paytm</a></li>
 
+function redirectToUPIAppOnIOS(adharNumber, amount) {
+  const appLinks = [
+    {
+      name: "Google Pay",
+      url: `tez://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+    },
+    {
+      name: "PhonePe",
+      url: `phonepe://pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+    },
+    {
+      name: "Paytm",
+      url: `paytmmp://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+    },
+    {
+      name: "BHIM",
+      url: `bhim://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+    }
+  ];
+
+  const optionsHtml = appLinks
+    .map(
+      (app) => `<li><a href="${app.url}" target="_blank" style="text-decoration: none; color: #007bff;">Open in ${app.name}</a></li>`
+    )
+    .join("");
+
+  const fallbackHtml = `
+    <div style="text-align: center;">
+      <h2>Select a UPI App</h2>
+      <ul style="list-style: none; padding: 0;">
+        ${optionsHtml}
       </ul>
     </div>
   `;
-
-
-
-
-
 
   const appWindow = window.open('', '_blank', 'width=400,height=400');
   appWindow.document.write(`
     <html>
       <head><title>UPI App Selection</title></head>
       <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
-        ${appListHtml}
+        ${fallbackHtml}
       </body>
     </html>
   `);
-}}
+}
+  }
+
+
 
 
   // Function to open QR code in a new window
