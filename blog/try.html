@@ -291,7 +291,6 @@ function redirectToUPIAppOnIOS(adharNumber, amount) {
 
   const optionsHtml = window.open('', '_blank', 'width=600,height=800');
   appWindow.document.write(`
-  
       <div class="payment-container">
         <a href="tez://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR" class="payment-button">
             <img src="/images/goooglepay.png" alt="Google Pay">
@@ -310,6 +309,44 @@ function redirectToUPIAppOnIOS(adharNumber, amount) {
             <span>BHIM UPI</span>
         </a>
     </div>
+    
+
+<style>
+
+  .payment-container {
+      display: grid;
+      gap: 15px;
+      grid-template-columns: 1fr;
+      margin: 0 auto;
+      max-width: 90%; /* Adjusts well for mobile */
+  }
+  .payment-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 15px;
+      text-decoration: none;
+      color: black;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .payment-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+  }
+  .payment-button img {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+  }
+  .payment-button span {
+      font-size: 1rem;
+      font-weight: 500;
+  }
+</style>
 
   `);
 
@@ -352,41 +389,3 @@ function redirectToUPIAppOnIOS(adharNumber, amount) {
   }
 
 </script>
-
-
-<style>
-
-  .payment-container {
-      display: grid;
-      gap: 15px;
-      grid-template-columns: 1fr;
-      margin: 0 auto;
-      max-width: 90%; /* Adjusts well for mobile */
-  }
-  .payment-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 15px;
-      text-decoration: none;
-      color: black;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .payment-button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-  }
-  .payment-button img {
-      width: 40px;
-      height: 40px;
-      margin-right: 10px;
-  }
-  .payment-button span {
-      font-size: 1rem;
-      font-weight: 500;
-  }
-</style>
