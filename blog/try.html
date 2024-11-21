@@ -290,7 +290,7 @@ function redirectToUPIAppOnIOS(adharNumber, amount) {
   ];
 
   const optionsHtml = window.open('', '_blank', 'width=600,height=800');
-  appWindow.document.write(`
+  optionsHtml.document.write(`
       <div class="payment-container">
         <a href="tez://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR" class="payment-button">
             <img src="/images/goooglepay.png" alt="Google Pay">
