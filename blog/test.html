@@ -6,35 +6,49 @@
     <title>Pay with Your Favorite App</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
             padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #333;
         }
         .payment-container {
-            max-width: 400px;
+            display: grid;
+            gap: 15px;
+            grid-template-columns: 1fr;
             margin: 0 auto;
+            max-width: 90%; /* Adjusts well for mobile */
         }
         .payment-button {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10px;
-            margin: 10px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            cursor: pointer;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 15px;
             text-decoration: none;
             color: black;
-            transition: 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
         }
         .payment-button:hover {
-            background-color: #f9f9f9;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
         }
         .payment-button img {
-            width: 30px;
-            height: 30px;
+            width: 40px;
+            height: 40px;
             margin-right: 10px;
+        }
+        .payment-button span {
+            font-size: 1rem;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -42,20 +56,20 @@
     <h1>Pay with Your Favorite App</h1>
     <div class="payment-container">
         <a href="#" class="payment-button">
-            <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.vecteezy.com%2Fsystem%2Fresources%2Fpreviews%2F017%2F221%2F853%2Foriginal%2Fgoogle-pay-logo-transparent-free-png.png&f=1&nofb=1&ipt=f6a19be2a2fb0e9938d57c12d1c4e41836ec0cfc5bf10726586fb826450027f1&ipo=images" alt="Google Pay">
-            Pay with Google Pay
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Google_Pay_Logo.svg" alt="Google Pay">
+            <span>Google Pay</span>
         </a>
         <a href="#" class="payment-button">
             <img src="https://upload.wikimedia.org/wikipedia/en/5/56/PhonePe_Logo.png" alt="PhonePe">
-            Pay with PhonePe
+            <span>PhonePe</span>
         </a>
         <a href="#" class="payment-button">
             <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Paytm_logo.png" alt="Paytm">
-            Pay with Paytm
+            <span>Paytm</span>
         </a>
         <a href="#" class="payment-button">
             <img src="https://upload.wikimedia.org/wikipedia/commons/c/cc/BHIM_UPI_Logo.png" alt="BHIM">
-            Pay with BHIM
+            <span>BHIM UPI</span>
         </a>
     </div>
 </body>
