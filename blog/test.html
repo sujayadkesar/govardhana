@@ -239,7 +239,7 @@ description: Submit your details and generate a UPI QR code for payment
         const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(upiData)}`;
         // Function to detect device type and proceed
 
-        detectDeviceAndProceed();
+        detectDeviceAndProceed(amount, adharNumber, qrCodeUrl);
         function detectDeviceAndProceed(amount, adharNumber, qrCodeUrl) {
             const userAgent = navigator.userAgent.toLowerCase();
             const isTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -268,124 +268,117 @@ description: Submit your details and generate a UPI QR code for payment
             }
         }
 
-
         function redirectToUPIAppOnIOS(adharNumber, amount) {
-            const appLinks = [
-                {
-                    name: "Google Pay",
-                    url: `tez://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
-                },
-                {
-                    name: "PhonePe",
-                    url: `phonepe://pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
-                },
-                {
-                    name: "Paytm",
-                    url: `paytmmp://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
-                },
-                {
-                    name: "BHIM",
-                    url: `bhim://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
-                }
-            ];
+    const appLinks = [
+        {
+            name: "Google Pay",
+            url: `tez://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+        },
+        {
+            name: "PhonePe",
+            url: `phonepe://pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+        },
+        {
+            name: "Paytm",
+            url: `paytmmp://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+        },
+        {
+            name: "BHIM",
+            url: `bhim://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+        }
+    ];
 
-            showUPIAppPopup(appLinks);
+    showUPIAppPopup(appLinks);
+    function showUPIAppPopup(appLinks) {
+        // Create a container for the popup
+        const popupContainer = document.createElement('div');
+        popupContainer.id = 'upi-popup';
+        popupContainer.style.position = 'fixed';
+        popupContainer.style.top = '50%';
+        popupContainer.style.left = '50%';
+        popupContainer.style.transform = 'translate(-50%, -50%)';
+        popupContainer.style.width = '300px';
+        popupContainer.style.padding = '20px';
+        popupContainer.style.backgroundColor = '#fff';
+        popupContainer.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+        popupContainer.style.borderRadius = '8px';
+        popupContainer.style.zIndex = '1000';
+        popupContainer.style.textAlign = 'center';
 
+        // Add the heading
+        const heading = document.createElement('h2');
+        heading.textContent = 'Select a UPI App';
+        heading.style.marginBottom = '20px';
+        popupContainer.appendChild(heading);
 
+        // Add app links dynamically
+        const list = document.createElement('ul');
+        list.style.listStyle = 'none';
+        list.style.padding = '0';
 
+        appLinks.forEach((app) => {
+            const listItem = document.createElement('li');
+            listItem.style.marginBottom = '10px';
 
+            const link = document.createElement('a');
+            link.href = app.url;
+            link.target = '_blank';
+            link.textContent = `Open in ${app.name}`;
+            link.style.textDecoration = 'none';
+            link.style.color = '#007bff';
+            link.style.fontSize = '16px';
 
+            listItem.appendChild(link);
+            list.appendChild(listItem);
+        });
 
-            function showUPIAppPopup(appLinks) {
-                // Create a container for the popup
-                const popupContainer = document.createElement('div');
-                popupContainer.id = 'upi-popup';
-                popupContainer.style.position = 'fixed';
-                popupContainer.style.top = '50%';
-                popupContainer.style.left = '50%';
-                popupContainer.style.transform = 'translate(-50%, -50%)';
-                popupContainer.style.width = '300px';
-                popupContainer.style.padding = '20px';
-                popupContainer.style.backgroundColor = '#fff';
-                popupContainer.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
-                popupContainer.style.borderRadius = '8px';
-                popupContainer.style.zIndex = '1000';
-                popupContainer.style.textAlign = 'center';
+        popupContainer.appendChild(list);
 
-                // Add the heading
-                const heading = document.createElement('h2');
-                heading.textContent = 'Select a UPI App';
-                heading.style.marginBottom = '20px';
-                popupContainer.appendChild(heading);
+        // Add a close button
+        const closeButton = document.createElement('button');
+        closeButton.textContent = 'Close';
+        closeButton.style.marginTop = '20px';
+        closeButton.style.padding = '10px 20px';
+        closeButton.style.backgroundColor = '#007bff';
+        closeButton.style.color = '#fff';
+        closeButton.style.border = 'none';
+        closeButton.style.borderRadius = '4px';
+        closeButton.style.cursor = 'pointer';
 
-                // Add app links dynamically
-                const list = document.createElement('ul');
-                list.style.listStyle = 'none';
-                list.style.padding = '0';
+        closeButton.onclick = function () {
+            document.body.removeChild(popupContainer);
+            document.body.removeChild(overlay);
+        };
 
-                appLinks.forEach((app) => {
-                    const listItem = document.createElement('li');
-                    listItem.style.marginBottom = '10px';
+        popupContainer.appendChild(closeButton);
 
-                    const link = document.createElement('a');
-                    link.href = app.url;
-                    link.target = '_blank';
-                    link.textContent = `Open in ${app.name}`;
-                    link.style.textDecoration = 'none';
-                    link.style.color = '#007bff';
-                    link.style.fontSize = '16px';
+        // Add an overlay to dim the background
+        const overlay = document.createElement('div');
+        overlay.id = 'overlay';
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        overlay.style.zIndex = '999';
 
-                    listItem.appendChild(link);
-                    list.appendChild(listItem);
-                });
+        overlay.onclick = closeButton.onclick; // Close popup on overlay click
 
-                popupContainer.appendChild(list);
+        // Append the popup and overlay to the body
+        document.body.appendChild(overlay);
+        document.body.appendChild(popupContainer);
 
-                // Add a close button
-                const closeButton = document.createElement('button');
-                closeButton.textContent = 'Close';
-                closeButton.style.marginTop = '20px';
-                closeButton.style.padding = '10px 20px';
-                closeButton.style.backgroundColor = '#007bff';
-                closeButton.style.color = '#fff';
-                closeButton.style.border = 'none';
-                closeButton.style.borderRadius = '4px';
-                closeButton.style.cursor = 'pointer';
-
-                closeButton.onclick = function () {
-                    document.body.removeChild(popupContainer);
-                    document.body.removeChild(overlay);
-                };
-
-                popupContainer.appendChild(closeButton);
-
-                // Add an overlay to dim the background
-                const overlay = document.createElement('div');
-                overlay.id = 'overlay';
-                overlay.style.position = 'fixed';
-                overlay.style.top = '0';
-                overlay.style.left = '0';
-                overlay.style.width = '100%';
-                overlay.style.height = '100%';
-                overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
-                overlay.style.zIndex = '999';
-
-                overlay.onclick = closeButton.onclick; // Close popup on overlay click
-
-                // Append the popup and overlay to the body
-                document.body.appendChild(overlay);
-                document.body.appendChild(popupContainer);
-            }
+    }
 
 
 
 
-
-            // Function to open QR code in a new window
-            function openQrWindow(qrCodeUrl) {
-                const qrWindow = window.open('', '_blank', 'width=500,height=600');
-                qrWindow.document.write(`
-                     <html>
+    // Function to open QR code in a new window
+    function openQrWindow(qrCodeUrl) {
+        const qrWindow = window.open('', '_blank', 'width=500,height=600');
+        qrWindow.document.write(`
+    <html>
       <head>
         <title>UPI Payment QR Code</title>
       </head>
@@ -400,5 +393,140 @@ description: Submit your details and generate a UPI QR code for payment
       </body>
     </html>
   `);
-    }}}
-    </script>
+    }
+
+</script>
+
+
+
+<!-- detectDeviceAndProceed();
+function detectDeviceAndProceed(amount, adharNumber, qrCodeUrl) {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    const isAndroid = () => /android/.test(userAgent);
+    const isIphone = () =>
+        /iphone|ipad|ipod/.test(userAgent) ||
+        (isTouchScreen && /mac os x/.test(userAgent) && navigator.maxTouchPoints > 1);
+    const isDesktop = () =>
+        !isTouchScreen && (/windows/.test(userAgent) || /macintosh|mac os x/.test(userAgent));
+
+    const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
+
+    if (isAndroid()) {
+        console.log('Redirecting to Android UPI URL:', upiData);
+        window.location.href = upiData;
+    } else if (isIphone()) {
+        console.log('Handling iOS UPI redirection');
+        redirectToUPIAppOnIOS(adharNumber, amount);
+    } else if (isDesktop()) {
+        console.log('Displaying QR Code for Desktop:', qrCodeUrl);
+        openQrWindow(qrCodeUrl);
+    } else {
+        console.log('Device not detected. Defaulting to QR Code.');
+        openQrWindow(qrCodeUrl);
+    }
+}
+
+
+function redirectToUPIAppOnIOS(adharNumber, amount) {
+    const appLinks = [
+        {
+            name: "Google Pay",
+            url: `tez://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+        },
+        {
+            name: "PhonePe",
+            url: `phonepe://pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+        },
+        {
+            name: "Paytm",
+            url: `paytmmp://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+        },
+        {
+            name: "BHIM",
+            url: `bhim://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+        }
+    ];
+
+    showUPIAppPopup(appLinks);
+    function showUPIAppPopup(appLinks) {
+        // Create a container for the popup
+        const popupContainer = document.createElement('div');
+        popupContainer.id = 'upi-popup';
+        popupContainer.style.position = 'fixed';
+        popupContainer.style.top = '50%';
+        popupContainer.style.left = '50%';
+        popupContainer.style.transform = 'translate(-50%, -50%)';
+        popupContainer.style.width = '300px';
+        popupContainer.style.padding = '20px';
+        popupContainer.style.backgroundColor = '#fff';
+        popupContainer.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+        popupContainer.style.borderRadius = '8px';
+        popupContainer.style.zIndex = '1000';
+        popupContainer.style.textAlign = 'center';
+
+        // Add the heading
+        const heading = document.createElement('h2');
+        heading.textContent = 'Select a UPI App';
+        heading.style.marginBottom = '20px';
+        popupContainer.appendChild(heading);
+
+        // Add app links dynamically
+        const list = document.createElement('ul');
+        list.style.listStyle = 'none';
+        list.style.padding = '0';
+
+        appLinks.forEach((app) => {
+            const listItem = document.createElement('li');
+            listItem.style.marginBottom = '10px';
+
+            const link = document.createElement('a');
+            link.href = app.url;
+            link.target = '_blank';
+            link.textContent = `Open in ${app.name}`;
+            link.style.textDecoration = 'none';
+            link.style.color = '#007bff';
+            link.style.fontSize = '16px';
+
+            listItem.appendChild(link);
+            list.appendChild(listItem);
+        });
+
+        popupContainer.appendChild(list);
+
+        // Add a close button
+        const closeButton = document.createElement('button');
+        closeButton.textContent = 'Close';
+        closeButton.style.marginTop = '20px';
+        closeButton.style.padding = '10px 20px';
+        closeButton.style.backgroundColor = '#007bff';
+        closeButton.style.color = '#fff';
+        closeButton.style.border = 'none';
+        closeButton.style.borderRadius = '4px';
+        closeButton.style.cursor = 'pointer';
+
+        closeButton.onclick = function () {
+            document.body.removeChild(popupContainer);
+            document.body.removeChild(overlay);
+        };
+
+        popupContainer.appendChild(closeButton);
+
+        // Add an overlay to dim the background
+        const overlay = document.createElement('div');
+        overlay.id = 'overlay';
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        overlay.style.zIndex = '999';
+
+        overlay.onclick = closeButton.onclick; // Close popup on overlay click
+
+        // Append the popup and overlay to the body
+        document.body.appendChild(overlay);
+        document.body.appendChild(popupContainer);
+    } -->
