@@ -216,90 +216,181 @@ function submitForm(event) {
 </script>
 
 
-
-
 <script>
-  // Function to check if the user is on a mobile device, even in desktop mode
-  function isMobileDevice() {
-  const userAgent = navigator.userAgent.toLowerCase();
-  
-  // Check if it's a touchscreen device
-  const hasTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+  // Function to generate the UPI QR code or direct link based on the device type
+  document.getElementById('generateQrButton').onclick = function () {
+    const adharNumber = document.getElementById('adhar').value;
 
-  // Check for common mobile user agents
-  const isMobile = /iphone|ipod|android|windows phone/i.test(userAgent);
-  
-  // If it's a touchscreen and matches mobile user agent, classify as mobile
-  if (hasTouchScreen && isMobile) {
-    return true;
+    const donorName = document.getElementById('name').value;
+    const donorPhone = document.getElementById('text').value;
+    const donorEmail = document.getElementById('email').value;
+
+    if (!adharNumber) {
+      alert("Please enter your Aadhar number.");
+      return;
+    }
+
+    if (!donorEmail) {
+      alert("Please enter your mail id!");
+      return;
+    }
+
+    if (!donorName) {
+      alert("Please enter your name!");
+      return;
+    }
+
+    if (!donorPhone) {
+      alert("Please enter your phone number!");
+      return;
+    }
+
+    if (!formSubmitted) {
+      alert("Please submit the form before generating the QR code.");
+      return;
+    }
+
+    const amount = 11000;
+
+    if (isNaN(amount) || amount <= 0) {
+      alert("Invalid amount!");
+      return;
+    }
+
+    // UPI data for QR code and link
+    const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(upiData)}`;
+    // Function to detect device type and proceed
+
+    detectDeviceAndProceed(amount, adharNumber, qrCodeUrl);
+    function detectDeviceAndProceed(amount, adharNumber, qrCodeUrl) {
+      const userAgent = navigator.userAgent.toLowerCase();
+      const isTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+      const isAndroid = () => /android/.test(userAgent);
+      const isIphone = () =>
+        /iphone|ipad|ipod/.test(userAgent) ||
+        (isTouchScreen && /mac os x/.test(userAgent) && navigator.maxTouchPoints > 1);
+      const isDesktop = () =>
+        !isTouchScreen && (/windows/.test(userAgent) || /macintosh|mac os x/.test(userAgent));
+
+      const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
+
+      if (isAndroid()) {
+        console.log('Redirecting to Android UPI URL:', upiData);
+        window.location.href = upiData;
+      } else if (isIphone()) {
+        console.log('Handling iOS UPI redirection');
+        redirectToUPIAppOnIOS(adharNumber, amount);
+      } else if (isDesktop()) {
+        console.log('Displaying QR Code for Desktop:', qrCodeUrl);
+        openQrWindow(qrCodeUrl);
+      } else {
+        console.log('Device not detected. Defaulting to QR Code.');
+        openQrWindow(qrCodeUrl);
+      }
+    }
+
+
+    function redirectToUPIAppOnIOS(adharNumber, amount) {
+      const appLinks = [
+        {
+          name: "Google Pay",
+          url: `tez://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+        },
+        {
+          name: "PhonePe",
+          url: `phonepe://pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+        },
+        {
+          name: "Paytm",
+          url: `paytmmp://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+        },
+        {
+          name: "BHIM",
+          url: `bhim://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+        }
+      ];
+      const optionsHtml = window.open('', '_blank', 'width=600,height=800');
+      optionsHtml.document.write(`
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Payment Options</title>
+      <style>
+          .payment-container {
+              display: grid;
+              gap: 15px;
+              grid-template-columns: 1fr;
+              margin: 0 auto;
+              max-width: 90%;
+              text-align: center;
+          }
+          .payment-button {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background-color: #fff;
+              border: 1px solid #ddd;
+              border-radius: 12px;
+              padding: 15px;
+              text-decoration: none;
+              color: black;
+              box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+              transition: transform 0.2s, box-shadow 0.2s;
+          }
+          .payment-button:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+          }
+          .payment-button img {
+              width: 40px;
+              height: 40px;
+              margin-right: 10px;
+          }
+          .payment-button span {
+              font-size: 1rem;
+              font-weight: 500;
+          }
+      </style>
+  </head>
+  <body>
+      <div class="payment-container">
+        <h1>Select prefered UPI Apps!</h1>
+        <br><br><br>
+          <a href="tez://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR" class="payment-button">
+              <img src="/images/goooglepay.png" alt="Google Pay">
+              <span>Google Pay</span>
+          </a>
+          <a href="phonepe://pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR" class="payment-button">
+              <img src="/images/phonepay.png" alt="PhonePe">
+              <span>PhonePe</span>
+          </a>
+          <a href="paytmmp://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR" class="payment-button">
+              <img src="/images/paytm.png" alt="Paytm">
+              <span>Paytm</span>
+          </a>
+          <a href="bhim://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR" class="payment-button">
+              <img src="/images/bhim-upi-icon-4059309141.png" alt="BHIM">
+              <span>BHIM UPI</span>
+          </a>
+      </div>
+  </body>
+  </html>
+`);
+      optionsHtml.document.close(); // Finalize document writing
+    }
   }
 
-  // If it's a touchscreen, but not a mobile user agent (e.g., touchscreen laptop), classify as desktop
-  if (hasTouchScreen && !isMobile) {
-    return false;
-  }
-
-  // If no touchscreen, classify as desktop
-  return false;
-}
 
 
-// Function to generate the UPI QR code or direct link based on the device type
-document.getElementById('generateQrButton').onclick = function() {
-  const adharNumber = document.getElementById('adhar').value;
-  const donorName = document.getElementById('name').value;
-  const donorPhone = document.getElementById('text').value;
-  const donorEmail = document.getElementById('email').value;
 
-  if (!adharNumber) {
-    alert("Please enter your Aadhar number.");
-    return;
-  }
-
-  if(!donorEmail){
-    alert("Please enter your mail id!");
-    return;
-  }
-
-  if(!donorName){
-    alert("Please enter your name!");
-    return; 
-  }
-
-  if(!donorPhone){
-    alert("Please enter your phone number!");
-    return;
-  }
-
-  if (!formSubmitted) {
-    alert("Please submit the form before generating the QR code.");
-    return;
-  }
-  
-  const amount = 11000;
-
-  if (isNaN(amount) || amount <= 0) {
-    alert("Invalid amount!");
-    return;
-  }
-
-  // UPI data for QR code and link
-  const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(upiData)}`;
-
-  if (isMobileDevice()) {
-    // Open UPI link directly for mobile users
-    window.location.href = upiData;
-  } else {
-    // Display QR code in a new window for non-mobile users
-    openQrWindow(qrCodeUrl);
-  }
-};
-
-// Function to open QR code in a new window
-function openQrWindow(qrCodeUrl) {
-  const qrWindow = window.open('', '_blank', 'width=500,height=600');
-  qrWindow.document.write(`
+  // Function to open QR code in a new window
+  function openQrWindow(qrCodeUrl) {
+    const qrWindow = window.open('', '_blank', 'width=500,height=600');
+    qrWindow.document.write(`
     <html>
       <head>
         <title>UPI Payment QR Code</title>
@@ -315,6 +406,6 @@ function openQrWindow(qrCodeUrl) {
       </body>
     </html>
   `);
-}
+  }
 
 </script>
