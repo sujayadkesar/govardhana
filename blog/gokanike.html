@@ -19,7 +19,7 @@ description: Submit your details and generate a UPI QR code for payment
     <input type="text" name="phone" id="text" placeholder="Enter your phone number..." required />
 
     <label for="amount" style="display: none;">Donated for Go Kanike</label>
-    <input type="text" name="amount" id="amount" value="365" style="display: none;" />
+    <input type="text" name="amount" id="amount" value="unknown" style="display: none;" />
 
     <input type="submit" value="Submit" />
   </form>
@@ -169,7 +169,7 @@ document.getElementById('generateQrButton').onclick = function() {
     return;
   }
 
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D${amount}%26cu%3DINR%26tn%3D${adharNumber}`;
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D%26cu%3DINR%26tn%3D${adharNumber}`;
   console.log("Generated QR Code URL:", qrCodeUrl);
 
   openQrWindow(qrCodeUrl);
@@ -409,4 +409,15 @@ function submitForm(event) {
   `);
   }
 
+</script>
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2ZJXCX9BQF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2ZJXCX9BQF');
 </script>

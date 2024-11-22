@@ -4,19 +4,10 @@
 title: Shri Govardhan [R] Goshala
 url: "https://shrigovardhan.org"
 baseurl:
-google_analytics_key: G-79H08BL92L
+google_analytics_key: G-2ZJXCX9BQF
 google_maps_javascript_api_key:
 disqus_shortname:
 
-# <!-- Google tag (gtag.js) -->
-# <script async src="https://www.googletagmanager.com/gtag/js?id=G-79H08BL92L"></script>
-# <script>
-#   window.dataLayer = window.dataLayer || [];
-#   function gtag(){dataLayer.push(arguments);}
-#   gtag('js', new Date());
-
-#   gtag('config', 'G-79H08BL92L');
-# </script>
 
 # Values for the jekyll-seo-tag gem (https://github.com/jekyll/jekyll-seo-tag)
 # logo: /siteicon.png
