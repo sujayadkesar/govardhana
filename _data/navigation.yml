@@ -19,6 +19,6 @@
   new_window: true
   highlight: false
 - name: Gallery
-  link: /gallery/
+  link: /gallary/
   new_window: false
   highlight: false
