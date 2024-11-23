@@ -27,141 +27,104 @@ description: Shri Govardhan [R] Goshala
       </div>
     </div>
   </div>
-  <div class="containerr">
-    <div class="polaroid">
-      <div class="polaroid__content">
-        <div class="polaroid__content-image">
-          <img src="/images/8193b777-9801-4213-86d8-f5b15879e7fe.jpg" alt="">
-        </div>
-        <div class="polaroid__content-caption">
-          <p>Punganur</p>
-        </div>
+  <div class="polaroid">
+    <div class="polaroid__content">
+      <div class="polaroid__content-image">
+        <img src="/images/8193b777-9801-4213-86d8-f5b15879e7fe.jpg" alt="">
+      </div>
+      <div class="polaroid__content-caption">
+        <p>Punganur</p>
       </div>
     </div>
-
-    <div class="containerr">
-      <div class="polaroid">
-        <div class="polaroid__content">
-          <div class="polaroid__content-image">
-            <img src="/images/3cow.jpg" alt="">
-          </div>
-          <div class="polaroid__content-caption">
-            <p>Gir</p>
-          </div>
-        </div>
+  </div>
+  <div class="polaroid">
+    <div class="polaroid__content">
+      <div class="polaroid__content-image">
+        <img src="/images/3cow.jpg" alt="">
       </div>
-      <div class="containerr">
-        <div class="polaroid">
-          <div class="polaroid__content">
-            <div class="polaroid__content-image">
-              <img src="/images/gopooja.jpg" alt="">
-            </div>
-            <div class="polaroid__content-caption">
-              <p>Go Grasa Samarpana</p>
-            </div>
-          </div>
-        </div>
-        <div class="containerr">
-          <div class="polaroid">
-            <div class="polaroid__content">
-              <div class="polaroid__content-image">
-                <img src="/images/goshala.jpg" alt="">
-              </div>
-              <div class="polaroid__content-caption">
-                <p>Glimpse of Goshala</p>
-              </div>
-            </div>
-          </div>
-          <div id="frame">
-            <div id="border">
-              <video width="640" height="360" controls>
-                <source src="{{ site.baseurl }}/images/flyin.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            </div><!-- #border -->
-          </div><!-- #frame -->
+      <div class="polaroid__content-caption">
+        <p>Gir</p>
+      </div>
+    </div>
+  </div>
+  <div class="polaroid">
+    <div class="polaroid__content">
+      <div class="polaroid__content-image">
+        <img src="/images/gopooja.jpg" alt="">
+      </div>
+      <div class="polaroid__content-caption">
+        <p>Go Grasa Samarpana</p>
+      </div>
+    </div>
+  </div>
+  <div class="polaroid">
+    <div class="polaroid__content">
+      <div class="polaroid__content-image">
+        <img src="/images/goshala.jpg" alt="">
+      </div>
+      <div class="polaroid__content-caption">
+        <p>Glimpse of Goshala</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="video-frame">
+  <video width="640" height="360" controls>
+    <source src="{{ site.baseurl }}/images/flyin.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
+
+<div class="video-frame">
+  <video width="640" height="360" controls>
+    <source src="{{ site.baseurl }}/images/Govardhana.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</div>
 
 
-          <div id="frame">
-            <div id="border">
-              <video width="640" height="360" controls>
-                <source src="{{ site.baseurl }}/images/Govardhana.mp4" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            </div><!-- #border -->
-          </div><!-- #frame -->
 
-
-          <style>
-          /* Main container for flex layout */
-.containerr {
-  display: flex;
-  justify-content: space-between; /* Distributes space evenly */
-  align-items: flex-start; /* Align items to the top */
-  flex-wrap: wrap; /* Allows items to wrap to the next row */
-  gap: 20px; /* Space between items */
-}
-
-/* Individual polaroid cards */
-.polaroid {
-  flex: 1 1 calc(50% - 20px); /* Two items per row, accounting for the gap */
-  max-width: 400px;
-  height: 450px;
-  background-color: white;
-  padding: 1rem;
-  box-shadow: 0 0.2rem 1.2rem rgba(0, 0, 0, 0.2);
-}
-
-/* Image container */
-.polaroid__content-image {
-  height: 350px;
-  width: 100%;
-  overflow: hidden;
-}
-
-/* Image styling */
-.polaroid__content-image > img {
-  height: 100%;
-  width: 100%;
-  display: block;
-  object-fit: cover;
-}
-
-/* Caption styling */
-.polaroid__content-caption {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 25px;
-}
-
-/* Frame styling for videos */
-#frame {
-  margin: 20px auto;
-  border: solid 15px #555;
-  max-width: 600px;
-  box-shadow: -3px -3px 12px #999;
-}
-
-#border {
-  padding: 0;
-  margin: 0;
-  border: solid 30px white;
-  box-shadow: -3px -3px 12px #999;
-}
-
-video {
-  display: block;
-  width: 100%;
-  height: auto;
-  border: solid 2px #aaa;
-}
-
-/* Responsive behavior for smaller screens */
-@media (max-width: 768px) {
-  .polaroid {
-    flex: 1 1 100%; /* Single column on small screens */
+<style>
+  /* Main container for polaroids */
+  .containerr {
+    display: flex;
+    flex-wrap: wrap;
+    /* Allows wrapping to the next row */
+    justify-content: space-between;
+    /* Distributes items with space between */
+    gap: 20px;
+    /* Adds consistent spacing */
   }
-}
 
-          </style>
+  /* Each polaroid */
+  .polaroid {
+    flex: 0 1 calc(50% - 20px);
+    /* Two items per row with a gap */
+    max-width: calc(50% - 20px);
+    background-color: white;
+    padding: 1rem;
+    box-shadow: 0 0.2rem 1.2rem rgba(0, 0, 0, 0.2);
+  }
+
+  /* Video styling for single row */
+  .video-frame {
+    margin: 20px auto;
+    max-width: 640px;
+    text-align: center;
+  }
+
+  video {
+    width: 100%;
+    height: auto;
+    border: solid 2px #aaa;
+  }
+
+  /* Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    .polaroid {
+      flex: 1 1 100%;
+      /* One item per row on smaller screens */
+    }
+  }
+</style>
