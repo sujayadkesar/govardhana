@@ -8,7 +8,7 @@ description: Shri Govardhan [R] Goshala
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2ZJXCX9BQF"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag() { dataLayer.push(arguments); }
   gtag('js', new Date());
 
   gtag('config', 'G-2ZJXCX9BQF');
@@ -51,109 +51,111 @@ description: Shri Govardhan [R] Goshala
         </div>
       </div>
 
-<div id="frame">
-    <div id="border">
-        <video width="640" height="360" controls>
+      <div id="frame">
+        <div id="border">
+          <video width="640" height="360" controls>
             <source src="{{ site.baseurl }}/images/flyin.mp4" type="video/mp4">
             Your browser does not support the video tag.
-        </video>
-    </div><!-- #border -->
-  </div><!-- #frame -->
+          </video>
+        </div><!-- #border -->
+      </div><!-- #frame -->
 
-  <div class="container">
-    <div class="polaroid">
-      <div class="polaroid__content">
-        <div class="polaroid__content-image">
-          <img src="/images/gopooja.jpg" alt="">
-        </div>
-        <div class="polaroid__content-caption">
-          <p>Gir</p>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="polaroid">
-        <div class="polaroid__content">
-          <div class="polaroid__content-image">
-            <img src="/images/goshala.jpg" alt="">
-          </div>
-          <div class="polaroid__content-caption">
-            <p>Gir</p>
+      <div class="container">
+        <div class="polaroid">
+          <div class="polaroid__content">
+            <div class="polaroid__content-image">
+              <img src="/images/gopooja.jpg" alt="">
+            </div>
+            <div class="polaroid__content-caption">
+              <p>Go Grasa Samarpana</p>
+            </div>
           </div>
         </div>
-      </div>
-<div id="frame">
-    <div id="border">
-        <video width="640" height="360" controls>
-            <source src="{{ site.baseurl }}/images/Govardhana.mp4" type="video/mp4">
-            Your browser does not support the video tag.
-        </video>
-    </div><!-- #border -->
-  </div><!-- #frame -->
+        <div class="container">
+          <div class="polaroid">
+            <div class="polaroid__content">
+              <div class="polaroid__content-image">
+                <img src="/images/goshala.jpg" alt="">
+              </div>
+              <div class="polaroid__content-caption">
+                <p>Glimpse of Goshala</p>
+              </div>
+            </div>
+          </div>
+          <div id="frame">
+            <div id="border">
+              <video width="640" height="360" controls>
+                <source src="{{ site.baseurl }}/images/Govardhana.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div><!-- #border -->
+          </div><!-- #frame -->
 
-  
-<style>
 
-  #frame{
-    position:relative;
-    padding:0;
-    margin:0;
-    border:solid 15px #555; 
-    max-width:600px;
-    margin:40px auto;
-    box-shadow:-3px -3px 12px #999;
-    
-    }
-    #border {
-    position: relative;
-    padding: 0;
-    margin: 0;
-    border: solid 30px white; /* Reduced from 70px to 30px */
-    box-shadow: -3px -3px 12px #999;
-}
+          <style>
+            #frame {
+              position: relative;
+              padding: 0;
+              margin: 0;
+              border: solid 15px #555;
+              max-width: 600px;
+              margin: 40px auto;
+              box-shadow: -3px -3px 12px #999;
 
-  video{
-    display:block;
-    padding:0;
-    margin:0;
-    width:100%;
-    height:auto;
-    border-top:solid 2px #aaa;
-    border-left:solid 2px #aaa;
-    border-bottom:solid 2px #ccc;
-    border-right:solid 2px #ccc;
-    }
+            }
 
-    .polaroid {
-      margin: 30px;
-      width: 400px;
-      height: 450px;
-      background-color: white;
-      padding: 1rem;
-      box-shadow: 0 0.2rem 1.2rem rgba(0, 0, 0, 0.2);
-      transform: rotate(0deg); /* Initial transform, randomized later */
-      transition: transform 0.3s ease;
-    }
+            #border {
+              position: relative;
+              padding: 0;
+              margin: 0;
+              border: solid 30px white;
+              /* Reduced from 70px to 30px */
+              box-shadow: -3px -3px 12px #999;
+            }
 
-    .polaroid__content-image {
-      height: 350px;
-      width: 100%;
-      overflow: hidden;
-    }
+            video {
+              display: block;
+              padding: 0;
+              margin: 0;
+              width: 100%;
+              height: auto;
+              border-top: solid 2px #aaa;
+              border-left: solid 2px #aaa;
+              border-bottom: solid 2px #ccc;
+              border-right: solid 2px #ccc;
+            }
 
-    .polaroid__content-image img {
-      height: 100%;
-      width: 100%;
-      display: block;
-      object-fit: cover;
-    }
+            .container {
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+              /* Center the items */
+              gap: 20px;
+              /* Space between rows and columns */
+            }
 
-    .polaroid__content-caption {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 25px;
-      text-align: center;
-    }
-   
-</style>
+            .polaroid {
+              flex: 1 1 calc(50% - 40px);
+              /* 2 per row with spacing adjustment */
+              max-width: 400px;
+              /* Limit the max width */
+              background-color: white;
+              padding: 1rem;
+              box-shadow: 0 0.2rem 1.2rem rgba(0, 0, 0, 0.2);
+              transition: transform 0.3s ease;
+            }
+
+            .polaroid__content-image img {
+              height: 100%;
+              width: 100%;
+              object-fit: cover;
+            }
+
+            .polaroid__content-caption {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-size: 25px;
+              text-align: center;
+            }
+          </style>
