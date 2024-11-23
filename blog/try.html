@@ -192,6 +192,6 @@ description: Shri Govardhan [R] Goshala
         <script>
           // Apply random rotation to polaroids
           document.querySelectorAll('.polaroid').forEach((item, index) => {
-            item.style.setProperty('--random', index % 1 ? Math.random() : -Math.random());
+            item.style.setProperty('--random', index % 4 ? Math.random() : -Math.random());
           });
         </script>
