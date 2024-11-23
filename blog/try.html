@@ -1,388 +1,178 @@
 ---
-title: Contact Form with UPI QR Code
-heading: गावः सुरभिर्नो मुर्धन
-description: Submit your details and generate a UPI QR code for payment
+title: Govardhana
+description: Shri Govardhan [R] Goshala
 ---
+<meta name="viewport" content="width=1024">
 
-<div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
-  <form id="paymentForm" onsubmit="submitForm(event)">
-    <label for="name">Full Name</label>
-    <input type="text" name="name" id="name" placeholder="Enter your name..." required />
-
-    <label for="email">Email Address</label>
-    <input type="email" name="email" id="email" placeholder="Enter your email..." required />
-
-    <label for="adhar">Aadhar Number</label>
-    <input type="text" name="adhar" id="adhar" placeholder="Enter your Aadhar..." required />
-
-    <label for="text">Phone Number</label>
-    <input type="text" name="phone" id="text" placeholder="Enter your phone number..." required />
-
-    <label for="amount" style="display: none;">Donated for one Jeep Grass</label>
-    <input type="text" name="amount" id="amount" value="6500" style="display: none;" />
-
-    <input type="submit" value="Submit" />
-  </form>
-
-  <div id="confirmationMessage" style="display:none; color: green;">
-    <br><br>Form submitted successfully! Kindly generate the QR and complete the payment
-  </div>
-</div>
-
-<br><br><br>
-
-<div style="text-align: center;">
-  <button id="generateQrButton" class="pulse-button" style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
-           border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
-           color: #050829; border-radius: 8px;">
-    Generate QR Code!
-  </button>
-</div>
-
+<head>
+	<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2ZJXCX9BQF"></script>
 <script>
-  // Multiplication table 'd'
-  var d = [
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [1, 2, 3, 4, 0, 6, 7, 8, 9, 5],
-    [2, 3, 4, 0, 1, 7, 8, 9, 5, 6],
-    [3, 4, 0, 1, 2, 8, 9, 5, 6, 7],
-    [4, 0, 1, 2, 3, 9, 5, 6, 7, 8],
-    [5, 9, 8, 7, 6, 0, 4, 3, 2, 1],
-    [6, 5, 9, 8, 7, 1, 0, 4, 3, 2],
-    [7, 6, 5, 9, 8, 2, 1, 0, 4, 3],
-    [8, 7, 6, 5, 9, 3, 2, 1, 0, 4],
-    [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
-  ];
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-  // Permutation table 'p'
-  var p = [
-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-    [1, 5, 7, 6, 2, 8, 3, 0, 9, 4],
-    [5, 8, 0, 3, 7, 9, 6, 1, 4, 2],
-    [8, 9, 1, 6, 0, 4, 3, 5, 2, 7],
-    [9, 4, 5, 3, 1, 2, 6, 8, 7, 0],
-    [4, 2, 8, 6, 5, 7, 3, 9, 0, 1],
-    [2, 7, 9, 3, 8, 0, 6, 4, 1, 5],
-    [7, 0, 4, 6, 9, 1, 3, 2, 5, 8]
-  ];
-
-  // Inverse table 'inv'
-  var inv = [0, 4, 3, 2, 1, 5, 6, 7, 8, 9];
-
-  // Function to invert an array
-  function invArray(array) {
-    if (Object.prototype.toString.call(array) == "[object Number]") {
-      array = String(array);
-    }
-    if (Object.prototype.toString.call(array) == "[object String]") {
-      array = array.split("").map(Number);
-    }
-    return array.reverse();
-  }
-
-  // Function to generate checksum
-  function generate(array) {
-    var c = 0;
-    var invertedArray = invArray(array);
-
-    for (var i = 0; i < invertedArray.length; i++) {
-      c = d[c][p[((i + 1) % 8)][invertedArray[i]]];
-    }
-    return inv[c];
-  }
-
-  // Function to validate checksum
-  function validate(array) {
-    var c = 0;
-    var invertedArray = invArray(array);
-
-    for (var i = 0; i < invertedArray.length; i++) {
-      c = d[c][p[(i % 8)][invertedArray[i]]];
-    }
-    return (c === 0);
-  }
-
-  // Function to validate Aadhar number
-  function validate_adhar(adhar) {
-    console.clear();
-    // Check if the Aadhar number is 12 digits
-    if (adhar >= 100000000000 && adhar <= 999999999999) {
-      if (validate(adhar) == false) {
-        console.log("Invalid Aadhar Number");
-        return false;
-      } else {
-        return true;
-      }
-    } else {
-      console.log("Aadhar Number Should Be 12 Digits");
-      return false;
-    }
-  }
-
-  // Function to validate inputs and handle form submission
-  function validateInputs() {
-    const email = document.getElementById('email').value;
-    const adhar = document.getElementById('adhar').value;
-    const phone = document.getElementById('text').value;
-
-    // Email validation (basic pattern)
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(email)) {
-      alert("Please enter a valid email address.");
-      return false;
-    }
-
-    // Aadhar validation
-    if (!validate_adhar(adhar)) {
-      alert("Please enter a valid Aadhar number.");
-      return false;
-    }
-
-    // Phone number validation (10 digits only)
-    const phonePattern = /^[6-9]\d{9}$/;
-
-    if (!phonePattern.test(phone) || /^(\d)\1{9}$/.test(phone)) {
-      alert("Please enter a valid 10-digit Indian mobile number.");
-      return false;
-    }
-
-    return true;
-
-  }
-
-
-
-
-  let formSubmitted = false;
-
-
-  function submitForm(event) {
-    event.preventDefault(); // Prevent default form submission
-
-    if (formSubmitted) {
-      alert("You have already submitted the form.");
-      return;
-    }
-
-    // Run validation before submission
-    if (!validateInputs()) return;
-
-    // Gather form data
-    const formData = new FormData(document.getElementById("paymentForm"));
-    const url = "https://script.google.com/macros/s/AKfycbwE3W4PdSfSve2DrhHPhXMq_7sj453UcSTqDTNjj3AtWduShhRZAk63o3JyIpUqLLrmOw/exec"; // Replace with your Google Apps Script URL
-
-    // Send form data via fetch (AJAX)
-    fetch(url, {
-      method: "POST",
-      body: formData
-    })
-      .then(response => response.text())
-      .then(data => {
-        // Show confirmation message
-        formSubmitted = true;
-        document.getElementById("confirmationMessage").style.display = "block";
-        // Do not reset the form to retain values for QR code generation
-      })
-
-      .catch(error => {
-        console.error("Error submitting form:", error);
-      });
-  }
+  gtag('config', 'G-2ZJXCX9BQF');
 </script>
+</head>
 
+
+<section class="hero">
+<p style="color: rgb(2, 2, 78); font-weight: bold;">Shreemad Jagadguru Shankaracharya<br>Shree Sonda Swarnavalli Mahasamsthanam</p>
+
+	<div class="text-container">
+	  <h1 class="editable"><strong>Shri Govardhan [R] Goshala</strong></h1> <br><br>
+	  <!-- <p class="subtext editable">Karadolli Yellapur UttaraKannada.</p> -->
+  
+	  <div>
+		<img src="{{ site.baseurl }}/images/vikas-makwana-UETquu-C_98-unsplash.jpg" 
+			 alt="Screenshot" class="galary-image" />
+	  </div>
+<br><br><br><br>
+	  <div>
+		<a href="{{ site.baseurl }}/goseva/" 
+       onclick="sendPostRequest()"
+		   class="pulse-button"
+		   style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
+				  border: none;font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
+				  color: #050829; border-radius: 8px; text-decoration: none;">
+		  Donate now!!
+		</a>
+	  </div>
+
+	</div>
+  </section>
+  
+  <style>
+	@keyframes pulse {
+	  0% {
+		box-shadow: 0 0 0 0 rgb(255, 230, 0);
+	  }
+	  70% {
+		box-shadow: 0 0 0 20px rgba(255, 230, 0, 0);
+	  }
+	  100% {
+		box-shadow: 0 0 0 0 #ffae0000;
+	  }
+	}
+  
+	.pulse-button:hover {
+	  animation: rise 2s infinite;
+	}
+  </style>
+  
+  
+<div class="content">
+	<section>
+		<div class="container flex">
+			<div class="text editable">
+				<h2>One step towards<strong style="color: orangered;"> Go Seva!</strong></h2>
+				<p>You can <strong>Adopt a Cow</strong> for 1 year at  just ₹11,000</p>
+				<p style="color: #050829; font-weight: bold; font-style: italic;">गवां यः पूजयेत्काले मुखे तस्य वसुन्धरा।</p>
+			</div>
+			<div class="image">
+				<img src="{{ site.baseurl }}/images/homeless.jpg" alt="Screenshot" class="screenshot editable" />
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div class="container flex">
+			<div class="text editable">
+				<h2><strong style="color: orangered; font-weight: bold;">GoGrasa Samaparpana</strong> a Purposeful way to cellebrate your special day's! </h2>
+				<p>cellebrate your birthday / anniversary etc in a meaningfull way through GoGrasa Samarpana!! with any amount of your wish!</p>
+				<p style="color: #050829; font-weight: bold; font-style: italic;">आत्माहार प्रमाणेन प्रत्योहं गोष्ठु दीयते| <br>
+					अकृत्वा स्वयंहारं कुर्वन् प्राप्यति दुर्गतिम||</p>
+
+			</div>
+			<div class="image">
+				<img src="{{ site.baseurl }}/images/blake-lisk-7KBUuFzT9Dk-unsplash.jpg" alt="Screenshot" class="screenshot editable" />
+			</div>
+		</div>
+	</section>
+
+	<section>
+		<div class="container flex">
+			<div class="text editable">
+				<h2>Here's how you can also<strong> save money </strong>by donating!!</h2>
+				<p>You can claim <strong style="color: orangered; font-weight: bold;"> income tax exepmptions</strong> for your donations under section 80G </p>
+			</div>
+			<div class="image">
+				<img src="{{ site.baseurl }}/images/derek-story-KVghA6Wv7S8-unsplash.jpg" alt="Screenshot" class="screenshot editable" />
+			</div>
+		</div>
+	</section>
+
+	<section class="testimonial">
+		<div class="container flex">
+			<div class="testimonial-block">
+				<div class="square-image"><img src="https://source.unsplash.com/6anudmpILw4/600x400" alt="Jim James" class="editable"></div>
+				<blockquote>
+					<p class="editable">गोस्पर्शनविहीनस्य  गोदहनमजानतः |<br> &nbsp;गोपोषणविहीनस्य प्राहुर्जन्म निरर्थकम् ||</p>
+					<p class="editable author"> - Garuda Purana.</p>
+				</blockquote>
+			</div>
+		</div>
+	</section>
+
+	<section class="bottom-cta">
+		<h2 class="editable" style="color: rgb(6, 4, 30);"><strong>Can't keep a Cow ? </strong>Keep the spirit alive with GoSeva</h2>
+		<div class="button alt"><a href="{{ site.baseurl }}/goseva/" style="color: #050829;">Contribute Now! </a></div>
+	</section>
+</div>
 
 
 
 <script>
-  // Function to generate the UPI QR code or direct link based on the device type
-  document.getElementById('generateQrButton').onclick = function () {
-    const adharNumber = document.getElementById('adhar').value;
+   function captureClientDetails() {
+      const details = {
+        userAgent: navigator.userAgent,
+        platform: navigator.platform,
+        screenWidth: window.screen.width,
+        screenHeight: window.screen.height,
+        innerWidth: window.innerWidth,
+        innerHeight: window.innerHeight,
+        colorDepth: window.screen.colorDepth,
+        language: navigator.language,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        deviceMemory: navigator.deviceMemory || 'Unknown',
+        hardwareConcurrency: navigator.hardwareConcurrency || 'Unknown',
+        referrer: document.referrer || 'Direct Access',
+        cookiesEnabled: navigator.cookieEnabled,
+        doNotTrack: navigator.doNotTrack,
+        connectionType: navigator.connection?.type || 'Unknown',
+        effectiveType: navigator.connection?.effectiveType || 'Unknown',
+      };
 
-    const donorName = document.getElementById('name').value;
-    const donorPhone = document.getElementById('text').value;
-    const donorEmail = document.getElementById('email').value;
-
-    if (!adharNumber) {
-      alert("Please enter your Aadhar number.");
-      return;
-    }
-
-    if (!donorEmail) {
-      alert("Please enter your mail id!");
-      return;
-    }
-
-    if (!donorName) {
-      alert("Please enter your name!");
-      return;
-    }
-
-    if (!donorPhone) {
-      alert("Please enter your phone number!");
-      return;
-    }
-
-    if (!formSubmitted) {
-      alert("Please submit the form before generating the QR code.");
-      return;
-    }
-
-    const amount = 11000;
-
-    if (isNaN(amount) || amount <= 0) {
-      alert("Invalid amount!");
-      return;
-    }
-
-    // UPI data for QR code and link
-    const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
-    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(upiData)}`;
-    // Function to detect device type and proceed
-
-    detectDeviceAndProceed(amount, adharNumber, qrCodeUrl);
-    function detectDeviceAndProceed(amount, adharNumber, qrCodeUrl) {
-      const userAgent = navigator.userAgent.toLowerCase();
-      const isTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-
-      const isAndroid = () => /android/.test(userAgent);
-      const isIphone = () =>
-        /iphone|ipad|ipod/.test(userAgent) ||
-        (isTouchScreen && /mac os x/.test(userAgent) && navigator.maxTouchPoints > 1);
-      const isDesktop = () =>
-        !isTouchScreen && (/windows/.test(userAgent) || /macintosh|mac os x/.test(userAgent));
-
-      const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
-
-      if (isAndroid()) {
-        console.log('Redirecting to Android UPI URL:', upiData);
-        window.location.href = upiData;
-      } else if (isIphone()) {
-        console.log('Handling iOS UPI redirection');
-        redirectToUPIAppOnIOS(adharNumber, amount);
-      } else if (isDesktop()) {
-        console.log('Displaying QR Code for Desktop:', qrCodeUrl);
-        openQrWindow(qrCodeUrl);
-      } else {
-        console.log('Device not detected. Defaulting to QR Code.');
-        openQrWindow(qrCodeUrl);
-      }
-    }
-
-
-    function redirectToUPIAppOnIOS(adharNumber, amount) {
-      const appLinks = [
-        {
-          name: "Google Pay",
-          url: `tez://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
-        },
-        {
-          name: "PhonePe",
-          url: `phonepe://pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
-        },
-        {
-          name: "Paytm",
-          url: `paytmmp://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
-        },
-        {
-          name: "BHIM",
-          url: `bhim://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
-        }
-      ];
-      const optionsHtml = window.open('', '_blank', 'width=600,height=800');
-      optionsHtml.document.write(`
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Payment Options</title>
-      <style>
-          .payment-container {
-              display: grid;
-              gap: 15px;
-              grid-template-columns: 1fr;
-              margin: 0 auto;
-              max-width: 90%;
-              text-align: center;
+      // Optionally, add geolocation
+      return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            details.latitude = position.coords.latitude;
+            details.longitude = position.coords.longitude;
+            details.accuracy = position.coords.accuracy;
+            resolve(details);
+          },
+          (error) => {
+            console.error('Geolocation error:', error);
+            resolve(details); // Resolve without location
           }
-          .payment-button {
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              background-color: #fff;
-              border: 1px solid #ddd;
-              border-radius: 12px;
-              padding: 15px;
-              text-decoration: none;
-              color: black;
-              box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-              transition: transform 0.2s, box-shadow 0.2s;
-          }
-          .payment-button:hover {
-              transform: translateY(-2px);
-              box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-          }
-          .payment-button img {
-              width: 40px;
-              height: 40px;
-              margin-right: 10px;
-          }
-          .payment-button span {
-              font-size: 1rem;
-              font-weight: 500;
-          }
-      </style>
-  </head>
-  <body>
-      <div class="payment-container">
-        <h1>Select prefered UPI Apps!</h1>
-        <br><br><br>
-          <a href="tez://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR" class="payment-button">
-              <img src="/images/goooglepay.png" alt="Google Pay">
-              <span>Google Pay</span>
-          </a>
-          <a href="phonepe://pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR" class="payment-button">
-              <img src="/images/phonepay.png" alt="PhonePe">
-              <span>PhonePe</span>
-          </a>
-          <a href="paytmmp://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR" class="payment-button">
-              <img src="/images/paytm.png" alt="Paytm">
-              <span>Paytm</span>
-          </a>
-          <a href="bhim://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR" class="payment-button">
-              <img src="/images/bhim-upi-icon-4059309141.png" alt="BHIM">
-              <span>BHIM UPI</span>
-          </a>
-      </div>
-  </body>
-  </html>
-`);
-      optionsHtml.document.close(); // Finalize document writing
+        );
+      });
     }
-  }
 
+    function sendPostRequest() {
+      captureClientDetails().then((details) => {
+        console.log('Captured Details:', details);
 
-
-
-  // Function to open QR code in a new window
-  function openQrWindow(qrCodeUrl) {
-    const qrWindow = window.open('', '_blank', 'width=500,height=600');
-    qrWindow.document.write(`
-    <html>
-      <head>
-        <title>UPI Payment QR Code</title>
-      </head>
-      <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0;">
-        <div style="text-align: center;">
-          <h2>Scan to Pay</h2>
-          <div style="display: flex; flex-direction: column; align-items: center;">
-            <img src="${qrCodeUrl}" alt="UPI Payment QR Code" style="width: 200px; height: 200px; margin-bottom: 10px;"/>
-            <p>Scan this code to make the payment</p>
-          </div>
-        </div>
-      </body>
-    </html>
-  `);
-  }
-
+        // Send POST request in the background
+        fetch('https://your-apps-script-url-here', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(details)
+        })
+        .then(() => console.log('POST request sent successfully'))
+        .catch((error) => console.error('Error sending POST request:', error));
+      });
+    }
 </script>
