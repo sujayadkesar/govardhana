@@ -1,178 +1,95 @@
----
-title: Govardhana
-description: Shri Govardhan [R] Goshala
----
-<meta name="viewport" content="width=1024">
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2ZJXCX9BQF"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-2ZJXCX9BQF');
-</script>
-</head>
-
-
-<section class="hero">
-<p style="color: rgb(2, 2, 78); font-weight: bold;">Shreemad Jagadguru Shankaracharya<br>Shree Sonda Swarnavalli Mahasamsthanam</p>
-
-	<div class="text-container">
-	  <h1 class="editable"><strong>Shri Govardhan [R] Goshala</strong></h1> <br><br>
-	  <!-- <p class="subtext editable">Karadolli Yellapur UttaraKannada.</p> -->
-  
-	  <div>
-		<img src="{{ site.baseurl }}/images/vikas-makwana-UETquu-C_98-unsplash.jpg" 
-			 alt="Screenshot" class="galary-image" />
-	  </div>
-<br><br><br><br>
-	  <div>
-		<a href="{{ site.baseurl }}/goseva/" 
-       onclick="sendPostRequest()"
-		   class="pulse-button"
-		   style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
-				  border: none;font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
-				  color: #050829; border-radius: 8px; text-decoration: none;">
-		  Donate now!!
-		</a>
-	  </div>
-
-	</div>
-  </section>
-  
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Polaroid Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet">
   <style>
-	@keyframes pulse {
-	  0% {
-		box-shadow: 0 0 0 0 rgb(255, 230, 0);
-	  }
-	  70% {
-		box-shadow: 0 0 0 20px rgba(255, 230, 0, 0);
-	  }
-	  100% {
-		box-shadow: 0 0 0 0 #ffae0000;
-	  }
-	}
-  
-	.pulse-button:hover {
-	  animation: rise 2s infinite;
-	}
+    body {
+      font-family: "Poor Story", cursive;
+      margin: 0;
+      padding: 0;
+      background-color: #5b9489;
+    }
+
+    .container {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .polaroid {
+      margin: 30px;
+      width: 400px;
+      height: 450px;
+      background-color: white;
+      padding: 1rem;
+      box-shadow: 0 0.2rem 1.2rem rgba(0, 0, 0, 0.2);
+      transform: rotate(0deg); /* Initial transform, randomized later */
+      transition: transform 0.3s ease;
+    }
+
+    .polaroid__content-image {
+      height: 350px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .polaroid__content-image img {
+      height: 100%;
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .polaroid__content-caption {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 25px;
+      text-align: center;
+    }
   </style>
-  
-  
-<div class="content">
-	<section>
-		<div class="container flex">
-			<div class="text editable">
-				<h2>One step towards<strong style="color: orangered;"> Go Seva!</strong></h2>
-				<p>You can <strong>Adopt a Cow</strong> for 1 year at  just ₹11,000</p>
-				<p style="color: #050829; font-weight: bold; font-style: italic;">गवां यः पूजयेत्काले मुखे तस्य वसुन्धरा।</p>
-			</div>
-			<div class="image">
-				<img src="{{ site.baseurl }}/images/homeless.jpg" alt="Screenshot" class="screenshot editable" />
-			</div>
-		</div>
-	</section>
+</head>
+<body>
+  <div class="container">
+    <div class="polaroid">
+      <div class="polaroid__content">
+        <div class="polaroid__content-image">
+          <img src="https://images.unsplash.com/photo-1544568100-847a948585b9?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ" alt="">
+        </div>
+        <div class="polaroid__content-caption">
+          <p>the good ol' boy</p>
+        </div>
+      </div>
+    </div>
 
-	<section>
-		<div class="container flex">
-			<div class="text editable">
-				<h2><strong style="color: orangered; font-weight: bold;">GoGrasa Samaparpana</strong> a Purposeful way to cellebrate your special day's! </h2>
-				<p>cellebrate your birthday / anniversary etc in a meaningfull way through GoGrasa Samarpana!! with any amount of your wish!</p>
-				<p style="color: #050829; font-weight: bold; font-style: italic;">आत्माहार प्रमाणेन प्रत्योहं गोष्ठु दीयते| <br>
-					अकृत्वा स्वयंहारं कुर्वन् प्राप्यति दुर्गतिम||</p>
+    <!-- Repeat for other polaroid elements -->
+    <div class="polaroid">
+      <div class="polaroid__content">
+        <div class="polaroid__content-image">
+          <img src="https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=400&fit=max&ixid=eyJhcHBfaWQiOjE0NTg5fQ" alt="">
+        </div>
+        <div class="polaroid__content-caption">
+          <p>mr i didn't do it</p>
+        </div>
+      </div>
+    </div>
 
-			</div>
-			<div class="image">
-				<img src="{{ site.baseurl }}/images/blake-lisk-7KBUuFzT9Dk-unsplash.jpg" alt="Screenshot" class="screenshot editable" />
-			</div>
-		</div>
-	</section>
+    <!-- Add more as required -->
+  </div>
 
-	<section>
-		<div class="container flex">
-			<div class="text editable">
-				<h2>Here's how you can also<strong> save money </strong>by donating!!</h2>
-				<p>You can claim <strong style="color: orangered; font-weight: bold;"> income tax exepmptions</strong> for your donations under section 80G </p>
-			</div>
-			<div class="image">
-				<img src="{{ site.baseurl }}/images/derek-story-KVghA6Wv7S8-unsplash.jpg" alt="Screenshot" class="screenshot editable" />
-			</div>
-		</div>
-	</section>
-
-	<section class="testimonial">
-		<div class="container flex">
-			<div class="testimonial-block">
-				<div class="square-image"><img src="https://source.unsplash.com/6anudmpILw4/600x400" alt="Jim James" class="editable"></div>
-				<blockquote>
-					<p class="editable">गोस्पर्शनविहीनस्य  गोदहनमजानतः |<br> &nbsp;गोपोषणविहीनस्य प्राहुर्जन्म निरर्थकम् ||</p>
-					<p class="editable author"> - Garuda Purana.</p>
-				</blockquote>
-			</div>
-		</div>
-	</section>
-
-	<section class="bottom-cta">
-		<h2 class="editable" style="color: rgb(6, 4, 30);"><strong>Can't keep a Cow ? </strong>Keep the spirit alive with GoSeva</h2>
-		<div class="button alt"><a href="{{ site.baseurl }}/goseva/" style="color: #050829;">Contribute Now! </a></div>
-	</section>
-</div>
-
-
-
-<script>
-   function captureClientDetails() {
-      const details = {
-        userAgent: navigator.userAgent,
-        platform: navigator.platform,
-        screenWidth: window.screen.width,
-        screenHeight: window.screen.height,
-        innerWidth: window.innerWidth,
-        innerHeight: window.innerHeight,
-        colorDepth: window.screen.colorDepth,
-        language: navigator.language,
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-        deviceMemory: navigator.deviceMemory || 'Unknown',
-        hardwareConcurrency: navigator.hardwareConcurrency || 'Unknown',
-        referrer: document.referrer || 'Direct Access',
-        cookiesEnabled: navigator.cookieEnabled,
-        doNotTrack: navigator.doNotTrack,
-        connectionType: navigator.connection?.type || 'Unknown',
-        effectiveType: navigator.connection?.effectiveType || 'Unknown',
-      };
-
-      // Optionally, add geolocation
-      return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            details.latitude = position.coords.latitude;
-            details.longitude = position.coords.longitude;
-            details.accuracy = position.coords.accuracy;
-            resolve(details);
-          },
-          (error) => {
-            console.error('Geolocation error:', error);
-            resolve(details); // Resolve without location
-          }
-        );
-      });
-    }
-
-    function sendPostRequest() {
-      captureClientDetails().then((details) => {
-        console.log('Captured Details:', details);
-
-        // Send POST request in the background
-        fetch('https://script.google.com/macros/s/AKfycbxPhTFeo6eT6eMabJEmfJxkpdYUuEibq6uuMWmKC5CvrVUZABmv2mzK4PvaZ3CNNmlM/exec', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(details)
-        })
-        .then(() => console.log('POST request sent successfully'))
-        .catch((error) => console.error('Error sending POST request:', error));
-      });
-    }
-</script>
+  <script>
+    // Random rotation effect for each polaroid
+    const polaroids = document.querySelectorAll('.polaroid');
+    polaroids.forEach(item => {
+      const randomRotation = Math.floor(Math.random() * (6 - -6 + 1) + -6); // Random degree between -6 and 6
+      item.style.transform = `rotate(${randomRotation}deg)`;
+    });
+  </script>
+</body>
+</html>
