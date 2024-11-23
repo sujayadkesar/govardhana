@@ -16,65 +16,46 @@ description: Shri Govardhan [R] Goshala
 
 
 
-<div class="containerr">
-  <div class="polaroid">
-    <div class="polaroid__content">
-      <div class="polaroid__content-image">
-        <img src="/images/ed00d592-f1fc-48ac-bf32-db5a498c5309.jpg" alt="">
-      </div>
-      <div class="polaroid__content-caption">
-        <p>Go Pooja</p>
-      </div>
-    </div>
+<div class="gallery">
+  <!-- Image 1 -->
+  <div class="gallery-item">
+    <img src="your-image1.jpg" alt="Image 1">
+    <p>Go Pooja</p>
   </div>
-  <div class="polaroid">
-    <div class="polaroid__content">
-      <div class="polaroid__content-image">
-        <img src="/images/8193b777-9801-4213-86d8-f5b15879e7fe.jpg" alt="">
-      </div>
-      <div class="polaroid__content-caption">
-        <p>Punganur</p>
-      </div>
-    </div>
+
+  <!-- Image 2 -->
+  <div class="gallery-item">
+    <img src="your-image2.jpg" alt="Image 2">
+    <p>Punganur</p>
   </div>
-  <div class="polaroid">
-    <div class="polaroid__content">
-      <div class="polaroid__content-image">
-        <img src="/images/3cow.jpg" alt="">
-      </div>
-      <div class="polaroid__content-caption">
-        <p>Gir</p>
-      </div>
-    </div>
+
+  <!-- Image 3 -->
+  <div class="gallery-item">
+    <img src="your-image3.jpg" alt="Image 3">
+    <p>Gir</p>
   </div>
-  <div class="polaroid">
-    <div class="polaroid__content">
-      <div class="polaroid__content-image">
-        <img src="/images/gopooja.jpg" alt="">
-      </div>
-      <div class="polaroid__content-caption">
-        <p>Go Grasa Samarpana</p>
-      </div>
-    </div>
+
+  <!-- Image 4 -->
+  <div class="gallery-item">
+    <img src="your-image4.jpg" alt="Image 4">
+    <p>Go Grasa Samarpana</p>
   </div>
-  <div class="polaroid">
-    <div class="polaroid__content">
-      <div class="polaroid__content-image">
-        <img src="/images/goshala.jpg" alt="">
-      </div>
-      <div class="polaroid__content-caption">
-        <p>Glimpse of Goshala</p>
-      </div>
-    </div>
+
+  <!-- Image 5 -->
+  <div class="gallery-item">
+    <img src="your-image5.jpg" alt="Image 5">
+    <p>Glimpse of Goshala</p>
+  </div>
+
+  <!-- Video -->
+  <div class="video-item">
+    <video controls>
+      <source src="your-video.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
   </div>
 </div>
 
-<div class="video-frame">
-  <video width="640" height="360" controls>
-    <source src="{{ site.baseurl }}/images/flyin.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</div>
 
 
 <div class="video-frame">
@@ -87,48 +68,46 @@ description: Shri Govardhan [R] Goshala
 
 
 <style>
-  /* Main container for polaroids */
-.containerr {
-  display: flex;
-  flex-wrap: wrap; /* Ensures items wrap to the next row */
+  /* Grid layout for gallery */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Two items per row */
   gap: 20px; /* Space between items */
-  justify-content: space-between; /* Even distribution */
+  margin: 20px;
 }
 
-/* Each polaroid item */
-.polaroid {
-  flex: 0 1 calc(50% - 20px); /* Two items per row with gap */
-  max-width: calc(50% - 20px);
-  background-color: white;
-  padding: 1rem;
-  box-shadow: 0 0.2rem 1.2rem rgba(0, 0, 0, 0.2);
+/* Styling for images */
+.gallery-item {
   text-align: center;
+  background: #fff;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
 }
 
-/* Ensures image fits within the container */
-.polaroid__content-image img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-/* Video styling for single row */
-.video-frame {
-  margin: 20px auto;
-  max-width: 640px;
-  text-align: center;
-}
-
-video {
+.gallery-item img {
   width: 100%;
   height: auto;
-  border: solid 2px #aaa;
+  border-radius: 8px;
+}
+
+/* Styling for videos */
+.video-item {
+  grid-column: span 2; /* Make video take one row */
+  text-align: center;
+}
+
+.video-item video {
+  width: 100%;
+  height: auto;
+  border: 2px solid #ccc;
+  border-radius: 8px;
 }
 
 /* Responsive design for smaller screens */
 @media (max-width: 768px) {
-  .polaroid {
-    flex: 1 1 100%; /* Single column layout on smaller screens */
+  .video-item {
+    grid-column: span 1; /* Ensure video fits smaller screens */
   }
 }
 
