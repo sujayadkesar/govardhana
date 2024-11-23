@@ -93,100 +93,75 @@ description: Shri Govardhan [R] Goshala
 
 
           <style>
-            /* Container styling */
-            .containerr {
-              display: flex;
-              justify-content: center;
-              /* Centers items horizontally */
-              align-items: flex-start;
-              /* Aligns items at the top */
-              flex-wrap: wrap;
-              /* Allows items to wrap to the next row if needed */
-              gap: 20px;
-              /* Adds space between rows and columns */
-              margin: 20px 0;
-              /* Optional: Adds space above and below the container */
-            }
+          /* Main container for flex layout */
+.containerr {
+  display: flex;
+  justify-content: space-between; /* Distributes space evenly */
+  align-items: flex-start; /* Align items to the top */
+  flex-wrap: wrap; /* Allows items to wrap to the next row */
+  gap: 20px; /* Space between items */
+}
 
-            /* Polaroid card styling */
-            .polaroid {
-              flex: 1 1 calc(50% - 40px);
-              /* Two cards per row with spacing */
-              max-width: 400px;
-              /* Optional: Ensures cards don't stretch too wide */
-              height: 450px;
-              background-color: white;
-              padding: 1rem;
-              box-shadow: 0 0.2rem 1.2rem rgba(0, 0, 0, 0.2);
-            }
+/* Individual polaroid cards */
+.polaroid {
+  flex: 1 1 calc(50% - 20px); /* Two items per row, accounting for the gap */
+  max-width: 400px;
+  height: 450px;
+  background-color: white;
+  padding: 1rem;
+  box-shadow: 0 0.2rem 1.2rem rgba(0, 0, 0, 0.2);
+}
 
-            /* Image container styling */
-            .polaroid__content-image {
-              height: 350px;
-              width: 100%;
-              overflow: hidden;
-            }
+/* Image container */
+.polaroid__content-image {
+  height: 350px;
+  width: 100%;
+  overflow: hidden;
+}
 
-            /* Image styling */
-            .polaroid__content-image>img {
-              height: 100%;
-              width: 100%;
-              display: block;
-              object-fit: cover;
-              /* Ensures the image covers the container proportionally */
-            }
+/* Image styling */
+.polaroid__content-image > img {
+  height: 100%;
+  width: 100%;
+  display: block;
+  object-fit: cover;
+}
 
-            /* Caption styling */
-            .polaroid__content-caption {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              font-size: 25px;
-            }
+/* Caption styling */
+.polaroid__content-caption {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+}
 
-            /* Frame styling for videos */
-            #frame {
-              position: relative;
-              padding: 0;
-              margin: 0 auto;
-              border: solid 15px #555;
-              max-width: 600px;
-              margin: 40px auto;
-              /* Centers the video frame */
-              box-shadow: -3px -3px 12px #999;
-            }
+/* Frame styling for videos */
+#frame {
+  margin: 20px auto;
+  border: solid 15px #555;
+  max-width: 600px;
+  box-shadow: -3px -3px 12px #999;
+}
 
-            #border {
-              position: relative;
-              padding: 0;
-              margin: 0;
-              border: solid 30px white;
-              /* Reduced from 70px to 30px */
-              box-shadow: -3px -3px 12px #999;
-            }
+#border {
+  padding: 0;
+  margin: 0;
+  border: solid 30px white;
+  box-shadow: -3px -3px 12px #999;
+}
 
-            video {
-              display: block;
-              padding: 0;
-              margin: 0;
-              width: 100%;
-              height: auto;
-              border-top: solid 2px #aaa;
-              border-left: solid 2px #aaa;
-              border-bottom: solid 2px #ccc;
-              border-right: solid 2px #ccc;
-            }
+video {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: solid 2px #aaa;
+}
 
-            /* Responsive behavior for smaller screens */
-            @media (max-width: 768px) {
-              .polaroid {
-                flex: 1 1 100%;
-                /* Each card takes full width on smaller screens */
-              }
+/* Responsive behavior for smaller screens */
+@media (max-width: 768px) {
+  .polaroid {
+    flex: 1 1 100%; /* Single column on small screens */
+  }
+}
 
-              #frame {
-                max-width: 100%;
-                /* Ensures video frames don't exceed screen width */
-              }
-            }
           </style>
