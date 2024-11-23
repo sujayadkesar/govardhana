@@ -251,7 +251,7 @@ function submitForm(event) {
       return;
     }
 
-    const amount = 11000;
+
 
     if (isNaN(amount) || amount <= 0) {
       alert("Invalid amount!");
@@ -297,19 +297,19 @@ function submitForm(event) {
       const appLinks = [
         {
           name: "Google Pay",
-          url: `tez://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+          url: `tez://upi/pay?pa=govardhanylp@sbi&tn=${adharNumber}&cu=INR`
         },
         {
           name: "PhonePe",
-          url: `phonepe://pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+          url: `phonepe://pay?pa=govardhanylp@sbi&tn=${adharNumber}&cu=INR`
         },
         {
           name: "Paytm",
-          url: `paytmmp://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+          url: `paytmmp://upi/pay?pa=govardhanylp@sbi&tn=${adharNumber}&cu=INR`
         },
         {
           name: "BHIM",
-          url: `bhim://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${adharNumber}&cu=INR`
+          url: `bhim://upi/pay?pa=govardhanylp@sbi&tn=${adharNumber}&cu=INR`
         }
       ];
       const optionsHtml = window.open('', '_blank', 'width=600,height=800');
