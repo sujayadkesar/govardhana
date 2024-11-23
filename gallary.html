@@ -76,6 +76,7 @@ description: Shri Govardhan [R] Goshala
   </video>
 </div>
 
+
 <div class="video-frame">
   <video width="640" height="360" controls>
     <source src="{{ site.baseurl }}/images/Govardhana.mp4" type="video/mp4">
@@ -87,44 +88,48 @@ description: Shri Govardhan [R] Goshala
 
 <style>
   /* Main container for polaroids */
-  .containerr {
-    display: flex;
-    flex-wrap: wrap;
-    /* Allows wrapping to the next row */
-    justify-content: space-between;
-    /* Distributes items with space between */
-    gap: 20px;
-    /* Adds consistent spacing */
-  }
+.containerr {
+  display: flex;
+  flex-wrap: wrap; /* Ensures items wrap to the next row */
+  gap: 20px; /* Space between items */
+  justify-content: space-between; /* Even distribution */
+}
 
-  /* Each polaroid */
+/* Each polaroid item */
+.polaroid {
+  flex: 0 1 calc(50% - 20px); /* Two items per row with gap */
+  max-width: calc(50% - 20px);
+  background-color: white;
+  padding: 1rem;
+  box-shadow: 0 0.2rem 1.2rem rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/* Ensures image fits within the container */
+.polaroid__content-image img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Video styling for single row */
+.video-frame {
+  margin: 20px auto;
+  max-width: 640px;
+  text-align: center;
+}
+
+video {
+  width: 100%;
+  height: auto;
+  border: solid 2px #aaa;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
   .polaroid {
-    flex: 0 1 calc(50% - 20px);
-    /* Two items per row with a gap */
-    max-width: calc(50% - 20px);
-    background-color: white;
-    padding: 1rem;
-    box-shadow: 0 0.2rem 1.2rem rgba(0, 0, 0, 0.2);
+    flex: 1 1 100%; /* Single column layout on smaller screens */
   }
+}
 
-  /* Video styling for single row */
-  .video-frame {
-    margin: 20px auto;
-    max-width: 640px;
-    text-align: center;
-  }
-
-  video {
-    width: 100%;
-    height: auto;
-    border: solid 2px #aaa;
-  }
-
-  /* Responsive design for smaller screens */
-  @media (max-width: 768px) {
-    .polaroid {
-      flex: 1 1 100%;
-      /* One item per row on smaller screens */
-    }
-  }
 </style>
