@@ -93,15 +93,67 @@ description: Shri Govardhan [R] Goshala
 
 
           <style>
+            /* Container styling */
+            .containerr {
+              display: flex;
+              justify-content: center;
+              /* Centers items horizontally */
+              align-items: flex-start;
+              /* Aligns items at the top */
+              flex-wrap: wrap;
+              /* Allows items to wrap to the next row if needed */
+              gap: 20px;
+              /* Adds space between rows and columns */
+              margin: 20px 0;
+              /* Optional: Adds space above and below the container */
+            }
+
+            /* Polaroid card styling */
+            .polaroid {
+              flex: 1 1 calc(50% - 40px);
+              /* Two cards per row with spacing */
+              max-width: 400px;
+              /* Optional: Ensures cards don't stretch too wide */
+              height: 450px;
+              background-color: white;
+              padding: 1rem;
+              box-shadow: 0 0.2rem 1.2rem rgba(0, 0, 0, 0.2);
+            }
+
+            /* Image container styling */
+            .polaroid__content-image {
+              height: 350px;
+              width: 100%;
+              overflow: hidden;
+            }
+
+            /* Image styling */
+            .polaroid__content-image>img {
+              height: 100%;
+              width: 100%;
+              display: block;
+              object-fit: cover;
+              /* Ensures the image covers the container proportionally */
+            }
+
+            /* Caption styling */
+            .polaroid__content-caption {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              font-size: 25px;
+            }
+
+            /* Frame styling for videos */
             #frame {
               position: relative;
               padding: 0;
-              margin: 0;
+              margin: 0 auto;
               border: solid 15px #555;
               max-width: 600px;
               margin: 40px auto;
+              /* Centers the video frame */
               box-shadow: -3px -3px 12px #999;
-
             }
 
             #border {
@@ -125,41 +177,16 @@ description: Shri Govardhan [R] Goshala
               border-right: solid 2px #ccc;
             }
 
+            /* Responsive behavior for smaller screens */
+            @media (max-width: 768px) {
+              .polaroid {
+                flex: 1 1 100%;
+                /* Each card takes full width on smaller screens */
+              }
 
-            .container__items {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              flex-wrap: wrap;
-              height: 100vh;
-            }
-
-            .polaroid {
-              margin: 30px;
-              width: 400px;
-              height: 450px;
-              background-color: white;
-              padding: 1rem;
-              box-shadow: 0 0.2rem 1.2rem rgba(0, 0, 0, 0.2);
-            }
-
-            .polaroid__content-image {
-              height: 350px;
-              width: 100%;
-              overflow: hidden;
-            }
-
-            .polaroid__content-image>img {
-              height: 100%;
-              width: 100%;
-              display: block;
-              object-fit: cover;
-            }
-
-            .polaroid__content-caption {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              font-size: 25px;
+              #frame {
+                max-width: 100%;
+                /* Ensures video frames don't exceed screen width */
+              }
             }
           </style>
