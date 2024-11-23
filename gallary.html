@@ -8,120 +8,63 @@ description: Shri Govardhan [R] Goshala
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2ZJXCX9BQF"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag() { dataLayer.push(arguments); }
+  function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'G-2ZJXCX9BQF');
 </script>
 
 
-
-<div class="gallery">
-  <!-- Image 1 -->
-  <div class="gallery-item">
-    <img src="/images/ed00d592-f1fc-48ac-bf32-db5a498c5309.jpg" alt="Image 1">
-    <p>Go Pooja</p>
-  </div>
-
-  <!-- Image 2 -->
-  <div class="gallery-item">
-    <img src="/images/3cow.jpg" alt="Image 2">
-    <p>Punganur</p>
-  </div>
-
-  <!-- Image 3 -->
-  <div class="gallery-item">
-    <img src="your-image3.jpg" alt="Image 3">
-    <p>Gir</p>
-  </div>
-
-  <!-- Image 4 -->
-  <div class="gallery-item">
-    <img src="/images/gopooja.jpg" alt="Image 4">
-    <p>Go Grasa Samarpana</p>
-  </div>
-
-  <!-- Image 5 -->
-  <div class="gallery-item">
-    <img src="/images/goshala.jpg" alt="Image 5">
-    <p>Glimpse of Goshala</p>
-  </div>
-
-  <!-- Video -->
-  <div class="video-item">
-    <video controls>
-      <source src="your-video.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-  </div>
-</div>
+<div id="frame">
+    <div id="border">
+        <video width="640" height="360" controls>
+            <source src="{{ site.baseurl }}/images/flyin.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div><!-- #border -->
+  </div><!-- #frame -->
 
 
+<div id="frame">
+    <div id="border">
+        <video width="640" height="360" controls>
+            <source src="{{ site.baseurl }}/images/Govardhana.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div><!-- #border -->
+  </div><!-- #frame -->
 
-<div class="video-frame">
-  <video width="640" height="360" controls>
-    <source src="{{ site.baseurl }}/images/Govardhana.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</div>
-
-
-
+  
 <style>
-  /* Grid layout for gallery */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Two items per row */
-  gap: 20px; /* Space between items */
-  margin: 20px;
+
+  #frame{
+    position:relative;
+    padding:0;
+    margin:0;
+    border:solid 15px #555; 
+    max-width:600px;
+    margin:40px auto;
+    box-shadow:-3px -3px 12px #999;
+    
+    }
+    #border {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    border: solid 30px white; /* Reduced from 70px to 30px */
+    box-shadow: -3px -3px 12px #999;
 }
 
-/* Styling for images */
-.gallery-item {
-  text-align: center;
-  background: #fff;
-  padding: 10px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  border-radius: 8px;
-}
-
-.gallery-item img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-}
-
-/* Styling for videos */
-.video-item {
-  grid-column: span 2; /* Make video take one row */
-  text-align: center;
-}
-
-.video-item video {
-  width: 100%;
-  height: auto;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-}
-
-/* Responsive design for smaller screens */
-@media (max-width: 768px) {
-  .video-item {
-    grid-column: span 1; /* Ensure video fits smaller screens */
-  }
-}
-
+  video{
+    display:block;
+    padding:0;
+    margin:0;
+    width:100%;
+    height:auto;
+    border-top:solid 2px #aaa;
+    border-left:solid 2px #aaa;
+    border-bottom:solid 2px #ccc;
+    border-right:solid 2px #ccc;
+    }
+   
 </style>
-
-<script>
-  
-var polaroids = document.querySelectorAll('.polaroid');
-
-polaroids.forEach(item => {
-  const randomRotation = Math.floor(Math.random() * (6 - -6 + 1) + -6);
-  
-  item.style.transform = `rotate(${randomRotation}deg)`
-})
-
-
-</script>
