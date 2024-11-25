@@ -17,7 +17,7 @@
     link: /committee
     new_window: false
     # social_icon: Facebook
-  - name: Twitter
+  - name: X
     link: https://twitter.com/
     social_icon: Twitter
     new_window: true
