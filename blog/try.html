@@ -264,7 +264,8 @@ description: Submit your details and generate a UPI QR code for payment
             return;
         }
 
-        const amount = document.getElementById('amount');
+        const valueOfAmount = document.getElementById('amount');
+        const amount = valueOfAmount.value;
 
         if (isNaN(amount) || amount <= 0) {
             alert("Invalid amount!");
