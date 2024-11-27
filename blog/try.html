@@ -154,9 +154,23 @@ description: Submit your details and generate a UPI QR code for payment
     let formSubmitted = false;
 
 
+    async function getUserLocation() {
+    try {
+      const response = await fetch('http://ip-api.com/json/');
+      const locationData = await response.json();
+      return locationData;
+    } catch (error) {
+      console.error('Error fetching user location:', error);
+      return null;
+    }
+  }
+
+
     function submitForm(event) {
         event.preventDefault(); // Prevent default form submission
 
+
+    
         if (formSubmitted) {
             alert("You have already submitted the form.");
             return;
@@ -166,13 +180,17 @@ description: Submit your details and generate a UPI QR code for payment
         if (!validateInputs()) return;
 
         // Gather form data
-        const formData = new FormData(document.getElementById("paymentForm"));
-        const url = "https://script.google.com/macros/s/AKfycbwE3W4PdSfSve2DrhHPhXMq_7sj453UcSTqDTNjj3AtWduShhRZAk63o3JyIpUqLLrmOw/exec"; // Replace with your Google Apps Script URL
 
+        const locationData = getUserLocation();
+
+        const formData = new FormData(document.getElementById("paymentForm"));
+        const url = "https://script.google.com/macros/s/AKfycbwAYlHdoMJnhyDwkyifM6kF61JS5ScggQDRzhmHmv6XmcyLuUrurkwXYd0ZZTS8tuIMtg/exec"; // Replace with your Google Apps Script URL
+
+        const finalData = {formData,locationData};
         // Send form data via fetch (AJAX)
         fetch(url, {
             method: "POST",
-            body: formData
+            body: finalData
         })
             .then(response => response.text())
             .then(data => {
@@ -394,3 +412,4 @@ description: Submit your details and generate a UPI QR code for payment
 
     gtag('config', 'G-2ZJXCX9BQF');
 </script>
+
