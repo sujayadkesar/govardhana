@@ -190,9 +190,6 @@ description: Submit your details and generate a UPI QR code for payment
         // Send form data via fetch (AJAX)
         fetch(url, {
             method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
             body: JSON.stringify(finalData) // Send data as JSON
         })
             .then(response => response.text())
