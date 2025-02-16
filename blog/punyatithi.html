@@ -36,9 +36,12 @@ description: Submit your details and generate a UPI QR code for payment
       <option value="Other">Other's</option>
     </select>
 
+    <label for="amount">Enter the amount </label>
+    <input type="number" name="amount" id="amount" placeholder="Enter any amount of your wish for gograsa samarpana..." required>
 
+<!-- 
     <label for="amount" style="display: none;">Donated for PunyaTithi go pooja</label>
-    <input type="text" name="amount" id="amount" value="501 - Donated for GoPooja on PunyaTithi" style="display: none;" />
+    <input type="text" name="amount" id="amount" value="501 - Donated for GoPooja on PunyaTithi" style="display: none;" /> -->
 
     <input type="submit" value="Submit" />
   </form>
@@ -179,8 +182,7 @@ description: Submit your details and generate a UPI QR code for payment
       return;
     }
 
-    const amount = 501;
-
+    const amount = parseFloat(document.getElementById('amount').value);
     if (isNaN(amount) || amount <= 0) {
       alert("Invalid amount!");
       return;
@@ -262,8 +264,7 @@ description: Submit your details and generate a UPI QR code for payment
       return;
     }
 
-    const amount = 501;
-
+    const amount = parseFloat(document.getElementById('amount').value);
     if (isNaN(amount) || amount <= 0) {
       alert("Invalid amount!");
       return;
