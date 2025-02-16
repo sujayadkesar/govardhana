@@ -168,12 +168,12 @@ document.getElementById('generateQrButton').onclick = function() {
     return;
   }
 
-  const amount = document.getElementById('amount');
+  const amount = parseFloat(document.getElementById('amount').value);
+    if (isNaN(amount) || amount <= 0) {
+      alert("Invalid amount!");
+      return;
+    }
 
-  if (isNaN(amount) || amount <= 0) {
-    alert("Invalid amount!");
-    return;
-  }
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D${amount}%26cu%3DINR%26tn%3D${name}`;
   console.log("Generated QR Code URL:", qrCodeUrl);
 
@@ -250,12 +250,12 @@ function submitForm(event) {
       return;
     }
 
-    const amount = document.getElementById('amount');
-
+    const amount = parseFloat(document.getElementById('amount').value);
     if (isNaN(amount) || amount <= 0) {
       alert("Invalid amount!");
       return;
     }
+
 
     // UPI data for QR code and link
     const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${donorPhone}`;
