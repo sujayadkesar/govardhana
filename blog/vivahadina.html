@@ -256,7 +256,7 @@ function submitForm(event) {
     }
 
     // UPI data for QR code and link
-    const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${name}`;
+    const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${donorPhone}`;
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(upiData)}`;
     // Function to detect device type and proceed
 
@@ -272,7 +272,7 @@ function submitForm(event) {
       const isDesktop = () =>
         !isTouchScreen && (/windows/.test(userAgent) || /macintosh|mac os x/.test(userAgent));
 
-      const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${name}`;
+      const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${donorPhone}`;
 
       if (isAndroid()) {
         console.log('Redirecting to Android UPI URL:', upiData);
@@ -294,19 +294,19 @@ function submitForm(event) {
       const appLinks = [
         {
           name: "Google Pay",
-          url: `tez://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${name}&cu=INR`
+          url: `tez://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${donorPhone}&cu=INR`
         },
         {
           name: "PhonePe",
-          url: `phonepe://pay?pa=govardhanylp@sbi&am=${amount}&tn=${name}&cu=INR`
+          url: `phonepe://pay?pa=govardhanylp@sbi&am=${amount}&tn=${donorPhone}&cu=INR`
         },
         {
           name: "Paytm",
-          url: `paytmmp://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${name}&cu=INR`
+          url: `paytmmp://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${donorPhone}&cu=INR`
         },
         {
           name: "BHIM",
-          url: `bhim://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${name}&cu=INR`
+          url: `bhim://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${donorPhone}&cu=INR`
         }
       ];
       const optionsHtml = window.open('', '_blank', 'width=600,height=800');
@@ -358,19 +358,19 @@ function submitForm(event) {
       <div class="payment-container">
         <h1>Select prefered UPI Apps!</h1>
         <br><br><br>
-          <a href="tez://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${name}&cu=INR" class="payment-button">
+          <a href="tez://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${donorPhone}&cu=INR" class="payment-button">
               <img src="/images/goooglepay.png" alt="Google Pay">
               <span>Google Pay</span>
           </a>
-          <a href="phonepe://pay?pa=govardhanylp@sbi&am=${amount}&tn=${name}&cu=INR" class="payment-button">
+          <a href="phonepe://pay?pa=govardhanylp@sbi&am=${amount}&tn=${donorPhone}&cu=INR" class="payment-button">
               <img src="/images/phonepay.png" alt="PhonePe">
               <span>PhonePe</span>
           </a>
-          <a href="paytmmp://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${name}&cu=INR" class="payment-button">
+          <a href="paytmmp://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${donorPhone}&cu=INR" class="payment-button">
               <img src="/images/paytm.png" alt="Paytm">
               <span>Paytm</span>
           </a>
-          <a href="bhim://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${name}&cu=INR" class="payment-button">
+          <a href="bhim://upi/pay?pa=govardhanylp@sbi&am=${amount}&tn=${donorPhone}&cu=INR" class="payment-button">
               <img src="/images/bhim-upi-icon-4059309141.png" alt="BHIM">
               <span>BHIM UPI</span>
           </a>
