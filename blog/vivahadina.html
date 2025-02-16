@@ -21,8 +21,11 @@ description: Submit your details and generate a UPI QR code for payment
     <label for="aniversary">Date of Anniversary </label>
     <input type="date" name="aniversary" id="aniversary"  required />
   
-    <label for="amount" style="display: none;">Donated for VivahaDina go pooja</label>
-    <input type="text" name="amount" id="amount" value="501 - Donated for GoPooja on VivahaDina" style="display: none;" />
+    <label for="amount">Enter the amount </label>
+    <input type="number" name="amount" id="amount" placeholder="Enter any amount of your wish for gograsa samarpana..." required>
+
+    <!-- <label for="amount" style="display: none;">Donated for VivahaDina go pooja</label>
+    <input type="text" name="amount" id="amount" value="501 - Donated for GoPooja on VivahaDina" style="display: none;" /> -->
 
     <input type="submit" value="Submit" />
   </form>
@@ -248,7 +251,7 @@ function submitForm(event) {
       return;
     }
 
-    const amount = 501;
+    const amount = document.getElementById('amount');
 
     if (isNaN(amount) || amount <= 0) {
       alert("Invalid amount!");
