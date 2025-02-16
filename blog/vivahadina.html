@@ -172,7 +172,8 @@ document.getElementById('generateQrButton').onclick = function() {
     return;
   }
 
-  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D${amount}%26cu%3DINR%26tn%3D${adharNumber}`;
+  const predefinedText = "-Vivahadina"; // Your predefined text
+  const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D${amount}%26cu%3DINR%26tn%3D${name}%2D${predefinedText}`;
   console.log("Generated QR Code URL:", qrCodeUrl);
 
   openQrWindow(qrCodeUrl);
@@ -256,7 +257,9 @@ function submitForm(event) {
     }
 
     // UPI data for QR code and link
-    const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
+    // const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${adharNumber}`;
+    const predefinedText = "-Vivahadina"
+    const upiData = `upi://pay?pa=govardhanylp@sbi&am=${amount}&cu=INR&tn=${name}%2D${predefinedText}`;
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(upiData)}`;
     // Function to detect device type and proceed
 
