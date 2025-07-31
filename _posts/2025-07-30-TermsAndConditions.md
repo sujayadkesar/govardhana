@@ -1,0 +1,282 @@
+---
+layout: default
+title: Policies - Shri Govardhan R Goshala
+permalink: /policies/
+---
+<style>
+.policies-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+}
+
+.policy-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, #ff9933, #ffffff, #138808);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.policy-header h1 {
+    color: #8B4513;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.policy-header .subtitle {
+    color: #666;
+    font-size: 1.2rem;
+    font-style: italic;
+}
+
+.policy-section {
+    background: #fff;
+    margin: 2rem 0;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 3px 20px rgba(0,0,0,0.08);
+    border-left: 5px solid #ff9933;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.policy-section:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 25px rgba(0,0,0,0.12);
+}
+
+.policy-section h2 {
+    color: #8B4513;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #ff9933;
+    display: flex;
+    align-items: center;
+}
+
+.policy-section h2:before {
+    content: "🐄";
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.policy-section h3 {
+    color: #138808;
+    font-size: 1.3rem;
+    margin: 1.5rem 0 1rem 0;
+}
+
+.policy-section p {
+    margin-bottom: 1rem;
+    text-align: justify;
+}
+
+.policy-section ul {
+    margin: 1rem 0 1rem 2rem;
+}
+
+.policy-section li {
+    margin-bottom: 0.5rem;
+    position: relative;
+}
+
+.policy-section li:before {
+    content: "🟡";
+    position: absolute;
+    left: -1.5rem;
+}
+
+.highlight-box {
+    background: linear-gradient(45deg, #fff3cd, #ffeaa7);
+    border: 2px solid #ff9933;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    text-align: center;
+    font-weight: bold;
+    color: #8B4513;
+}
+
+.contact-info {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    text-align: center;
+    border: 2px dashed #ff9933;
+}
+
+.contact-info h3 {
+    color: #8B4513;
+    margin-bottom: 1rem;
+}
+
+.last-updated {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid #ddd;
+}
+
+@media (max-width: 768px) {
+    .policies-container {
+        padding: 1rem;
+    }
+    
+    .policy-header h1 {
+        font-size: 2rem;
+    }
+    
+    .policy-section {
+        padding: 1.5rem;
+        margin: 1rem 0;
+    }
+}
+</style>
+
+<div class="policies-container">
+    <div class="policy-header">
+        <h1>Policies & Terms</h1>
+        <p class="subtitle">Shri Govardhan R Goshala</p>
+        <p>🙏 Cow Service is Divine Service 🙏</p>
+    </div>
+
+    <div class="policy-section">
+        <h2>Terms of Service</h2>
+        
+        <h3>1. About Us</h3>
+        <p>Shri Govardhan R Goshala is a charitable organization dedicated to the service of holy cows. By using our website https://shrigovardhan.org/, you agree to these terms and conditions.</p>
+
+        <h3>2. Our Services</h3>
+        <ul>
+            <li>Cow Adoption Program - ₹11,000 annually</li>
+            <li>GoGrasa Samarpana - Special occasion donations</li>
+            <li>General goshala support donations</li>
+            <li>Income Tax Exemption Certificates (80G)</li>
+        </ul>
+
+        <h3>3. Donation Policy</h3>
+        <p>All contributions are voluntary donations for cow welfare. Donations support feeding, medical care, shelter, and overall maintenance of cows in our goshala. We provide 80G certificates for tax exemption purposes to all donors.</p>
+
+        <div class="highlight-box">
+            <p>🚫 IMPORTANT: All donations are final and non-refundable</p>
+            <p>Donations are used immediately for cow care and goshala operations</p>
+        </div>
+
+        <h3>4. User Responsibilities</h3>
+        <ul>
+            <li>Provide accurate information for donation receipts</li>
+            <li>Ensure payment details are correct before confirming</li>
+            <li>Contact us for any donation-related queries or concerns</li>
+            <li>Notify us of any changes in contact information for receipt delivery</li>
+        </ul>
+    </div>
+
+    <div class="policy-section">
+        <h2>Privacy Policy</h2>
+        
+        <h3>1. Information Collection</h3>
+        <p>We collect only the minimum necessary information required for:</p>
+        <ul>
+            <li>Processing donations and payments</li>
+            <li>Issuing 80G tax exemption certificates</li>
+            <li>Sending updates about cow welfare activities</li>
+            <li>Maintaining donor records as required by law</li>
+        </ul>
+
+        <h3>2. Information Usage</h3>
+        <p>Your personal data is used solely for donation processing and goshala communication purposes. We never sell, rent, or share your information with third parties for commercial purposes. Your information may be shared only when required by legal authorities.</p>
+
+        <h3>3. Data Security</h3>
+        <p>We implement appropriate technical and organizational security measures to protect your personal and payment information against unauthorized access, alteration, disclosure, or destruction.</p>
+
+        <h3>4. Data Retention</h3>
+        <p>We retain your information for as long as necessary to fulfill the purposes outlined in this policy, comply with legal obligations, and maintain proper accounting records.</p>
+    </div>
+
+    <div class="policy-section">
+        <h2>Donation & Payment Policy</h2>
+        
+        <h3>1. Accepted Payment Methods</h3>
+        <ul>
+            <li>PhonePe (Primary Gateway)</li>
+            <li>UPI Payments</li>
+            <li>Net Banking</li>
+            <li>Debit/Credit Cards</li>
+            <li>Digital Wallets</li>
+        </ul>
+
+        <h3>2. Donation Receipts</h3>
+        <p>Official 80G certificates will be provided for all donations. Receipts will be sent to your registered email address within 7-10 business days. Please ensure your email address is correct during the donation process.</p>
+
+        <div class="highlight-box">
+            <p>💰 Tax Benefits: 50% deduction available under Section 80G</p>
+            <p>Valid for Income Tax exemption in India</p>
+        </div>
+
+        <h3>3. Minimum Donation Amounts</h3>
+        <ul>
+            <li>Cow Adoption Program: ₹11,000 (Annual)</li>
+            <li>GoGrasa Samarpana: ₹101 minimum</li>
+            <li>General Donations: ₹51 minimum</li>
+        </ul>
+
+        <h3>4. No Refund Policy</h3>
+        <p>Since donations are immediately utilized for cow care, feeding, medical treatment, and goshala maintenance, we do not provide refunds under any circumstances. All donations are considered final upon completion of the transaction.</p>
+    </div>
+
+    <div class="policy-section">
+        <h2>Website Usage Terms</h2>
+        
+        <h3>1. Acceptable Use</h3>
+        <p>You may use our website for legitimate donation purposes only. Any misuse, including but not limited to fraudulent activities, spam, or unauthorized access attempts, is strictly prohibited.</p>
+
+        <h3>2. Intellectual Property</h3>
+        <p>All content on this website, including text, images, logos, and designs, belongs to Shri Govardhan R Goshala and is protected by applicable copyright laws.</p>
+
+        <h3>3. Disclaimer</h3>
+        <p>While we strive to keep information accurate and up-to-date, we make no warranties about the completeness, reliability, or accuracy of the information on our website.</p>
+    </div>
+
+    <div class="policy-section">
+        <h2>Contact & Grievance</h2>
+        
+        <div class="contact-info">
+            <h3>Contact Details</h3>
+            <p><strong>Address:</strong> Shri Govardhan Goshala, Kardoli, Yellapur, Karnataka, India</p>
+            <p><strong>Website:</strong> https://shrigovardhan.org/</p>
+            <p><strong>Email:</strong> info@shrigovardhan.org</p>
+            
+            <h3>Grievance Officer</h3>
+            <p>For any complaints, queries, or concerns, please contact us through the above channels. We aim to respond to all grievances within 48-72 hours.</p>
+            
+            <h3>Response Time</h3>
+            <p>General Queries: 24-48 hours</p>
+            <p>Donation Issues: Within 24 hours</p>
+            <p>Technical Problems: 12-24 hours</p>
+        </div>
+    </div>
+
+    <div class="policy-section">
+        <h2>Policy Updates</h2>
+        <p>We reserve the right to update these policies at any time. Significant changes will be communicated through our website and email notifications to registered users. Continued use of our services after policy updates constitutes acceptance of the revised terms.</p>
+        
+        <div class="highlight-box">
+            <p>🔄 Please check these policies regularly for updates</p>
+            <p>Your continued use implies acceptance of any changes</p>
+        </div>
+    </div>
+
+    <div class="last-updated">
+        <p>Last Updated: July 31, 2025</p>
+        <p>🙏 Thank you for contributing to cow welfare 🙏</p>
+    </div>
+</div>
