@@ -17,8 +17,8 @@
     link: /committee
     new_window: false
     # social_icon: Facebook
-  - name: X
-    link: https://twitter.com/
+  - name: Terms And Conditions
+    link: /blog/TermsAndConditions/
     social_icon: Twitter
     new_window: true
   - name: YouTube
