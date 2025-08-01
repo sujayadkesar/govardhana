@@ -35,12 +35,14 @@ description: Submit your details and make payment through PhonePe
   <button 
     id="phonePePaymentButton"
     class="pulse-button"
+    onclick="initiatePhonePePayment(); console.log('Direct onclick triggered');"
     style="background-color: #5f259f; padding: 15px 30px; font-size: 18px; 
            border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
            color: white; border-radius: 8px; display: none;">
     Pay ₹11,000 via PhonePe
   </button>
 </div>
+
 
 <div id="paymentStatus" style="text-align: center; margin-top: 20px; display: none;">
   <p id="statusMessage"></p>
