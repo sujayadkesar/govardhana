@@ -191,7 +191,7 @@ function submitForm(event) {
     });
 }
 
-// PhonePe Payment Integration
+  // PhonePe Payment Integration with Enhanced Error Handling
 async function initiatePhonePePayment() {
   const name = document.getElementById('name').value;
   const email = document.getElementById('email').value;
@@ -222,9 +222,10 @@ async function initiatePhonePePayment() {
     callbackUrl: window.location.origin + '/payment-callback.html'
   };
   
+  console.log('Sending payment data:', paymentData);
+  
   try {
-    // Replace this URL with your Google Apps Script web app URL
-    const response = await fetch('https://script.google.com/macros/s/AKfycbyJDpRccxRtw0luJwzQ5XFNrvFcBUTHCTfTdCDL77jRyiRvswp9u7N29vtTpXy0W0lLrQ/exec', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbxU6NHwhAScS6IqT3TNb3kYAWTVNcTmPlRqsfAfk_1WWE9Cdgj3d_OqdKEQYV9Om3UAsA/exec', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -232,7 +233,14 @@ async function initiatePhonePePayment() {
       body: JSON.stringify(paymentData)
     });
     
+    console.log('Response status:', response.status);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
     const result = await response.json();
+    console.log('Payment API response:', result);
     
     if (result.success && result.data && result.data.instrumentResponse && result.data.instrumentResponse.redirectInfo) {
       // Store transaction ID in localStorage for tracking
@@ -240,40 +248,38 @@ async function initiatePhonePePayment() {
       localStorage.setItem('donorDetails', JSON.stringify(paymentData.userDetails));
       
       // Redirect to PhonePe payment page
-      window.location.href = result.data.instrumentResponse.redirectInfo.url;
+      document.getElementById('statusMessage').textContent = "Redirecting to PhonePe...";
+      
+      setTimeout(() => {
+        window.location.href = result.data.instrumentResponse.redirectInfo.url;
+      }, 1000);
+      
     } else {
-      document.getElementById('statusMessage').textContent = "Payment initiation failed. Please try again.";
+      // Show detailed error for debugging
+      let errorMessage = "Payment initiation failed. ";
+      if (result.error) {
+        errorMessage += "Error: " + result.error;
+      }
+      if (result.debugInfo) {
+        errorMessage += " Debug: " + JSON.stringify(result.debugInfo);
+      }
+      if (!result.success && result.message) {
+        errorMessage += " Message: " + result.message;
+      }
+      
+      console.error('Payment failed:', result);
+      document.getElementById('statusMessage').textContent = errorMessage;
       document.getElementById('statusMessage').style.color = "red";
       document.getElementById('phonePePaymentButton').disabled = false;
     }
   } catch (error) {
-    console.error('Error:', error);
-    document.getElementById('statusMessage').textContent = "Something went wrong. Please try again.";
+    console.error('Fetch error:', error);
+    document.getElementById('statusMessage').textContent = "Network error: " + error.message + ". Please check your internet connection and try again.";
     document.getElementById('statusMessage').style.color = "red";
     document.getElementById('phonePePaymentButton').disabled = false;
   }
 }
 
-// Add event listener to PhonePe payment button
-document.getElementById('phonePePaymentButton').addEventListener('click', initiatePhonePePayment);
-
-// Check if returning from payment (for handling success/failure)
-window.addEventListener('load', function() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const paymentStatus = urlParams.get('status');
-  
-  if (paymentStatus === 'success') {
-    document.getElementById('statusMessage').textContent = "🙏 Payment successful! Thank you for your donation.";
-    document.getElementById('statusMessage').style.color = "green";
-    document.getElementById('paymentStatus').style.display = "block";
-    document.getElementById('phonePePaymentButton').style.display = "none";
-  } else if (paymentStatus === 'failure') {
-    document.getElementById('statusMessage').textContent = "Payment failed. Please try again.";
-    document.getElementById('statusMessage').style.color = "red";
-    document.getElementById('paymentStatus').style.display = "block";
-    document.getElementById('phonePePaymentButton').disabled = false;
-  }
-});
 </script>
 
 <!-- Google tag (gtag.js) -->
