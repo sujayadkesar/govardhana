@@ -218,13 +218,13 @@ async function initiatePhonePePayment() {
       phone: phone,
       adhar: adhar
     },
-    redirectUrl: window.location.origin + '/payment-success.html',
+    redirectUrl: window.location.origin + '/PaymentSuccess.html',
     callbackUrl: window.location.origin + '/payment-callback.html'
   };
   
   try {
     // Replace this URL with your Google Apps Script web app URL
-    const response = await fetch('YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL', {
+    const response = await fetch('https://script.google.com/macros/s/AKfycbyJDpRccxRtw0luJwzQ5XFNrvFcBUTHCTfTdCDL77jRyiRvswp9u7N29vtTpXy0W0lLrQ/exec', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
