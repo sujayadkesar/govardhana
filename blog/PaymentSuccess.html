@@ -1,0 +1,177 @@
+---
+title: Payment Successful - Adopt a Cow
+heading: धन्यवाद! आपका दान सफल रहा
+description: Your cow adoption payment has been completed successfully
+layout: default
+---
+
+<div style="text-align: center; padding: 50px 20px;">
+  <!-- Success Icon -->
+  <div style="font-size: 80px; color: #28a745; margin-bottom: 20px;">
+    ✅
+  </div>
+  
+  <h1 style="color: #28a745; font-size: 2.5em; margin-bottom: 20px;">
+    🙏 धन्यवाद! Payment Successful
+  </h1>
+  
+  <div style="background: linear-gradient(135deg, #e8f5e8, #f0f8f0); 
+              border: 2px solid #28a745; border-radius: 15px; 
+              padding: 30px; margin: 20px auto; max-width: 600px;
+              box-shadow: 0 4px 15px rgba(40, 167, 69, 0.2);">
+    
+    <h2 style="color: #155724; margin-bottom: 20px;">
+      Your Cow Adoption is Complete!
+    </h2>
+    
+    <div id="paymentDetails" style="text-align: left; background: white; 
+                                   padding: 20px; border-radius: 10px; 
+                                   margin: 20px 0; border: 1px solid #c3e6cb;">
+      <h3 style="color: #155724; margin-bottom: 15px;">Payment Details:</h3>
+      <p><strong>Amount:</strong> ₹11,000</p>
+      <p><strong>Purpose:</strong> Gau Seva - Cow Adoption</p>
+      <p><strong>Transaction ID:</strong> <span id="transactionId">Loading...</span></p>
+      <p><strong>Date:</strong> <span id="paymentDate"></span></p>
+      <p><strong>Status:</strong> <span style="color: #28a745; font-weight: bold;">✅ Completed</span></p>
+    </div>
+    
+    <div style="background: #fff3cd; border: 1px solid #ffeaa7; 
+                border-radius: 8px; padding: 20px; margin: 20px 0;">
+      <h3 style="color: #856404;">📧 What Happens Next?</h3>
+      <ul style="text-align: left; color: #856404; line-height: 1.8;">
+        <li>You will receive a <strong>payment confirmation email</strong> within 15 minutes</li>
+        <li><strong>80G Tax Receipt</strong> will be emailed within 24-48 hours</li>
+        <li>Our team will contact you with <strong>cow adoption details</strong></li>
+        <li>You'll receive regular <strong>updates about your adopted cow</strong></li>
+      </ul>
+    </div>
+    
+    <div style="background: #d4edda; border: 1px solid #c3e6cb; 
+                border-radius: 8px; padding: 20px; margin: 20px 0;">
+      <h3 style="color: #155724;">🐄 Your Contribution to Gau Seva</h3>
+      <p style="color: #155724; line-height: 1.6; margin: 0;">
+        Your generous donation of ₹11,000 will directly support the care, feeding, and 
+        shelter of our sacred cows. This noble act of Gau Seva brings immense spiritual 
+        merit and contributes to preserving our ancient traditions.
+      </p>
+    </div>
+  </div>
+  
+  <!-- Action Buttons -->
+  <div style="margin: 40px 0;">
+    <a href="/" style="background: linear-gradient(135deg, #ff7b7b, #d63384); 
+                       color: white; padding: 15px 30px; text-decoration: none; 
+                       border-radius: 25px; font-weight: bold; margin: 10px; 
+                       display: inline-block; transition: transform 0.2s;">
+      🏠 Return to Home
+    </a>
+    
+    <a href="/goseva/" style="background: linear-gradient(135deg, #20c997, #0d6efd); 
+                             color: white; padding: 15px 30px; text-decoration: none; 
+                             border-radius: 25px; font-weight: bold; margin: 10px; 
+                             display: inline-block; transition: transform 0.2s;">
+      🙏 More Gau Seva
+    </a>
+    
+    <button onclick="shareSuccess()" style="background: linear-gradient(135deg, #ffc107, #fd7e14); 
+                                           color: white; padding: 15px 30px; border: none; 
+                                           border-radius: 25px; font-weight: bold; margin: 10px; 
+                                           cursor: pointer; transition: transform 0.2s;">
+      📱 Share Your Seva
+    </button>
+  </div>
+  
+  <!-- Contact Information -->
+  <div style="background: #f8f9fa; border-radius: 10px; padding: 20px; 
+              margin: 30px auto; max-width: 500px;">
+    <h3 style="color: #495057;">📞 Need Help?</h3>
+    <p style="color: #6c757d; margin: 10px 0;">
+      If you have any questions or concerns about your donation:
+    </p>
+    <p style="color: #495057; font-weight: bold;">
+      📧 Email: contact@shrigovardhan.org<br>
+      📱 WhatsApp: +91-XXXXXXXXXX
+    </p>
+  </div>
+</div>
+
+<script>
+// Display payment details from localStorage or URL parameters
+document.addEventListener('DOMContentLoaded', function() {
+  // Get transaction ID from URL parameters or localStorage
+  const urlParams = new URLSearchParams(window.location.search);
+  const transactionId = urlParams.get('transactionId') || 
+                       localStorage.getItem('merchantTransactionId') || 
+                       'TXN' + Date.now();
+  
+  // Display current date
+  const currentDate = new Date().toLocaleDateString('en-IN', {
+    year: 'numeric',
+    month: 'long', 
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+  
+  document.getElementById('transactionId').textContent = transactionId;
+  document.getElementById('paymentDate').textContent = currentDate;
+  
+  // Track successful payment for analytics
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'purchase', {
+      transaction_id: transactionId,
+      value: 11000,
+      currency: 'INR',
+      items: [{
+        item_id: 'cow_adoption',
+        item_name: 'Cow Adoption',
+        category: 'Donation',
+        quantity: 1,
+        price: 11000
+      }]
+    });
+  }
+});
+
+// Share functionality
+function shareSuccess() {
+  if (navigator.share) {
+    navigator.share({
+      title: 'I adopted a cow for Gau Seva! 🐄',
+      text: 'I just contributed ₹11,000 for cow adoption at Shri Govardhan Goshala. Join me in this noble cause!',
+      url: window.location.origin
+    });
+  } else {
+    // Fallback for browsers that don't support Web Share API
+    const shareText = `I just contributed ₹11,000 for cow adoption at Shri Govardhan Goshala! Join me in this noble cause: ${window.location.origin}`;
+    
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(shareText).then(() => {
+        alert('Share message copied to clipboard!');
+      });
+    } else {
+      prompt('Copy this message to share:', shareText);
+    }
+  }
+}
+
+// Add hover effects to buttons
+document.querySelectorAll('a, button').forEach(element => {
+  element.addEventListener('mouseenter', function() {
+    this.style.transform = 'translateY(-2px) scale(1.05)';
+  });
+  
+  element.addEventListener('mouseleave', function() {
+    this.style.transform = 'translateY(0) scale(1)';
+  });
+});
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2ZJXCX9BQF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-2ZJXCX9BQF');
+</script>
