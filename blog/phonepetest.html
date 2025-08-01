@@ -192,8 +192,6 @@ function submitForm(event) {
       console.error("Error submitting form:", error);
     });
 }
-
-  
 function initiatePhonePePayment() {
   console.log("PhonePe button clicked!");
   
@@ -226,82 +224,73 @@ function initiatePhonePePayment() {
     callbackUrl: window.location.origin + '/payment-callback.html'
   };
   
-  console.log('Sending payment data:', paymentData);
-  console.log('Using Google Apps Script URL:', 'https://script.google.com/macros/s/AKfycbyV2auMvbkjj-vq6mfw2y6DiHHwHLzVPLMD5H-qyMfBwaHW6Azp6NZ_WvPauqta03rLvA/exec');
+  console.log('Sending payment data via form submission:', paymentData);
   
-  fetch('https://script.google.com/macros/s/AKfycbyV2auMvbkjj-vq6mfw2y6DiHHwHLzVPLMD5H-qyMfBwaHW6Azp6NZ_WvPauqta03rLvA/exec', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(paymentData),
-    mode: 'cors' // Explicitly set CORS mode
-  })
-  .then(response => {
-    console.log('Response received:', response);
-    console.log('Response status:', response.status);
-    console.log('Response ok:', response.ok);
-    
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-    }
-    return response.text(); // Get as text first for debugging
-  })
-  .then(responseText => {
-    console.log('Raw response text:', responseText);
-    
+  // Create invisible form to bypass CORS
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = 'https://script.google.com/macros/s/AKfycbzaVYf6wuxHeFkGQaX0xlqplcLnljIKF_Xjvjd4xl045WTvjO9fcevyP3UG_5Lk9mbNKQ/exec';
+  form.target = 'paymentFrame'; // Target the iframe
+  form.style.display = 'none';
+  
+  // Create hidden input with payment data
+  const input = document.createElement('input');
+  input.type = 'hidden';
+  input.name = 'paymentData';
+  input.value = JSON.stringify(paymentData);
+  form.appendChild(input);
+  
+  // Create iframe to handle response
+  const iframe = document.createElement('iframe');
+  iframe.name = 'paymentFrame';
+  iframe.style.display = 'none';
+  document.body.appendChild(iframe);
+  
+  // Handle iframe load event
+  iframe.onload = function() {
     try {
-      const result = JSON.parse(responseText);
-      console.log('Parsed response:', result);
+      const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+      const responseText = iframeDoc.body.textContent || iframeDoc.body.innerText;
       
-      if (result.success && result.data && result.data.instrumentResponse && result.data.instrumentResponse.redirectInfo) {
-        localStorage.setItem('merchantTransactionId', result.data.merchantTransactionId);
-        localStorage.setItem('donorDetails', JSON.stringify(paymentData.userDetails));
+      console.log('Iframe response:', responseText);
+      
+      if (responseText) {
+        const result = JSON.parse(responseText);
         
-        document.getElementById('statusMessage').textContent = "Redirecting to PhonePe...";
-        document.getElementById('statusMessage').style.color = "green";
-        
-        setTimeout(() => {
-          window.location.href = result.data.instrumentResponse.redirectInfo.url;
-        }, 1000);
-        
-      } else {
-        let errorMessage = "Payment initiation failed. ";
-        if (result.error) {
-          errorMessage += "Error: " + result.error;
+        if (result.success && result.data && result.data.instrumentResponse && result.data.instrumentResponse.redirectInfo) {
+          localStorage.setItem('merchantTransactionId', result.data.merchantTransactionId);
+          localStorage.setItem('donorDetails', JSON.stringify(paymentData.userDetails));
+          
+          document.getElementById('statusMessage').textContent = "Redirecting to PhonePe...";
+          document.getElementById('statusMessage').style.color = "green";
+          
+          // Clean up
+          document.body.removeChild(iframe);
+          document.body.removeChild(form);
+          
+          // Redirect to PhonePe
+          setTimeout(() => {
+            window.location.href = result.data.instrumentResponse.redirectInfo.url;
+          }, 1000);
+        } else {
+          throw new Error(result.error || result.message || 'Payment initiation failed');
         }
-        if (result.message) {
-          errorMessage += " Message: " + result.message;
-        }
-        
-        console.error('Payment failed:', result);
-        document.getElementById('statusMessage').textContent = errorMessage;
-        document.getElementById('statusMessage').style.color = "red";
-        document.getElementById('phonePePaymentButton').disabled = false;
       }
-    } catch (parseError) {
-      console.error('JSON Parse error:', parseError);
-      document.getElementById('statusMessage').textContent = "Invalid response from server: " + responseText;
+    } catch (error) {
+      console.error('Payment processing error:', error);
+      document.getElementById('statusMessage').textContent = "Payment initiation failed: " + error.message;
       document.getElementById('statusMessage').style.color = "red";
       document.getElementById('phonePePaymentButton').disabled = false;
+      
+      // Clean up
+      if (iframe.parentNode) document.body.removeChild(iframe);
+      if (form.parentNode) document.body.removeChild(form);
     }
-  })
-  .catch(error => {
-    console.error('Detailed fetch error:', error);
-    console.error('Error name:', error.name);
-    console.error('Error message:', error.message);
-    
-    let errorMessage = "Connection failed: ";
-    if (error.message.includes('Failed to fetch')) {
-      errorMessage += "Cannot reach the server. Possible causes: 1) Internet connection issue, 2) Google Apps Script not properly deployed, 3) CORS policy blocking the request.";
-    } else {
-      errorMessage += error.message;
-    }
-    
-    document.getElementById('statusMessage').textContent = errorMessage;
-    document.getElementById('statusMessage').style.color = "red";
-    document.getElementById('phonePePaymentButton').disabled = false;
-  });
+  };
+  
+  // Add form to document and submit
+  document.body.appendChild(form);
+  form.submit();
 }
 
 </script>
