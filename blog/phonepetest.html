@@ -193,8 +193,10 @@ function submitForm(event) {
     });
 }
 
-  // PhonePe Payment Integration with Enhanced Error Handling
-async function initiatePhonePePayment() {
+  
+function initiatePhonePePayment() {
+  console.log("PhonePe button clicked!");
+  
   const name = document.getElementById('name').value;
   const email = document.getElementById('email').value;
   const phone = document.getElementById('text').value;
@@ -213,7 +215,7 @@ async function initiatePhonePePayment() {
   const paymentData = {
     amount: 11000,
     donationType: 'Adopt a Cow',
-    userId: phone, // Using phone as user ID
+    userId: phone,
     userDetails: {
       name: name,
       email: email,
@@ -225,61 +227,81 @@ async function initiatePhonePePayment() {
   };
   
   console.log('Sending payment data:', paymentData);
+  console.log('Using Google Apps Script URL:', 'https://script.google.com/macros/s/AKfycbzO0QrEkka_NWi6UzWlKTrlx-1ROLAOui74Enscdo21cjAgLa4ytvn9bC8lDrkr_9xEHA/exec');
   
-  try {
-    const response = await fetch('https://script.google.com/macros/s/AKfycbxX63uJvUY-l2IrRIHZFCsFVeFVL9QUqeUvZMxdVpmw1oMCZ9Z1msBQ6JIi53LCe7yELw/exec', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(paymentData)
-    });
-    
+  fetch('https://script.google.com/macros/s/AKfycbzO0QrEkka_NWi6UzWlKTrlx-1ROLAOui74Enscdo21cjAgLa4ytvn9bC8lDrkr_9xEHA/exec', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(paymentData),
+    mode: 'cors' // Explicitly set CORS mode
+  })
+  .then(response => {
+    console.log('Response received:', response);
     console.log('Response status:', response.status);
+    console.log('Response ok:', response.ok);
     
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
     }
+    return response.text(); // Get as text first for debugging
+  })
+  .then(responseText => {
+    console.log('Raw response text:', responseText);
     
-    const result = await response.json();
-    console.log('Payment API response:', result);
-    
-    if (result.success && result.data && result.data.instrumentResponse && result.data.instrumentResponse.redirectInfo) {
-      // Store transaction ID in localStorage for tracking
-      localStorage.setItem('merchantTransactionId', result.data.merchantTransactionId);
-      localStorage.setItem('donorDetails', JSON.stringify(paymentData.userDetails));
+    try {
+      const result = JSON.parse(responseText);
+      console.log('Parsed response:', result);
       
-      // Redirect to PhonePe payment page
-      document.getElementById('statusMessage').textContent = "Redirecting to PhonePe...";
-      
-      setTimeout(() => {
-        window.location.href = result.data.instrumentResponse.redirectInfo.url;
-      }, 1000);
-      
-    } else {
-      // Show detailed error for debugging
-      let errorMessage = "Payment initiation failed. ";
-      if (result.error) {
-        errorMessage += "Error: " + result.error;
+      if (result.success && result.data && result.data.instrumentResponse && result.data.instrumentResponse.redirectInfo) {
+        localStorage.setItem('merchantTransactionId', result.data.merchantTransactionId);
+        localStorage.setItem('donorDetails', JSON.stringify(paymentData.userDetails));
+        
+        document.getElementById('statusMessage').textContent = "Redirecting to PhonePe...";
+        document.getElementById('statusMessage').style.color = "green";
+        
+        setTimeout(() => {
+          window.location.href = result.data.instrumentResponse.redirectInfo.url;
+        }, 1000);
+        
+      } else {
+        let errorMessage = "Payment initiation failed. ";
+        if (result.error) {
+          errorMessage += "Error: " + result.error;
+        }
+        if (result.message) {
+          errorMessage += " Message: " + result.message;
+        }
+        
+        console.error('Payment failed:', result);
+        document.getElementById('statusMessage').textContent = errorMessage;
+        document.getElementById('statusMessage').style.color = "red";
+        document.getElementById('phonePePaymentButton').disabled = false;
       }
-      if (result.debugInfo) {
-        errorMessage += " Debug: " + JSON.stringify(result.debugInfo);
-      }
-      if (!result.success && result.message) {
-        errorMessage += " Message: " + result.message;
-      }
-      
-      console.error('Payment failed:', result);
-      document.getElementById('statusMessage').textContent = errorMessage;
+    } catch (parseError) {
+      console.error('JSON Parse error:', parseError);
+      document.getElementById('statusMessage').textContent = "Invalid response from server: " + responseText;
       document.getElementById('statusMessage').style.color = "red";
       document.getElementById('phonePePaymentButton').disabled = false;
     }
-  } catch (error) {
-    console.error('Fetch error:', error);
-    document.getElementById('statusMessage').textContent = "Network error: " + error.message + ". Please check your internet connection and try again.";
+  })
+  .catch(error => {
+    console.error('Detailed fetch error:', error);
+    console.error('Error name:', error.name);
+    console.error('Error message:', error.message);
+    
+    let errorMessage = "Connection failed: ";
+    if (error.message.includes('Failed to fetch')) {
+      errorMessage += "Cannot reach the server. Possible causes: 1) Internet connection issue, 2) Google Apps Script not properly deployed, 3) CORS policy blocking the request.";
+    } else {
+      errorMessage += error.message;
+    }
+    
+    document.getElementById('statusMessage').textContent = errorMessage;
     document.getElementById('statusMessage').style.color = "red";
     document.getElementById('phonePePaymentButton').disabled = false;
-  }
+  });
 }
 
 </script>
