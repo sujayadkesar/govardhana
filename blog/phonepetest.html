@@ -1,0 +1,287 @@
+---
+title: Adopt a Cow
+heading: गावः सुरभिर्नो मुर्धन
+description: Submit your details and make payment through PhonePe
+---
+
+<div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
+  <form id="paymentForm" onsubmit="submitForm(event)">
+    <label for="name">Full Name</label>
+    <input type="text" name="name" id="name" placeholder="Enter your name..." required/>
+
+    <label for="email">Email Address</label>
+    <input type="email" name="email" id="email" placeholder="Enter your email..." required />
+
+    <label for="adhar">Aadhar Number</label>
+    <input type="text" name="adhar" id="adhar" placeholder="Enter your Aadhar..." required />
+
+    <label for="text">Phone Number</label>
+    <input type="text" name="phone" id="text" placeholder="Enter your phone number..." required />
+
+    <label for="amount" style="display: none;">Donated for adopting Cow</label>
+    <input type="text" name="amount" id="amount" value="11000 (Donated for adopting Cow)" style="display: none;" />
+
+    <input type="submit" value="Submit & Proceed to Payment" />
+  </form>
+
+  <div id="confirmationMessage" style="display:none; color: green;">
+    <br><br>Form submitted successfully! Click below to proceed with PhonePe payment.
+  </div>
+</div>
+
+<br><br><br>
+
+<div style="text-align: center;">
+  <button 
+    id="phonePePaymentButton"
+    class="pulse-button"
+    style="background-color: #5f259f; padding: 15px 30px; font-size: 18px; 
+           border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
+           color: white; border-radius: 8px; display: none;">
+    Pay ₹11,000 via PhonePe
+  </button>
+</div>
+
+<div id="paymentStatus" style="text-align: center; margin-top: 20px; display: none;">
+  <p id="statusMessage"></p>
+</div>
+
+<script>
+// Multiplication table 'd'
+var d = [
+  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+  [1, 2, 3, 4, 0, 6, 7, 8, 9, 5], 
+  [2, 3, 4, 0, 1, 7, 8, 9, 5, 6], 
+  [3, 4, 0, 1, 2, 8, 9, 5, 6, 7], 
+  [4, 0, 1, 2, 3, 9, 5, 6, 7, 8], 
+  [5, 9, 8, 7, 6, 0, 4, 3, 2, 1], 
+  [6, 5, 9, 8, 7, 1, 0, 4, 3, 2], 
+  [7, 6, 5, 9, 8, 2, 1, 0, 4, 3], 
+  [8, 7, 6, 5, 9, 3, 2, 1, 0, 4], 
+  [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+];
+
+// Permutation table 'p'
+var p = [
+  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 
+  [1, 5, 7, 6, 2, 8, 3, 0, 9, 4], 
+  [5, 8, 0, 3, 7, 9, 6, 1, 4, 2], 
+  [8, 9, 1, 6, 0, 4, 3, 5, 2, 7], 
+  [9, 4, 5, 3, 1, 2, 6, 8, 7, 0], 
+  [4, 2, 8, 6, 5, 7, 3, 9, 0, 1], 
+  [2, 7, 9, 3, 8, 0, 6, 4, 1, 5], 
+  [7, 0, 4, 6, 9, 1, 3, 2, 5, 8]
+];
+
+// Inverse table 'inv'
+var inv = [0, 4, 3, 2, 1, 5, 6, 7, 8, 9];
+
+// Function to invert an array
+function invArray(array){
+  if (Object.prototype.toString.call(array) == "[object Number]") {
+    array = String(array);
+  }
+  if (Object.prototype.toString.call(array) == "[object String]") {
+    array = array.split("").map(Number);
+  }
+  return array.reverse();
+}
+
+// Function to generate checksum
+function generate(array){
+  var c = 0;
+  var invertedArray = invArray(array);
+
+  for (var i = 0; i < invertedArray.length; i++) {
+    c = d[c][p[((i + 1) % 8)][invertedArray[i]]];
+  }
+  return inv[c];
+}
+
+// Function to validate checksum
+function validate(array) {
+  var c = 0;
+  var invertedArray = invArray(array);
+
+  for (var i = 0; i < invertedArray.length; i++) {
+    c = d[c][p[(i % 8)][invertedArray[i]]];
+  }
+  return (c === 0);
+}
+
+// Function to validate Aadhar number
+function validate_adhar(adhar) {
+  console.clear();
+  // Check if the Aadhar number is 12 digits
+  if (adhar >= 100000000000 && adhar <= 999999999999) {
+    if (validate(adhar) == false) {
+      console.log("Invalid Aadhar Number");
+      return false;
+    } else {
+      return true;
+    }
+  } else {
+    console.log("Aadhar Number Should Be 12 Digits");
+    return false;
+  }
+}
+
+// Function to validate inputs and handle form submission
+function validateInputs() {
+  const email = document.getElementById('email').value;
+  const adhar = document.getElementById('adhar').value;
+  const phone = document.getElementById('text').value;
+
+  // Email validation (basic pattern)
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(email)) {
+    alert("Please enter a valid email address.");
+    return false;
+  }
+
+  // Aadhar validation
+  if (!validate_adhar(adhar)) {
+    alert("Please enter a valid Aadhar number.");
+    return false;
+  }
+
+  // Phone number validation (10 digits only)
+  const phonePattern = /^[6-9]\d{9}$/;
+
+  if (!phonePattern.test(phone) || /^(\d)\1{9}$/.test(phone)) {
+    alert("Please enter a valid 10-digit Indian mobile number.");
+    return false;
+  }
+
+  return true;
+}
+
+let formSubmitted = false;
+
+function submitForm(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    if (formSubmitted) {
+      alert("You have already submitted the form.");
+      return;
+    }
+
+    // Run validation before submission
+    if (!validateInputs()) return;
+
+    // Gather form data
+    const formData = new FormData(document.getElementById("paymentForm"));
+    const url = "https://script.google.com/macros/s/AKfycbwE3W4PdSfSve2DrhHPhXMq_7sj453UcSTqDTNjj3AtWduShhRZAk63o3JyIpUqLLrmOw/exec"; // Replace with your Google Apps Script URL
+
+    // Send form data via fetch (AJAX)
+    fetch(url, {
+      method: "POST",
+      body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+      // Show confirmation message
+      formSubmitted = true;
+      document.getElementById("confirmationMessage").style.display = "block";
+      document.getElementById("phonePePaymentButton").style.display = "inline-block";
+      // Do not reset the form to retain values for payment
+    })
+    .catch(error => {
+      console.error("Error submitting form:", error);
+    });
+}
+
+// PhonePe Payment Integration
+async function initiatePhonePePayment() {
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const phone = document.getElementById('text').value;
+  const adhar = document.getElementById('adhar').value;
+  
+  if (!formSubmitted) {
+    alert("Please submit the form first.");
+    return;
+  }
+
+  // Show loading status
+  document.getElementById('statusMessage').textContent = "Initiating payment...";
+  document.getElementById('paymentStatus').style.display = "block";
+  document.getElementById('phonePePaymentButton').disabled = true;
+
+  const paymentData = {
+    amount: 11000,
+    donationType: 'Adopt a Cow',
+    userId: phone, // Using phone as user ID
+    userDetails: {
+      name: name,
+      email: email,
+      phone: phone,
+      adhar: adhar
+    },
+    redirectUrl: window.location.origin + '/payment-success.html',
+    callbackUrl: window.location.origin + '/payment-callback.html'
+  };
+  
+  try {
+    // Replace this URL with your Google Apps Script web app URL
+    const response = await fetch('YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(paymentData)
+    });
+    
+    const result = await response.json();
+    
+    if (result.success && result.data && result.data.instrumentResponse && result.data.instrumentResponse.redirectInfo) {
+      // Store transaction ID in localStorage for tracking
+      localStorage.setItem('merchantTransactionId', result.data.merchantTransactionId);
+      localStorage.setItem('donorDetails', JSON.stringify(paymentData.userDetails));
+      
+      // Redirect to PhonePe payment page
+      window.location.href = result.data.instrumentResponse.redirectInfo.url;
+    } else {
+      document.getElementById('statusMessage').textContent = "Payment initiation failed. Please try again.";
+      document.getElementById('statusMessage').style.color = "red";
+      document.getElementById('phonePePaymentButton').disabled = false;
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    document.getElementById('statusMessage').textContent = "Something went wrong. Please try again.";
+    document.getElementById('statusMessage').style.color = "red";
+    document.getElementById('phonePePaymentButton').disabled = false;
+  }
+}
+
+// Add event listener to PhonePe payment button
+document.getElementById('phonePePaymentButton').addEventListener('click', initiatePhonePePayment);
+
+// Check if returning from payment (for handling success/failure)
+window.addEventListener('load', function() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const paymentStatus = urlParams.get('status');
+  
+  if (paymentStatus === 'success') {
+    document.getElementById('statusMessage').textContent = "🙏 Payment successful! Thank you for your donation.";
+    document.getElementById('statusMessage').style.color = "green";
+    document.getElementById('paymentStatus').style.display = "block";
+    document.getElementById('phonePePaymentButton').style.display = "none";
+  } else if (paymentStatus === 'failure') {
+    document.getElementById('statusMessage').textContent = "Payment failed. Please try again.";
+    document.getElementById('statusMessage').style.color = "red";
+    document.getElementById('paymentStatus').style.display = "block";
+    document.getElementById('phonePePaymentButton').disabled = false;
+  }
+});
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2ZJXCX9BQF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2ZJXCX9BQF');
+</script>
