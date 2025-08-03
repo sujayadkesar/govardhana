@@ -186,7 +186,7 @@ description: Submit your details and generate a UPI QR code for payment
             return;
         }
 
-        const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=upi%3A%2F%2Fpay%3Fpa%3Dgovardhanylp%40sbi%26am%3D${amount}%26cu%3DINR%26tn%3D${adharNumber}`;
+        const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=upi%3A%2F%2Fpay%3Fpa%3Djithu2590hdfc%40ibl%26am%3D${amount}%26cu%3DINR%26tn%3D${adharNumber}`;
         console.log("Generated QR Code URL:", qrCodeUrl);
 
         openQrWindow(qrCodeUrl);
