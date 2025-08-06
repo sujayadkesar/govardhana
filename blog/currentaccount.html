@@ -5,787 +5,745 @@ description: Support GoSeva through various contributions - adopt cows, nourish 
 ---
 
 <!-- Enhanced Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<!-- Main Content Container - Properly aligned with site structure -->
-<div class="goseva-container">
-    <!-- Hero Section -->
-    <div class="hero-section">
+<!-- Mobile-First GoSeva Container -->
+<div class="mobile-goseva">
+    <!-- Hero Section - Mobile Optimized -->
+    <section class="mobile-hero">
+        <div class="hero-bg-pattern"></div>
         <div class="hero-content">
-            <div class="sanskrit-verse">
-                <p>गावो विश्वस्य मातरः | सर्वे भद्राणि पश्यन्तु</p>
-                <span>Cows are the mothers of the universe | May all beings witness prosperity</span>
+            <div class="spiritual-badge">
+                <i class="fas fa-om"></i>
+                <span>Sacred Service</span>
             </div>
             <h1 class="hero-title">
-                Sacred Opportunities to Engage in 
-                <span class="highlight-text">GoSeva</span>
+                <span class="sacred-text">Sacred GoSeva</span>
+                <span class="opportunities-text">Opportunities</span>
             </h1>
-            <div class="hero-subtitle">
-                Join our divine mission of cow protection and spiritual upliftment through meaningful contributions
+            <p class="hero-desc">Transform your devotion into divine service through meaningful contributions to cow protection</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Sacred Cows</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1000+</div>
+                    <div class="stat-label">Devotees</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">80G</div>
+                    <div class="stat-label">Tax Benefits</div>
+                </div>
             </div>
         </div>
-        <div class="hero-animation">
-            <div class="floating-elements">
-                <i class="fas fa-leaf leaf-1"></i>
-                <i class="fas fa-heart heart-1"></i>
-                <i class="fas fa-star star-1"></i>
-                <i class="fas fa-leaf leaf-2"></i>
-                <i class="fas fa-heart heart-2"></i>
+    </section>
+
+    <!-- Quick Actions - Mobile First -->
+    <section class="quick-actions">
+        <h2 class="section-title">Choose Your Sacred Service</h2>
+        <div class="action-grid">
+            <a href="#adoption" class="quick-action-card featured">
+                <div class="action-icon">🐄</div>
+                <div class="action-title">Adopt a Cow</div>
+                <div class="action-price">₹11,000/year</div>
+                <div class="action-badge">Most Popular</div>
+            </a>
+            <a href="#feeding" class="quick-action-card">
+                <div class="action-icon">🌾</div>
+                <div class="action-title">Feed Herd</div>
+                <div class="action-price">₹13,000</div>
+            </a>
+            <a href="#special" class="quick-action-card celebration">
+                <div class="action-icon">🙏</div>
+                <div class="action-title">Special Pooja</div>
+                <div class="action-price">Any Amount</div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Featured Donations - Card Stack Style -->
+    <section class="featured-donations" id="adoption">
+        <div class="section-header">
+            <h2>Adopt & Care</h2>
+            <p>Become a guardian of divine beings</p>
+        </div>
+        
+        <div class="mobile-card-stack">
+            <!-- Adopt Cow - Primary -->
+            <div class="donation-card primary-card">
+                <div class="card-header">
+                    <div class="card-icon-wrapper">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="card-badge">Most Chosen</div>
+                    <h3>Adopt a Sacred Cow</h3>
+                    <p class="card-subtitle">Complete care for one year</p>
+                </div>
+                
+                <div class="price-section">
+                    <div class="price-main">₹11,000</div>
+                    <div class="price-period">Per Year</div>
+                </div>
+                
+                <div class="benefits-section">
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Daily food & medical care</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Adoption certificate</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>80G tax exemption</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Monthly updates</span>
+                    </div>
+                </div>
+                
+                <div class="impact-highlight">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Your support sustains a sacred life for 365 days</span>
+                </div>
+                
+                <a href="{{ '/blog/adoptacow' | relative_url }}" class="cta-button primary-cta">
+                    <span>Adopt Sacred Cow</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Adopt Nandi -->
+            <div class="donation-card standard-card">
+                <div class="card-header">
+                    <div class="card-icon-wrapper">
+                        <i class="fas fa-mountain"></i>
+                    </div>
+                    <h3>Adopt a Nandi</h3>
+                    <p class="card-subtitle">Sacred bull guardianship</p>
+                </div>
+                
+                <div class="price-section">
+                    <div class="price-main">₹6,000</div>
+                    <div class="price-period">Per Year</div>
+                </div>
+                
+                <div class="benefits-section">
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Complete Nandi care</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Spiritual blessings</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Certificate & tax benefits</span>
+                    </div>
+                </div>
+                
+                <a href="{{ '/blog/adoptANandi' | relative_url }}" class="cta-button standard-cta">
+                    <span>Adopt Nandi</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Adopt Calf -->
+            <div class="donation-card basic-card">
+                <div class="card-header">
+                    <div class="card-icon-wrapper">
+                        <i class="fas fa-baby"></i>
+                    </div>
+                    <h3>Adopt a GoVatsa</h3>
+                    <p class="card-subtitle">Nurture young life</p>
+                </div>
+                
+                <div class="price-section">
+                    <div class="price-main">₹3,000</div>
+                    <div class="price-period">Per Year</div>
+                </div>
+                
+                <div class="benefits-section">
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Calf nutrition & care</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Growth monitoring</span>
+                    </div>
+                    <div class="benefit-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Future cow guardian</span>
+                    </div>
+                </div>
+                
+                <a href="{{ '/blog/adoptGovatsa' | relative_url }}" class="cta-button basic-cta">
+                    <span>Adopt Calf</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Feeding Section -->
+    <section class="feeding-section" id="feeding">
+        <div class="section-header">
+            <h2>Nourish the Herd</h2>
+            <p>Provide nutritious food for sacred beings</p>
+        </div>
+        
+        <div class="feeding-options">
+            <div class="feeding-card large-feeding">
+                <div class="feeding-visual">
+                    <i class="fas fa-truck"></i>
+                    <div class="quantity-badge">1 Tractor Load</div>
+                </div>
+                <div class="feeding-content">
+                    <h3>Feed Entire Herd</h3>
+                    <p>Fresh grass for multiple days</p>
+                    <div class="feeding-price">₹13,000</div>
+                    <div class="feeding-impact">Feeds 100+ cows for 3-4 days</div>
+                    <a href="{{ '/blog/oneTractorGrass' | relative_url }}" class="feeding-cta">
+                        <span>Nourish Herd</span>
+                        <i class="fas fa-seedling"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="feeding-card medium-feeding">
+                <div class="feeding-visual">
+                    <i class="fas fa-car"></i>
+                    <div class="quantity-badge">1 Jeep Load</div>
+                </div>
+                <div class="feeding-content">
+                    <h3>Feed Hungry Cows</h3>
+                    <p>Grass for daily needs</p>
+                    <div class="feeding-price">₹6,500</div>
+                    <div class="feeding-impact">Sustains herd for 1-2 days</div>
+                    <a href="{{ '/blog/oneJeepGrass' | relative_url }}" class="feeding-cta">
+                        <span>Feed Cows</span>
+                        <i class="fas fa-leaf"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Special Occasions Section -->
-    <div class="section-container">
+    <section class="special-occasions" id="special">
         <div class="section-header">
-            <h2>Celebrate with Sacred Purpose</h2>
-            <p>Transform your special moments into spiritual blessings</p>
+            <h2>Sacred Celebrations</h2>
+            <p>Honor special moments with divine blessings</p>
         </div>
         
-        <div class="card-grid">
-            <!-- Birthday GoPooja -->
-            <div class="donation-card celebration-card">
-                <div class="card-icon">
-                    <i class="fas fa-birthday-cake"></i>
-                </div>
-                <div class="card-header">
-                    <h3>Janma Dina GoPooja</h3>
-                    <p class="card-subtitle">Birthday Celebration with Divine Blessings</p>
-                </div>
-                <div class="card-body">
-                    <div class="donation-amount">
-                        <span class="currency">₹</span>
-                        <span class="amount">Any Amount</span>
-                        <span class="period">of Your Wish</span>
-                    </div>
-                    <ul class="benefits-list">
-                        <li><i class="fas fa-check"></i> Celebrate in a meaningful way</li>
-                        <li><i class="fas fa-check"></i> Accumulate spiritual benefits</li>
-                        <li><i class="fas fa-check"></i> Birthday blessings for prosperity</li>
-                        <li><i class="fas fa-check"></i> Create positive karma</li>
-                    </ul>
-                    <a href="{{ '/blog/janmadina' | relative_url }}" class="cta-button celebration-btn">
-                        <span>Celebrate with GoSeva</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
+        <div class="occasion-grid">
+            <div class="occasion-card birthday-card">
+                <div class="occasion-icon">🎂</div>
+                <h3>Birthday Pooja</h3>
+                <p>Celebrate with divine blessings</p>
+                <div class="occasion-price">Any Amount</div>
+                <a href="{{ '/blog/janmadina' | relative_url }}" class="occasion-cta">Book Birthday Pooja</a>
             </div>
 
-            <!-- Anniversary GoPooja -->
-            <div class="donation-card celebration-card">
-                <div class="card-icon">
-                    <i class="fas fa-heart"></i>
-                </div>
-                <div class="card-header">
-                    <h3>Vivaha Dina GoPooja</h3>
-                    <p class="card-subtitle">Anniversary Celebration with Sacred Blessings</p>
-                </div>
-                <div class="card-body">
-                    <div class="donation-amount">
-                        <span class="currency">₹</span>
-                        <span class="amount">Any Amount</span>
-                        <span class="period">of Your Wish</span>
-                    </div>
-                    <ul class="benefits-list">
-                        <li><i class="fas fa-check"></i> Honor your sacred bond</li>
-                        <li><i class="fas fa-check"></i> Seek divine blessings for harmony</li>
-                        <li><i class="fas fa-check"></i> Strengthen your spiritual journey</li>
-                        <li><i class="fas fa-check"></i> Create lasting positive impact</li>
-                    </ul>
-                    <a href="{{ '/blog/vivahadina' | relative_url }}" class="cta-button celebration-btn">
-                        <span>Honor Your Union</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
+            <div class="occasion-card anniversary-card">
+                <div class="occasion-icon">💝</div>
+                <h3>Anniversary Pooja</h3>
+                <p>Bless your sacred union</p>
+                <div class="occasion-price">Any Amount</div>
+                <a href="{{ '/blog/vivahadina' | relative_url }}" class="occasion-cta">Book Anniversary Pooja</a>
             </div>
 
-            <!-- Punya Tithi -->
-            <div class="donation-card premium-card">
-                <div class="card-badge">Sacred</div>
-                <div class="card-icon">
-                    <i class="fas fa-praying-hands"></i>
-                </div>
-                <div class="card-header">
-                    <h3>Punya Tithi GoPooja</h3>
-                    <p class="card-subtitle">Honoring Beloved Ancestors</p>
-                </div>
-                <div class="card-body">
-                    <div class="donation-amount">
-                        <span class="currency">₹</span>
-                        <span class="amount">Any Amount</span>
-                        <span class="period">of Your Wish</span>
-                    </div>
-                    <ul class="benefits-list">
-                        <li><i class="fas fa-check"></i> Honor ancestral memory</li>
-                        <li><i class="fas fa-check"></i> Seek blessings for family lineage</li>
-                        <li><i class="fas fa-check"></i> Create spiritual merit</li>
-                        <li><i class="fas fa-check"></i> Attain peace and prosperity</li>
-                    </ul>
-                    <a href="{{ '/blog/punyatithi' | relative_url }}" class="cta-button premium-btn">
-                        <span>Honor Ancestors</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
+            <div class="occasion-card memorial-card">
+                <div class="occasion-icon">🕯️</div>
+                <h3>Memorial Pooja</h3>
+                <p>Honor beloved ancestors</p>
+                <div class="occasion-price">Any Amount</div>
+                <a href="{{ '/blog/punyatithi' | relative_url }}" class="occasion-cta">Book Memorial Pooja</a>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Main Adoption Section -->
-    <div class="section-container">
+    <!-- Daily Operations Section -->
+    <section class="daily-operations">
         <div class="section-header">
-            <h2>Adopt & Nourish Our Sacred Cows</h2>
-            <p>Become a guardian of these divine beings and experience profound spiritual blessings</p>
+            <h2>Daily Sacred Services</h2>
+            <p>Support our daily care and spiritual rituals</p>
         </div>
         
-        <div class="card-grid">
-            <!-- Adopt a Cow -->
-            <div class="donation-card featured-card">
-                <div class="card-badge">Most Popular</div>
-                <div class="card-icon">
-                    <i class="fas fa-home"></i>
-                </div>
-                <div class="card-header">
-                    <h3>Adopt a Cow</h3>
-                    <p class="card-subtitle">One Year Sacred Guardianship</p>
-                </div>
-                <div class="card-body">
-                    <div class="donation-amount">
-                        <span class="currency">₹</span>
-                        <span class="amount">11,000</span>
-                        <span class="period">/ Year</span>
-                    </div>
-                    <ul class="benefits-list">
-                        <li><i class="fas fa-check"></i> Complete care for one sacred cow</li>
-                        <li><i class="fas fa-check"></i> Personalized adoption certificate</li>
-                        <li><i class="fas fa-check"></i> 80G tax exemption benefits</li>
-                        <li><i class="fas fa-check"></i> Regular updates on your cow</li>
-                    </ul>
-                    <div class="impact-note">
-                        <i class="fas fa-info-circle"></i>
-                        <span>Your adoption supports daily food, medical care, and shelter</span>
-                    </div>
-                    <a href="{{ '/blog/adoptacow' | relative_url }}" class="cta-button featured-btn">
-                        <span>Adopt Your Sacred Cow</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Nourish a Herd -->
-            <div class="donation-card standard-card">
-                <div class="card-icon">
-                    <i class="fas fa-seedling"></i>
-                </div>
-                <div class="card-header">
-                    <h3>Nourish the Herd</h3>
-                    <p class="card-subtitle">One Tractor Load of Fresh Grass</p>
-                </div>
-                <div class="card-body">
-                    <div class="donation-amount">
-                        <span class="currency">₹</span>
-                        <span class="amount">13,000</span>
-                        <span class="period">/ One Time</span>
-                    </div>
-                    <ul class="benefits-list">
-                        <li><i class="fas fa-check"></i> Feed entire herd for multiple days</li>
-                        <li><i class="fas fa-check"></i> Certificate of nourishment support</li>
-                        <li><i class="fas fa-check"></i> 80G tax exemption benefits</li>
-                        <li><i class="fas fa-check"></i> Photo updates of feeding</li>
-                    </ul>
-                    <a href="{{ '/blog/oneTractorGrass' | relative_url }}" class="cta-button standard-btn">
-                        <span>Nourish the Herd</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Go Kanike -->
-            <div class="donation-card flexible-card">
-                <div class="card-icon">
-                    <i class="fas fa-hands-helping"></i>
-                </div>
-                <div class="card-header">
-                    <h3>Go Kanike</h3>
-                    <p class="card-subtitle">Heartfelt Offering to Sacred Cows</p>
-                </div>
-                <div class="card-body">
-                    <div class="donation-amount">
-                        <span class="currency">₹</span>
-                        <span class="amount">Any Amount</span>
-                        <span class="period">You Wish</span>
-                    </div>
-                    <ul class="benefits-list">
-                        <li><i class="fas fa-check"></i> Nourish cows with your love</li>
-                        <li><i class="fas fa-check"></i> Seek divine blessings</li>
-                        <li><i class="fas fa-check"></i> Attain spiritual enlightenment</li>
-                        <li><i class="fas fa-check"></i> Create positive karma</li>
-                    </ul>
-                    <a href="{{ '/blog/gokanike' | relative_url }}" class="cta-button flexible-btn">
-                        <span>Make Your Offering</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Support Services Section -->
-    <div class="section-container">
-        <div class="section-header">
-            <h2>Support Our Sacred Mission</h2>
-            <p>Every contribution helps maintain our divine sanctuary</p>
-        </div>
-        
-        <div class="card-grid">
-            <!-- Adopt Nandi -->
-            <div class="donation-card basic-card">
-                <div class="card-icon">
-                    <i class="fas fa-mountain"></i>
-                </div>
-                <div class="card-header">
-                    <h3>Adopt a Nandi</h3>
-                    <p class="card-subtitle">One Year Care for Sacred Bull</p>
-                </div>
-                <div class="card-body">
-                    <div class="donation-amount">
-                        <span class="currency">₹</span>
-                        <span class="amount">6,000</span>
-                        <span class="period">/ Year</span>
-                    </div>
-                    <ul class="benefits-list">
-                        <li><i class="fas fa-check"></i> Care for sacred Nandi bull</li>
-                        <li><i class="fas fa-check"></i> Adoption certificate</li>
-                        <li><i class="fas fa-check"></i> 80G tax benefits</li>
-                        <li><i class="fas fa-check"></i> Spiritual blessings</li>
-                    </ul>
-                    <a href="{{ '/blog/adoptANandi' | relative_url }}" class="cta-button basic-btn">
-                        <span>Adopt Sacred Nandi</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Feed with Jeep -->
-            <div class="donation-card standard-card">
-                <div class="card-icon">
-                    <i class="fas fa-truck"></i>
-                </div>
-                <div class="card-header">
-                    <h3>Feed the Hungry</h3>
-                    <p class="card-subtitle">One Jeep Load of Fresh Grass</p>
-                </div>
-                <div class="card-body">
-                    <div class="donation-amount">
-                        <span class="currency">₹</span>
-                        <span class="amount">6,500</span>
-                        <span class="period">/ One Time</span>
-                    </div>
-                    <ul class="benefits-list">
-                        <li><i class="fas fa-check"></i> Sustain hungry cows</li>
-                        <li><i class="fas fa-check"></i> Support certificate</li>
-                        <li><i class="fas fa-check"></i> Tax exemption benefits</li>
-                        <li><i class="fas fa-check"></i> Uplift Gau-raksha mission</li>
-                    </ul>
-                    <a href="{{ '/blog/oneJeepGrass' | relative_url }}" class="cta-button standard-btn">
-                        <span>Feed the Hungry</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Adopt GoVatsa -->
-            <div class="donation-card premium-card">
-                <div class="card-icon">
-                    <i class="fas fa-baby"></i>
-                </div>
-                <div class="card-header">
-                    <h3>Adopt a GoVatsa</h3>
-                    <p class="card-subtitle">Care for Sacred Calf</p>
-                </div>
-                <div class="card-body">
-                    <div class="donation-amount">
-                        <span class="currency">₹</span>
-                        <span class="amount">3,000</span>
-                        <span class="period">/ Year</span>
-                    </div>
-                    <ul class="benefits-list">
-                        <li><i class="fas fa-check"></i> Nurture young calf to health</li>
-                        <li><i class="fas fa-check"></i> Certificate of support</li>
-                        <li><i class="fas fa-check"></i> 80G tax exemption</li>
-                        <li><i class="fas fa-check"></i> Future cow guardian</li>
-                    </ul>
-                    <a href="{{ '/blog/adoptGovatsa' | relative_url }}" class="cta-button premium-btn">
-                        <span>Nurture Young Life</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Spiritual Services Section -->
-    <div class="section-container">
-        <div class="section-header">
-            <h2>Spiritual Services & Daily Operations</h2>
-            <p>Support the sacred rituals and daily care of our Goshala</p>
-        </div>
-        
-        <div class="card-grid">
-            <!-- SiddhaGrasa -->
-            <div class="donation-card basic-card">
-                <div class="card-icon">
-                    <i class="fas fa-bowl-rice"></i>
-                </div>
-                <div class="card-header">
-                    <h3>SiddhaGrasa Samarpana</h3>
-                    <p class="card-subtitle">Sacred Food Offering</p>
-                </div>
-                <div class="card-body">
-                    <div class="donation-amount">
-                        <span class="currency">₹</span>
-                        <span class="amount">2,000</span>
-                        <span class="period">/ One Time</span>
-                    </div>
-                    <ul class="benefits-list">
-                        <li><i class="fas fa-check"></i> Blessed food for divine beings</li>
-                        <li><i class="fas fa-check"></i> Certificate of spiritual support</li>
-                        <li><i class="fas fa-check"></i> 80G tax exemption</li>
-                        <li><i class="fas fa-check"></i> Blessings in every bite</li>
-                    </ul>
-                    <a href="{{ '/blog/SiddhaGrasa' | relative_url }}" class="cta-button basic-btn">
-                        <span>Offer Sacred Food</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Go Pooja -->
-            <div class="donation-card standard-card">
-                <div class="card-icon">
-                    <i class="fas fa-hands-praying"></i>
-                </div>
-                <div class="card-header">
-                    <h3>Go Pooja</h3>
-                    <p class="card-subtitle">Sacred Cow Worship Ceremony</p>
-                </div>
-                <div class="card-body">
-                    <div class="donation-amount">
-                        <span class="currency">₹</span>
-                        <span class="amount">1,250</span>
-                        <span class="period">/ Ceremony</span>
-                    </div>
-                    <ul class="benefits-list">
-                        <li><i class="fas fa-check"></i> Sacred worship ceremony</li>
-                        <li><i class="fas fa-check"></i> Divine blessings for prosperity</li>
-                        <li><i class="fas fa-check"></i> Spiritual enlightenment</li>
-                        <li><i class="fas fa-check"></i> Celebrate special occasions</li>
-                    </ul>
-                    <a href="{{ '/blog/goPooja' | relative_url }}" class="cta-button standard-btn">
-                        <span>Book Sacred Pooja</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <!-- One Day Expense -->
-            <div class="donation-card premium-card">
-                <div class="card-icon">
+        <div class="operations-slider">
+            <div class="operation-card">
+                <div class="operation-header">
                     <i class="fas fa-calendar-day"></i>
+                    <h3>One Day Expenses</h3>
                 </div>
-                <div class="card-header">
-                    <h3>One Day Expense</h3>
-                    <p class="card-subtitle">Complete Daily Operations</p>
+                <div class="operation-price">₹4,500</div>
+                <p>Complete daily operations of Goshala</p>
+                <div class="operation-includes">
+                    <span>Food</span>
+                    <span>Medicine</span>
+                    <span>Care</span>
+                    <span>Maintenance</span>
                 </div>
-                <div class="card-body">
-                    <div class="donation-amount">
-                        <span class="currency">₹</span>
-                        <span class="amount">4,500</span>
-                        <span class="period">/ Day</span>
-                    </div>
-                    <ul class="benefits-list">
-                        <li><i class="fas fa-check"></i> Cover complete day expenses</li>
-                        <li><i class="fas fa-check"></i> Certificate of support</li>
-                        <li><i class="fas fa-check"></i> 80G tax exemption benefits</li>
-                        <li><i class="fas fa-check"></i> Sustain entire Goshala</li>
-                    </ul>
-                    <a href="{{ '/blog/oneDayExpense' | relative_url }}" class="cta-button premium-btn">
-                        <span>Support Daily Operations</span>
-                        <i class="fas fa-arrow-right"></i>
-                    </a>
+                <a href="{{ '/blog/oneDayExpense' | relative_url }}" class="operation-cta">Support Daily Operations</a>
+            </div>
+
+            <div class="operation-card">
+                <div class="operation-header">
+                    <i class="fas fa-hands-praying"></i>
+                    <h3>Go Pooja</h3>
                 </div>
+                <div class="operation-price">₹1,250</div>
+                <p>Sacred cow worship ceremony</p>
+                <div class="operation-includes">
+                    <span>Ritual</span>
+                    <span>Offerings</span>
+                    <span>Prayers</span>
+                    <span>Blessings</span>
+                </div>
+                <a href="{{ '/blog/goPooja' | relative_url }}" class="operation-cta">Book Pooja</a>
+            </div>
+
+            <div class="operation-card">
+                <div class="operation-header">
+                    <i class="fas fa-bowl-rice"></i>
+                    <h3>Sacred Food</h3>
+                </div>
+                <div class="operation-price">₹2,000</div>
+                <p>SiddhaGrasa blessed offering</p>
+                <div class="operation-includes">
+                    <span>Blessed Food</span>
+                    <span>Ceremony</span>
+                    <span>Prayers</span>
+                    <span>Merit</span>
+                </div>
+                <a href="{{ '/blog/SiddhaGrasa' | relative_url }}" class="operation-cta">Offer Sacred Food</a>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Urgent Appeal Section -->
-    <div class="urgent-appeal">
-        <div class="appeal-content">
+    <!-- Flexible Donation -->
+    <section class="flexible-donation">
+        <div class="donation-banner">
+            <div class="banner-content">
+                <h2>Go Kanike - Heartfelt Offering</h2>
+                <p>Contribute any amount from your heart for cow welfare</p>
+                <div class="flexible-features">
+                    <div class="feature">
+                        <i class="fas fa-heart"></i>
+                        <span>From the Heart</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-hands"></i>
+                        <span>Any Amount</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-certificate"></i>
+                        <span>Tax Benefits</span>
+                    </div>
+                </div>
+                <a href="{{ '/blog/gokanike' | relative_url }}" class="flexible-cta">
+                    <span>Make Your Offering</span>
+                    <i class="fas fa-donate"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Urgent Construction Appeal -->
+    <section class="urgent-appeal">
+        <div class="appeal-banner">
             <div class="appeal-icon">
                 <i class="fas fa-hammer"></i>
             </div>
-            <div class="appeal-text">
-                <h3>Urgent Need of the Hour!</h3>
-                <p>Help us expand our sacred facilities with new construction projects</p>
-                <div class="appeal-details">
-                    Building better shelters • Enhanced medical facilities • Expanded grazing areas
-                </div>
+            <div class="appeal-content">
+                <div class="urgent-badge">Urgent Need!</div>
+                <h3>Expand Our Sacred Facilities</h3>
+                <p>Help build better shelters, medical facilities, and grazing areas for our growing Goshala family</p>
+                <a href="{{ '/blog/newconstruction' | relative_url }}" class="urgent-cta">
+                    <span>Support Construction</span>
+                    <i class="fas fa-external-link-alt"></i>
+                </a>
             </div>
-            <a href="{{ '/blog/newconstruction' | relative_url }}" class="urgent-cta">
-                <span>Support Construction</span>
-                <i class="fas fa-external-link-alt"></i>
-            </a>
         </div>
-    </div>
+    </section>
 
-    <!-- Trust Indicators -->
-    <div class="trust-section">
-        <div class="trust-content">
-            <div class="trust-item">
-                <i class="fas fa-certificate"></i>
-                <span>80G Tax Exemption</span>
-            </div>
+    <!-- Trust Footer -->
+    <section class="trust-footer">
+        <div class="trust-items">
             <div class="trust-item">
                 <i class="fas fa-shield-alt"></i>
-                <span>Secure Donations</span>
+                <div class="trust-text">
+                    <div class="trust-title">Secure</div>
+                    <div class="trust-desc">Safe Donations</div>
+                </div>
+            </div>
+            <div class="trust-item">
+                <i class="fas fa-certificate"></i>
+                <div class="trust-text">
+                    <div class="trust-title">80G Benefits</div>
+                    <div class="trust-desc">Tax Exemption</div>
+                </div>
             </div>
             <div class="trust-item">
                 <i class="fas fa-receipt"></i>
-                <span>Official Certificates</span>
-            </div>
-            <div class="trust-item">
-                <i class="fas fa-heart"></i>
-                <span>100+ Sacred Cows</span>
+                <div class="trust-text">
+                    <div class="trust-title">Certified</div>
+                    <div class="trust-desc">Official Receipts</div>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
 </div>
 
 <style>
-    /* Main container to ensure proper alignment */
-    .goseva-container {
-        width: 100%;
-        max-width: none;
+    /* Mobile-First CSS Reset and Base */
+    .mobile-goseva * {
+        box-sizing: border-box;
         margin: 0;
         padding: 0;
+    }
+
+    .mobile-goseva {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.5;
+        color: #1a1a1a;
+        background: #fafafa;
         overflow-x: hidden;
     }
 
-    /* Reset any conflicting styles */
-    .goseva-container * {
-        box-sizing: border-box;
-    }
-
-    /* Base styles that won't conflict with existing site */
-    .goseva-container .hero-section,
-    .goseva-container .section-container,
-    .goseva-container .urgent-appeal,
-    .goseva-container .trust-section {
-        font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    }
-
-    /* Hero Section - Full width */
-    .goseva-container .hero-section {
+    /* Mobile Hero Section */
+    .mobile-hero {
         position: relative;
-        background: linear-gradient(135deg, #ff9068 0%, #fd746c 50%, #e8a852 100%);
-        padding: 4rem 0 6rem;
-        text-align: center;
+        background: linear-gradient(135deg, #ff8a50 0%, #ff6b35 50%, #d63384 100%);
+        padding: 2rem 1rem 3rem;
         color: white;
+        text-align: center;
         overflow: hidden;
-        min-height: 60vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 0 2rem 0;
-        width: 100vw;
-        position: relative;
-        left: 50%;
-        right: 50%;
-        margin-left: -50vw;
-        margin-right: -50vw;
     }
 
-    .goseva-container .hero-content {
-        max-width: 800px;
-        z-index: 2;
-        position: relative;
-        padding: 0 2rem;
-    }
-
-    .goseva-container .sanskrit-verse {
-        margin-bottom: 2rem;
-        animation: fadeInUp 1s ease-out;
-    }
-
-    .goseva-container .sanskrit-verse p {
-        font-family: 'Crimson Text', serif;
-        font-size: 1.3rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-        color: #fff8e1;
-    }
-
-    .goseva-container .sanskrit-verse span {
-        font-size: 0.9rem;
-        opacity: 0.9;
-        font-style: italic;
-    }
-
-    .goseva-container .hero-title {
-        font-size: clamp(2.5rem, 5vw, 4rem);
-        font-weight: 800;
-        margin-bottom: 1.5rem;
-        animation: fadeInUp 1s ease-out 0.3s both;
-    }
-
-    .goseva-container .highlight-text {
-        background: linear-gradient(45deg, #ffd700, #ffed4e);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        position: relative;
-    }
-
-    .goseva-container .hero-subtitle {
-        font-size: 1.2rem;
-        margin-bottom: 2rem;
-        opacity: 0.95;
-        animation: fadeInUp 1s ease-out 0.6s both;
-    }
-
-    /* Floating Animation */
-    .goseva-container .hero-animation {
+    .hero-bg-pattern {
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        overflow: hidden;
-        z-index: 1;
+        opacity: 0.1;
+        background-image: 
+            radial-gradient(circle at 20% 50%, white 2px, transparent 2px),
+            radial-gradient(circle at 80% 50%, white 2px, transparent 2px);
+        background-size: 60px 60px;
+        animation: float 8s ease-in-out infinite;
     }
-
-    .goseva-container .floating-elements i {
-        position: absolute;
-        color: rgba(255, 255, 255, 0.1);
-        animation: float 6s ease-in-out infinite;
-    }
-
-    .goseva-container .leaf-1 { top: 20%; left: 10%; font-size: 2rem; animation-delay: 0s; }
-    .goseva-container .heart-1 { top: 30%; right: 15%; font-size: 1.5rem; animation-delay: 1s; }
-    .goseva-container .star-1 { top: 60%; left: 20%; font-size: 1.8rem; animation-delay: 2s; }
-    .goseva-container .leaf-2 { bottom: 20%; right: 10%; font-size: 2.2rem; animation-delay: 3s; }
-    .goseva-container .heart-2 { bottom: 30%; left: 15%; font-size: 1.6rem; animation-delay: 4s; }
 
     @keyframes float {
-        0%, 100% { transform: translateY(0px) rotate(0deg); }
-        50% { transform: translateY(-20px) rotate(10deg); }
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
     }
 
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    /* Section Containers - Properly constrained */
-    .goseva-container .section-container {
-        padding: 4rem 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-        width: 100%;
-    }
-
-    .goseva-container .section-header {
-        text-align: center;
-        margin-bottom: 3rem;
-    }
-
-    .goseva-container .section-header h2 {
-        font-size: clamp(2rem, 4vw, 2.8rem);
-        font-weight: 700;
-        color: #2c3e50;
-        margin-bottom: 1rem;
+    .hero-content {
         position: relative;
-    }
-
-    .goseva-container .section-header h2:after {
-        content: '';
-        position: absolute;
-        bottom: -10px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 60px;
-        height: 3px;
-        background: linear-gradient(45deg, #ff9068, #e8a852);
-        border-radius: 2px;
-    }
-
-    .goseva-container .section-header p {
-        font-size: 1.1rem;
-        color: #666;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    /* Card Grid */
-    .goseva-container .card-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 2rem;
-        margin-top: 3rem;
-        width: 100%;
-    }
-
-    /* Enhanced Donation Cards */
-    .goseva-container .donation-card {
-        background: white;
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.08);
-        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        position: relative;
-        border: 1px solid rgba(255,255,255,0.8);
-        animation: fadeIn 0.6s ease-out forwards;
-        width: 100%;
-    }
-
-    .goseva-container .donation-card:hover {
-        transform: translateY(-10px) scale(1.02);
-        box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-    }
-
-    .goseva-container .card-badge {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        background: linear-gradient(45deg, #ff6b6b, #ee5a24);
-        color: white;
-        padding: 5px 12px;
-        border-radius: 15px;
-        font-size: 0.8rem;
-        font-weight: 600;
         z-index: 2;
+        max-width: 400px;
+        margin: 0 auto;
     }
 
-    .goseva-container .featured-card .card-badge {
-        background: linear-gradient(45deg, #ffd700, #f39c12);
+    .spiritual-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+        backdrop-filter: blur(10px);
     }
 
-    .goseva-container .card-icon {
-        text-align: center;
-        padding: 2rem 0 1rem;
-        position: relative;
+    .hero-title {
+        margin-bottom: 1rem;
     }
 
-    .goseva-container .card-icon i {
-        font-size: 2.5rem;
-        background: linear-gradient(45deg, #ff9068, #e8a852);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+    .sacred-text {
+        display: block;
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2rem;
+        font-weight: 600;
+        margin-bottom: 0.2rem;
     }
 
-    .goseva-container .card-header {
-        text-align: center;
-        padding: 0 2rem 1.5rem;
-    }
-
-    .goseva-container .card-header h3 {
+    .opportunities-text {
+        display: block;
         font-size: 1.4rem;
+        font-weight: 300;
+        opacity: 0.9;
+    }
+
+    .hero-desc {
+        font-size: 1rem;
+        opacity: 0.95;
+        margin-bottom: 2rem;
+        line-height: 1.6;
+    }
+
+    .hero-stats {
+        display: flex;
+        justify-content: space-around;
+        gap: 1rem;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
         font-weight: 700;
+        margin-bottom: 0.2rem;
+    }
+
+    .stat-label {
+        font-size: 0.8rem;
+        opacity: 0.8;
+    }
+
+    /* Quick Actions Section */
+    .quick-actions {
+        padding: 2rem 1rem;
+        background: white;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #2c3e50;
+    }
+
+    .action-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .quick-action-card {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 16px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+        border: 2px solid transparent;
+    }
+
+    .quick-action-card.featured {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .quick-action-card.celebration {
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+    }
+
+    .quick-action-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .action-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .action-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+    }
+
+    .action-price {
+        font-size: 1rem;
+        font-weight: 500;
+        opacity: 0.8;
+    }
+
+    .action-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: #ffd700;
+        color: #000;
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.7rem;
+        font-weight: 600;
+    }
+
+    /* Featured Donations - Mobile Card Stack */
+    .featured-donations {
+        padding: 2rem 1rem;
+        background: #f8f9fa;
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.8rem;
+        font-weight: 600;
         color: #2c3e50;
         margin-bottom: 0.5rem;
     }
 
-    .goseva-container .card-subtitle {
+    .section-header p {
         color: #666;
-        font-size: 0.95rem;
-        font-weight: 400;
+        font-size: 1rem;
     }
 
-    .goseva-container .card-body {
-        padding: 0 2rem 2rem;
+    .mobile-card-stack {
+        max-width: 400px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
     }
 
-    .goseva-container .donation-amount {
-        text-align: center;
-        margin-bottom: 2rem;
+    .donation-card {
+        background: white;
+        border-radius: 20px;
         padding: 1.5rem;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
         border: 2px solid transparent;
-        background-clip: padding-box;
     }
 
-    .goseva-container .currency {
-        font-size: 1.2rem;
-        color: #666;
+    .donation-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+
+    .primary-card {
+        border-color: #667eea;
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+    }
+
+    .card-header {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        position: relative;
+    }
+
+    .card-icon-wrapper {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    .card-badge {
+        position: absolute;
+        top: -10px;
+        right: 0;
+        background: #ff6b35;
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
         font-weight: 600;
     }
 
-    .goseva-container .amount {
-        font-size: 2.2rem;
-        font-weight: 800;
+    .card-header h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
         color: #2c3e50;
-        margin: 0 0.2rem;
+        margin-bottom: 0.3rem;
     }
 
-    .goseva-container .period {
+    .card-subtitle {
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .price-section {
+        text-align: center;
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+    }
+
+    .price-main {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2c3e50;
+    }
+
+    .price-period {
         font-size: 0.9rem;
         color: #666;
-        font-weight: 500;
+        margin-top: 0.2rem;
     }
 
-    .goseva-container .benefits-list {
-        list-style: none;
-        margin-bottom: 2rem;
-        padding: 0;
+    .benefits-section {
+        margin-bottom: 1.5rem;
     }
 
-    .goseva-container .benefits-list li {
-        padding: 0.5rem 0;
+    .benefit-item {
         display: flex;
         align-items: center;
-        font-size: 0.95rem;
-        color: #555;
-    }
-
-    .goseva-container .benefits-list i {
-        color: #27ae60;
-        margin-right: 0.8rem;
+        gap: 0.8rem;
+        margin-bottom: 0.8rem;
         font-size: 0.9rem;
     }
 
-    .goseva-container .impact-note {
+    .benefit-item i {
+        color: #27ae60;
+        font-size: 1rem;
+    }
+
+    .impact-highlight {
         background: linear-gradient(135deg, #e8f5e8 0%, #d4edda 100%);
         padding: 1rem;
         border-radius: 10px;
         margin-bottom: 1.5rem;
-        border-left: 4px solid #27ae60;
         display: flex;
         align-items: center;
+        gap: 0.8rem;
         font-size: 0.9rem;
+        border-left: 4px solid #27ae60;
     }
 
-    .goseva-container .impact-note i {
+    .impact-highlight i {
         color: #27ae60;
-        margin-right: 0.8rem;
-        font-size: 1rem;
     }
 
-    /* CTA Buttons */
-    .goseva-container .cta-button {
+    .cta-button {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 0.8rem;
         width: 100%;
-        padding: 1rem 1.5rem;
+        padding: 1rem;
         border: none;
         border-radius: 12px;
         font-size: 1rem;
@@ -797,191 +755,530 @@ description: Support GoSeva through various contributions - adopt cows, nourish 
         overflow: hidden;
     }
 
-    .goseva-container .cta-button::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        transition: left 0.5s;
-    }
-
-    .goseva-container .cta-button:hover::before {
-        left: 100%;
-    }
-
-    .goseva-container .cta-button:hover {
-        transform: translateY(-2px);
-        text-decoration: none;
-        color: white;
-    }
-
-    .goseva-container .celebration-btn {
+    .primary-cta {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     }
 
-    .goseva-container .celebration-btn:hover {
-        background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
-    }
-
-    .goseva-container .featured-btn {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-    }
-
-    .goseva-container .featured-btn:hover {
-        background: linear-gradient(135deg, #ee82f0 0%, #f3455a 100%);
-    }
-
-    .goseva-container .standard-btn {
+    .standard-cta {
         background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     }
 
-    .goseva-container .standard-btn:hover {
-        background: linear-gradient(135deg, #3d9bfe 0%, #00e0fe 100%);
-    }
-
-    .goseva-container .premium-btn {
-        background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-    }
-
-    .goseva-container .premium-btn:hover {
-        background: linear-gradient(135deg, #f85f88 0%, #fed12e 100%);
-    }
-
-    .goseva-container .basic-btn {
+    .basic-cta {
         background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
         color: #2c3e50;
     }
 
-    .goseva-container .basic-btn:hover {
-        background: linear-gradient(135deg, #96e6e2 0%, #fec4d1 100%);
-        color: #2c3e50;
+    .cta-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
 
-    .goseva-container .flexible-btn {
-        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-        color: #2c3e50;
+    /* Feeding Section */
+    .feeding-section {
+        padding: 2rem 1rem;
+        background: white;
     }
 
-    .goseva-container .flexible-btn:hover {
-        background: linear-gradient(135deg, #ffe0c0 0%, #fba48d 100%);
-        color: #2c3e50;
-    }
-
-    /* Urgent Appeal Section - Properly contained */
-    .goseva-container .urgent-appeal {
-        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
-        margin: 4rem auto;
-        border-radius: 20px;
-        padding: 3rem 2rem;
-        color: white;
-        position: relative;
-        overflow: hidden;
-        animation: pulse-glow 3s ease-in-out infinite;
-        max-width: 1200px;
-        width: calc(100% - 40px);
-    }
-
-    .goseva-container .appeal-content {
-        display: flex;
-        align-items: center;
-        gap: 2rem;
-        max-width: 1000px;
+    .feeding-options {
+        max-width: 400px;
         margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .feeding-card {
+        background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        border: 2px solid #e9ecef;
+        transition: all 0.3s ease;
+    }
+
+    .feeding-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        border-color: #4facfe;
+    }
+
+    .feeding-visual {
+        text-align: center;
+        margin-bottom: 1rem;
         position: relative;
-        z-index: 2;
     }
 
-    .goseva-container .appeal-icon i {
-        font-size: 3rem;
-        opacity: 0.9;
-    }
-
-    .goseva-container .appeal-text h3 {
-        font-size: 1.8rem;
-        font-weight: 700;
+    .feeding-visual i {
+        font-size: 2.5rem;
+        color: #4facfe;
         margin-bottom: 0.5rem;
     }
 
-    .goseva-container .appeal-text p {
-        font-size: 1rem;
-        opacity: 0.95;
+    .quantity-badge {
+        background: #4facfe;
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+    }
+
+    .feeding-content h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+    }
+
+    .feeding-content p {
+        color: #666;
         margin-bottom: 1rem;
     }
 
-    .goseva-container .appeal-details {
+    .feeding-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #4facfe;
+        margin-bottom: 0.5rem;
+    }
+
+    .feeding-impact {
         font-size: 0.9rem;
-        opacity: 0.8;
+        color: #666;
+        margin-bottom: 1.5rem;
         font-style: italic;
     }
 
-    .goseva-container .urgent-cta {
-        background: rgba(255,255,255,0.2);
-        color: white;
-        padding: 1rem 2rem;
-        border-radius: 10px;
-        text-decoration: none;
-        display: flex;
+    .feeding-cta {
+        display: inline-flex;
         align-items: center;
-        gap: 0.8rem;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        border: 2px solid rgba(255,255,255,0.3);
-        backdrop-filter: blur(10px);
-        white-space: nowrap;
-    }
-
-    .goseva-container .urgent-cta:hover {
-        background: rgba(255,255,255,0.3);
-        transform: translateY(-2px);
+        gap: 0.5rem;
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
         color: white;
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
         text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        width: 100%;
+        justify-content: center;
     }
 
-    @keyframes pulse-glow {
-        0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.3); }
-        50% { box-shadow: 0 0 40px rgba(255, 107, 107, 0.6); }
+    .feeding-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
     }
 
-    /* Trust Section - Properly contained */
-    .goseva-container .trust-section {
-        background: white;
-        padding: 2rem;
-        margin: 3rem auto;
-        border-radius: 15px;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-        max-width: 1200px;
-        width: calc(100% - 40px);
+    /* Special Occasions */
+    .special-occasions {
+        padding: 2rem 1rem;
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
     }
 
-    .goseva-container .trust-content {
+    .occasion-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 2rem;
-        max-width: 800px;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        max-width: 400px;
         margin: 0 auto;
     }
 
-    .goseva-container .trust-item {
+    .occasion-card {
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .occasion-card:hover {
+        transform: translateY(-3px);
+        background: white;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .occasion-icon {
+        font-size: 2rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .occasion-card h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+    }
+
+    .occasion-card p {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    .occasion-price {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #ff6b35;
+        margin-bottom: 1rem;
+    }
+
+    .occasion-cta {
+        display: inline-block;
+        background: linear-gradient(135deg, #ff6b35 0%, #f9ca24 100%);
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        transition: all 0.3s ease;
+        width: 100%;
+        text-align: center;
+    }
+
+    .occasion-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+    }
+
+    /* Daily Operations */
+    .daily-operations {
+        padding: 2rem 1rem;
+        background: #f8f9fa;
+    }
+
+    .operations-slider {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .operation-card {
+        background: white;
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        transition: all 0.3s ease;
+    }
+
+    .operation-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+
+    .operation-header {
         display: flex;
         align-items: center;
-        justify-content: center;
         gap: 0.8rem;
+        margin-bottom: 1rem;
+    }
+
+    .operation-header i {
+        font-size: 1.5rem;
+        color: #667eea;
+    }
+
+    .operation-header h3 {
+        font-size: 1.2rem;
         font-weight: 600;
         color: #2c3e50;
     }
 
-    .goseva-container .trust-item i {
-        color: #27ae60;
-        font-size: 1.2rem;
+    .operation-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #667eea;
+        margin-bottom: 0.8rem;
     }
 
-    @keyframes fadeIn {
+    .operation-card p {
+        color: #666;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+    }
+
+    .operation-includes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .operation-includes span {
+        background: #f8f9fa;
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        color: #666;
+    }
+
+    .operation-cta {
+        display: block;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 0.8rem 1rem;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+
+    .operation-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Flexible Donation */
+    .flexible-donation {
+        padding: 2rem 1rem;
+        background: white;
+    }
+
+    .donation-banner {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .banner-content {
+        background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        border-radius: 20px;
+        padding: 2rem 1.5rem;
+        text-align: center;
+    }
+
+    .banner-content h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #2c3e50;
+        margin-bottom: 0.8rem;
+    }
+
+    .banner-content p {
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+
+    .flexible-features {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 2rem;
+    }
+
+    .feature {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .feature i {
+        font-size: 1.2rem;
+        color: #667eea;
+    }
+
+    .feature span {
+        font-size: 0.8rem;
+        color: #666;
+    }
+
+    .flexible-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .flexible-cta:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    /* Urgent Appeal */
+    .urgent-appeal {
+        padding: 2rem 1rem;
+        background: #ff6b35;
+    }
+
+    .appeal-banner {
+        max-width: 400px;
+        margin: 0 auto;
+        text-align: center;
+        color: white;
+    }
+
+    .appeal-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        opacity: 0.9;
+    }
+
+    .urgent-badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.3rem 1rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        backdrop-filter: blur(10px);
+    }
+
+    .appeal-content h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+    }
+
+    .appeal-content p {
+        margin-bottom: 1.5rem;
+        opacity: 0.95;
+        line-height: 1.6;
+    }
+
+    .urgent-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.8rem;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+        border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .urgent-cta:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+    }
+
+    /* Trust Footer */
+    .trust-footer {
+        padding: 2rem 1rem;
+        background: white;
+        border-top: 1px solid #e9ecef;
+    }
+
+    .trust-items {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .trust-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 12px;
+    }
+
+    .trust-item i {
+        font-size: 1.5rem;
+        color: #27ae60;
+    }
+
+    .trust-title {
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 0.9rem;
+    }
+
+    .trust-desc {
+        color: #666;
+        font-size: 0.8rem;
+    }
+
+    /* Tablet and Desktop Responsiveness */
+    @media (min-width: 768px) {
+        .action-grid {
+            grid-template-columns: repeat(3, 1fr);
+            max-width: 800px;
+            gap: 1.5rem;
+        }
+
+        .occasion-grid {
+            grid-template-columns: repeat(3, 1fr);
+            max-width: 800px;
+            gap: 1.5rem;
+        }
+
+        .operations-slider {
+            grid-template-columns: repeat(3, 1fr);
+            max-width: 900px;
+            gap: 2rem;
+        }
+
+        .feeding-options {
+            flex-direction: row;
+            max-width: 800px;
+            gap: 2rem;
+        }
+
+        .mobile-card-stack {
+            max-width: 800px;
+            flex-direction: row;
+            gap: 2rem;
+        }
+
+        .donation-card {
+            flex: 1;
+        }
+
+        .trust-items {
+            grid-template-columns: repeat(3, 1fr);
+            max-width: 800px;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .sacred-text {
+            font-size: 3rem;
+        }
+
+        .opportunities-text {
+            font-size: 1.8rem;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .mobile-goseva {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header h2 {
+            font-size: 2.2rem;
+        }
+    }
+
+    /* Smooth Animations */
+    @keyframes slideInUp {
         from {
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateY(30px);
         }
         to {
             opacity: 1;
@@ -989,148 +1286,102 @@ description: Support GoSeva through various contributions - adopt cows, nourish 
         }
     }
 
-    /* Responsive Design */
-    @media (max-width: 768px) {
-        .goseva-container .hero-section {
-            padding: 3rem 0 4rem;
-            min-height: 50vh;
-        }
+    .donation-card,
+    .feeding-card,
+    .occasion-card,
+    .operation-card {
+        animation: slideInUp 0.6s ease-out forwards;
+    }
 
-        .goseva-container .section-container {
-            padding: 3rem 15px;
-        }
-
-        .goseva-container .card-grid {
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        .goseva-container .appeal-content {
-            flex-direction: column;
-            text-align: center;
-            gap: 1.5rem;
-        }
-
-        .goseva-container .trust-content {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-        }
-
-        .goseva-container .donation-card:hover {
-            transform: translateY(-5px) scale(1.01);
+    /* Touch-friendly interactions */
+    @media (hover: none) {
+        .quick-action-card:active,
+        .cta-button:active,
+        .feeding-cta:active,
+        .occasion-cta:active,
+        .operation-cta:active {
+            transform: scale(0.98);
         }
     }
 
-    @media (max-width: 480px) {
-        .goseva-container .hero-title {
-            font-size: 2rem;
+    /* Dark mode considerations */
+    @media (prefers-color-scheme: dark) {
+        .mobile-goseva {
+            background: #1a1a1a;
+            color: #ffffff;
         }
-
-        .goseva-container .section-header h2 {
-            font-size: 1.8rem;
+        
+        .donation-card,
+        .feeding-card,
+        .operation-card {
+            background: #2d2d2d;
+            color: #ffffff;
         }
-
-        .goseva-container .urgent-appeal {
-            margin: 2rem 10px;
-            padding: 2rem;
+        
+        .section-header h2 {
+            color: #ffffff;
         }
-
-        .goseva-container .trust-content {
-            grid-template-columns: 1fr;
-        }
-
-        .goseva-container .card-grid {
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-
-        .goseva-container .section-container {
-            padding: 2rem 10px;
-        }
-    }
-
-    /* Ensure no horizontal scroll */
-    .goseva-container {
-        width: 100%;
-        overflow-x: hidden;
     }
 </style>
 
 <script>
-    // Enhanced interactions
-    document.addEventListener('DOMContentLoaded', function() {
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
+document.addEventListener('DOMContentLoaded', function() {
+    // Intersection Observer for scroll animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
 
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.animationPlayState = 'running';
-                }
-            });
-        }, observerOptions);
-
-        // Observe all donation cards
-        document.querySelectorAll('.goseva-container .donation-card').forEach((card, index) => {
-            card.style.animationDelay = `${index * 0.1}s`;
-            observer.observe(card);
-        });
-
-        // Add ripple effect to buttons
-        document.querySelectorAll('.goseva-container .cta-button, .goseva-container .urgent-cta').forEach(button => {
-            button.addEventListener('click', function(e) {
-                let ripple = document.createElement('span');
-                ripple.classList.add('ripple');
-                this.appendChild(ripple);
-                
-                let rect = this.getBoundingClientRect();
-                let x = e.clientX - rect.left;
-                let y = e.clientY - rect.top;
-                
-                ripple.style.left = `${x}px`;
-                ripple.style.top = `${y}px`;
-                ripple.style.position = 'absolute';
-                ripple.style.borderRadius = '50%';
-                ripple.style.width = '100px';
-                ripple.style.height = '100px';
-                ripple.style.marginTop = '-50px';
-                ripple.style.marginLeft = '-50px';
-                ripple.style.animation = 'ripple 0.6s';
-                ripple.style.background = 'rgba(255, 255, 255, 0.4)';
-                ripple.style.transform = 'scale(0)';
-                
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
                 setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-            });
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 100);
+            }
+        });
+    }, observerOptions);
+
+    // Observe all cards
+    document.querySelectorAll('.donation-card, .feeding-card, .occasion-card, .operation-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'all 0.6s ease';
+        observer.observe(card);
+    });
+
+    // Touch feedback for mobile
+    document.querySelectorAll('.cta-button, .feeding-cta, .occasion-cta, .operation-cta, .flexible-cta, .urgent-cta').forEach(button => {
+        button.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.98)';
+        });
+        
+        button.addEventListener('touchend', function() {
+            this.style.transform = '';
         });
     });
 
-    // Add ripple keyframes
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes ripple {
-            to {
-                transform: scale(2);
-                opacity: 0;
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
-        }
-    `;
-    document.head.appendChild(style);
+        });
+    });
+
+    // Add loading states for donation links
+    document.querySelectorAll('a[href*="/blog/"]').forEach(link => {
+        link.addEventListener('click', function() {
+            this.style.opacity = '0.7';
+            this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+        });
+    });
+});
 </script>
