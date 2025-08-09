@@ -1,7 +1,7 @@
 ---
-title: Adopt a Cow
+title: Siddha Grasa
 heading: गावः सुरभिर्नो मुर्धन
-description: Submit your details and make payment through PhonePe
+description: Submit your details and generate a UPI QR code for payment
 ---
 
 <div class="contact-box" style="display: flex; justify-content: center; align-items: center;">
@@ -15,17 +15,17 @@ description: Submit your details and make payment through PhonePe
     <label for="adhar">Aadhar Number</label>
     <input type="text" name="adhar" id="adhar" placeholder="Enter your Aadhar..." required />
 
-    <label for="text">Phone Number</label>
-    <input type="text" name="phone" id="text" placeholder="Enter your phone number..." required />
+    <label for="phone">Phone Number</label>
+    <input type="text" name="phone" id="phone" placeholder="Enter your phone number..." required />
 
-    <label for="amount" style="display: none;">Donated for adopting Cow</label>
-    <input type="text" name="amount" id="amount" value="11000 (Donated for adopting Cow)" style="display: none;" />
+    <label for="amount" style="display: none;">Donation for Siddha Grasa</label>
+    <input type="text" name="amount" id="amount" value="2000 - Donated for Siddha Grasa" style="display: none;" />
 
-    <input type="submit" value="Submit & Proceed to Payment" />
+    <input type="submit" value="Submit" />
   </form>
 
   <div id="confirmationMessage" style="display:none; color: green;">
-    <br><br>Form submitted successfully! Click below to proceed with PhonePe payment.
+    <br><br>Form submitted successfully! Kindly generate the QR and complete the payment.
   </div>
 </div>
 
@@ -33,245 +33,217 @@ description: Submit your details and make payment through PhonePe
 
 <div style="text-align: center;">
   <button 
-    id="phonePePaymentButton"
+    id="generateQrButton"
     class="pulse-button"
-    onclick="initiatePhonePePayment(); console.log('Direct onclick triggered');"
-    style="background-color: #5f259f; padding: 15px 30px; font-size: 18px; 
+    style="background-color: #ffd500; padding: 15px 30px; font-size: 18px; 
            border: none; font-weight: bold; cursor: pointer; transition: all 0.3s ease-in-out; 
-           color: white; border-radius: 8px; display: none;">
-    Pay ₹11,000 via PhonePe
+           color: #050829; border-radius: 8px;">
+    Proceed to Pay
   </button>
 </div>
 
-
-<div id="paymentStatus" style="text-align: center; margin-top: 20px; display: none;">
-  <p id="statusMessage"></p>
-</div>
-
 <script>
-// Multiplication table 'd'
+// --- Aadhar Validation (Verhoeff Algorithm) ---
 var d = [
-  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
-  [1, 2, 3, 4, 0, 6, 7, 8, 9, 5], 
-  [2, 3, 4, 0, 1, 7, 8, 9, 5, 6], 
-  [3, 4, 0, 1, 2, 8, 9, 5, 6, 7], 
-  [4, 0, 1, 2, 3, 9, 5, 6, 7, 8], 
-  [5, 9, 8, 7, 6, 0, 4, 3, 2, 1], 
-  [6, 5, 9, 8, 7, 1, 0, 4, 3, 2], 
-  [7, 6, 5, 9, 8, 2, 1, 0, 4, 3], 
-  [8, 7, 6, 5, 9, 3, 2, 1, 0, 4], 
-  [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [1, 2, 3, 4, 0, 6, 7, 8, 9, 5],
+    [2, 3, 4, 0, 1, 7, 8, 9, 5, 6], [3, 4, 0, 1, 2, 8, 9, 5, 6, 7],
+    [4, 0, 1, 2, 3, 9, 5, 6, 7, 8], [5, 9, 8, 7, 6, 0, 4, 3, 2, 1],
+    [6, 5, 9, 8, 7, 1, 0, 4, 3, 2], [7, 6, 5, 9, 8, 2, 1, 0, 4, 3],
+    [8, 7, 6, 5, 9, 3, 2, 1, 0, 4], [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
 ];
-
-// Permutation table 'p'
 var p = [
-  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 
-  [1, 5, 7, 6, 2, 8, 3, 0, 9, 4], 
-  [5, 8, 0, 3, 7, 9, 6, 1, 4, 2], 
-  [8, 9, 1, 6, 0, 4, 3, 5, 2, 7], 
-  [9, 4, 5, 3, 1, 2, 6, 8, 7, 0], 
-  [4, 2, 8, 6, 5, 7, 3, 9, 0, 1], 
-  [2, 7, 9, 3, 8, 0, 6, 4, 1, 5], 
-  [7, 0, 4, 6, 9, 1, 3, 2, 5, 8]
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [1, 5, 7, 6, 2, 8, 3, 0, 9, 4],
+    [5, 8, 0, 3, 7, 9, 6, 1, 4, 2], [8, 9, 1, 6, 0, 4, 3, 5, 2, 7],
+    [9, 4, 5, 3, 1, 2, 6, 8, 7, 0], [4, 2, 8, 6, 5, 7, 3, 9, 0, 1],
+    [2, 7, 9, 3, 8, 0, 6, 4, 1, 5], [7, 0, 4, 6, 9, 1, 3, 2, 5, 8]
 ];
-
-// Inverse table 'inv'
 var inv = [0, 4, 3, 2, 1, 5, 6, 7, 8, 9];
 
-// Function to invert an array
-function invArray(array){
-  if (Object.prototype.toString.call(array) == "[object Number]") {
-    array = String(array);
-  }
-  if (Object.prototype.toString.call(array) == "[object String]") {
-    array = array.split("").map(Number);
-  }
-  return array.reverse();
-}
-
-// Function to generate checksum
-function generate(array){
-  var c = 0;
-  var invertedArray = invArray(array);
-
-  for (var i = 0; i < invertedArray.length; i++) {
-    c = d[c][p[((i + 1) % 8)][invertedArray[i]]];
-  }
-  return inv[c];
-}
-
-// Function to validate checksum
-function validate(array) {
-  var c = 0;
-  var invertedArray = invArray(array);
-
-  for (var i = 0; i < invertedArray.length; i++) {
-    c = d[c][p[(i % 8)][invertedArray[i]]];
-  }
-  return (c === 0);
-}
-
-// Function to validate Aadhar number
-function validate_adhar(adhar) {
-  console.clear();
-  // Check if the Aadhar number is 12 digits
-  if (adhar >= 100000000000 && adhar <= 999999999999) {
-    if (validate(adhar) == false) {
-      console.log("Invalid Aadhar Number");
-      return false;
-    } else {
-      return true;
+function invArray(array) {
+    if (Object.prototype.toString.call(array) == "[object Number]") {
+        array = String(array);
     }
-  } else {
-    console.log("Aadhar Number Should Be 12 Digits");
-    return false;
-  }
+    if (Object.prototype.toString.call(array) == "[object String]") {
+        array = array.split("").map(Number);
+    }
+    return array.reverse();
 }
 
-// Function to validate inputs and handle form submission
-function validateInputs() {
-  const email = document.getElementById('email').value;
-  const adhar = document.getElementById('adhar').value;
-  const phone = document.getElementById('text').value;
-
-  // Email validation (basic pattern)
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(email)) {
-    alert("Please enter a valid email address.");
-    return false;
-  }
-
-  // Aadhar validation
-  if (!validate_adhar(adhar)) {
-    alert("Please enter a valid Aadhar number.");
-    return false;
-  }
-
-  // Phone number validation (10 digits only)
-  const phonePattern = /^[6-9]\d{9}$/;
-
-  if (!phonePattern.test(phone) || /^(\d)\1{9}$/.test(phone)) {
-    alert("Please enter a valid 10-digit Indian mobile number.");
-    return false;
-  }
-
-  return true;
+function generate(array) {
+    var c = 0;
+    var invertedArray = invArray(array);
+    for (var i = 0; i < invertedArray.length; i++) {
+        c = d[c][p[((i + 1) % 8)][invertedArray[i]]]];
+    }
+    return inv[c];
 }
 
+function validate(array) {
+    var c = 0;
+    var invertedArray = invArray(array);
+    for (var i = 0; i < invertedArray.length; i++) {
+        c = d[c][p[(i % 8)][invertedArray[i]]];
+    }
+    return (c === 0);
+}
+
+function validate_adhar(adhar) {
+    if (adhar.length === 12 && /^\d+$/.test(adhar)) {
+        return validate(adhar);
+    }
+    return false;
+}
+
+// --- Form and Payment Logic ---
 let formSubmitted = false;
 
-function submitForm(event) {
-    event.preventDefault(); // Prevent default form submission
+function validateInputs() {
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const adhar = document.getElementById('adhar').value;
+    const phone = document.getElementById('phone').value;
 
-    if (formSubmitted) {
-      alert("You have already submitted the form.");
-      return;
+    if (!name) {
+        alert("Please enter your full name.");
+        return false;
     }
 
-    // Run validation before submission
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        alert("Please enter a valid email address.");
+        return false;
+    }
+
+    if (!validate_adhar(adhar)) {
+        alert("Please enter a valid 12-digit Aadhar number.");
+        return false;
+    }
+
+    const phonePattern = /^[6-9]\d{9}$/;
+    if (!phonePattern.test(phone) || /^(\d)\1{9}$/.test(phone)) {
+        alert("Please enter a valid 10-digit Indian mobile number.");
+        return false;
+    }
+    return true;
+}
+
+function submitForm(event) {
+    event.preventDefault();
+    if (formSubmitted) {
+        alert("You have already submitted the form.");
+        return;
+    }
     if (!validateInputs()) return;
 
-    // Gather form data
     const formData = new FormData(document.getElementById("paymentForm"));
-    const url = "https://script.google.com/macros/s/AKfycbwE3W4PdSfSve2DrhHPhXMq_7sj453UcSTqDTNjj3AtWduShhRZAk63o3JyIpUqLLrmOw/exec"; // Replace with your Google Apps Script URL
+    const url = "https://script.google.com/macros/s/AKfycbwE3W4PdSfSve2DrhHPhXMq_7sj453UcSTqDTNjj3AtWduShhRZAk63o3JyIpUqLLrmOw/exec";
 
-    // Send form data via fetch (AJAX)
     fetch(url, {
-      method: "POST",
-      body: formData
+        method: "POST",
+        body: formData
     })
     .then(response => response.text())
     .then(data => {
-      // Show confirmation message
-      formSubmitted = true;
-      document.getElementById("confirmationMessage").style.display = "block";
-      document.getElementById("phonePePaymentButton").style.display = "inline-block";
-      // Do not reset the form to retain values for payment
+        formSubmitted = true;
+        document.getElementById("confirmationMessage").style.display = "block";
+        document.getElementById("paymentForm").style.display = "none";
     })
     .catch(error => {
-      console.error("Error submitting form:", error);
+        console.error("Error submitting form:", error);
+        alert("There was an error submitting your details. Please try again.");
     });
 }
 
-
-function initiatePhonePePayment() {
-  console.log("PhonePe button clicked!");
-  
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
-  const phone = document.getElementById('text').value;
-  const adhar = document.getElementById('adhar').value;
-  
-  if (!formSubmitted) {
-    alert("Please submit the form first.");
-    return;
-  }
-
-  // Show loading status
-  document.getElementById('statusMessage').textContent = "Preparing payment...";
-  document.getElementById('paymentStatus').style.display = "block";
-  document.getElementById('phonePePaymentButton').disabled = true;
-
-  const paymentData = {
-    amount: 11000,
-    donationType: 'Adopt a Cow',
-    userId: phone,
-    userDetails: {
-      name: name,
-      email: email,
-      phone: phone,
-      adhar: adhar
-    },
-    redirectUrl: window.location.origin + '/PaymentSuccess.html',
-    callbackUrl: window.location.origin + '/payment-callback.html'
-  };
-  
-  console.log('Creating payment form:', paymentData);
-  
-  // Create a form that submits directly to Google Apps Script
-  const form = document.createElement('form');
-  form.method = 'POST';
-  form.action = 'https://script.google.com/macros/s/AKfycbzU1YL5oVfqp_KwAB1x_p7fzYbp8KkZ48MH5k0n-GdyMz1uzee3CFuE4iPopDttI9AKQA/exec';
-  form.target = '_self'; // Submit in same window
-  
-  // Create hidden inputs for all data
-  const fields = [
-    { name: 'amount', value: paymentData.amount },
-    { name: 'donationType', value: paymentData.donationType },
-    { name: 'userId', value: paymentData.userId },
-    { name: 'userName', value: paymentData.userDetails.name },
-    { name: 'userEmail', value: paymentData.userDetails.email },
-    { name: 'userPhone', value: paymentData.userDetails.phone },
-    { name: 'userAdhar', value: paymentData.userDetails.adhar },
-    { name: 'redirectUrl', value: paymentData.redirectUrl },
-    { name: 'callbackUrl', value: paymentData.callbackUrl }
-  ];
-  
-  fields.forEach(field => {
-    const input = document.createElement('input');
-    input.type = 'hidden';
-    input.name = field.name;
-    input.value = field.value;
-    form.appendChild(input);
-  });
-  
-  // Add form to document and submit
-  document.body.appendChild(form);
-  
-  // Update status and submit
-  document.getElementById('statusMessage').textContent = "Redirecting to payment gateway...";
-  document.getElementById('statusMessage').style.color = "blue";
-  
-  // Store data in localStorage for success page
-  localStorage.setItem('donorDetails', JSON.stringify(paymentData.userDetails));
-  
-  // Submit form after short delay
-  setTimeout(() => {
-    form.submit();
-  }, 1000);
+function openQrWindow(qrCodeUrl) {
+    const qrWindow = window.open('', '_blank', 'width=500,height=600');
+    qrWindow.document.write(`
+        <html>
+        <head><title>UPI Payment QR Code</title></head>
+        <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: sans-serif;">
+            <div style="text-align: center;">
+            <h2>Scan to Pay</h2>
+            <img src="${qrCodeUrl}" alt="UPI Payment QR Code" style="width: 250px; height: 250px;"/>
+            <p>Scan this code with any UPI app to pay.</p>
+            </div>
+        </body>
+        </html>
+    `);
 }
 
+function redirectToUPIAppOnIOS(amount, transactionNote) {
+    const upiId = "govardhanylp@sbi";
+    const payeeName = "Siddha Grasa"; // URL encoded: Siddha%20Grasa
 
+    // Construct app-specific URLs
+    const baseUpiParams = `pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
+    const optionsHtml = window.open('', '_blank', 'width=600,height=800');
+    optionsHtml.document.write(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Payment Options</title>
+            <style>
+                body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+                .payment-container { display: grid; gap: 15px; grid-template-columns: 1fr; margin: 20px auto; max-width: 90%; text-align: center; }
+                .payment-button { display: flex; align-items: center; justify-content: center; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 12px; padding: 15px; text-decoration: none; color: black; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: all 0.2s; }
+                .payment-button:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+                .payment-button img { width: 40px; height: 40px; margin-right: 15px; }
+                .payment-button span { font-size: 1rem; font-weight: 500; }
+            </style>
+        </head>
+        <body>
+            <div class="payment-container">
+            <h1>Select a UPI App</h1>
+            <a href="tez://upi/pay?${baseUpiParams}" class="payment-button"><img src="/images/goooglepay.png" alt="Google Pay"><span>Google Pay</span></a>
+            <a href="phonepe://pay?${baseUpiParams}" class="payment-button"><img src="/images/phonepay.png" alt="PhonePe"><span>PhonePe</span></a>
+            <a href="paytmmp://upi/pay?${baseUpiParams}" class="payment-button"><img src="/images/paytm.png" alt="Paytm"><span>Paytm</span></a>
+            <a href="bhim://upi/pay?${baseUpiParams}" class="payment-button"><img src="/images/bhim-upi-icon-4059309141.png" alt="BHIM"><span>BHIM UPI</span></a>
+            </div>
+        </body>
+        </html>
+    `);
+    optionsHtml.document.close();
+}
+
+function detectDeviceAndProceed(upiData, qrCodeUrl, amount, transactionNote) {
+    const userAgent = navigator.userAgent.toLowerCase();
+    const isTouchScreen = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    const isAndroid = /android/.test(userAgent);
+    const isIos = /iphone|ipad|ipod/.test(userAgent) || (isTouchScreen && /mac os x/.test(userAgent) && navigator.maxTouchPoints > 1);
+
+    if (isAndroid) {
+        window.location.href = upiData;
+    } else if (isIos) {
+        redirectToUPIAppOnIOS(amount, transactionNote);
+    } else { // Desktop or other
+        openQrWindow(qrCodeUrl);
+    }
+}
+
+// --- Main Button Event Listener ---
+document.getElementById('generateQrButton').onclick = function() {
+    if (!formSubmitted) {
+        alert("Please submit your details first by clicking the 'Submit' button.");
+        return;
+    }
+
+    const donorName = document.getElementById('name').value;
+    const amount = 2000;
+    
+    // Standardized parameters
+    const upiId = "govardhanylp@sbi";
+    const payeeName = "Siddha Grasa"; // Name of the recipient
+    const transactionNote = `Donation from ${donorName}`; // A safer, more descriptive note
+    
+    // Construct the universal UPI link and QR code URL
+    const upiData = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
+    const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(upiData)}`;
+
+    detectDeviceAndProceed(upiData, qrCodeUrl, amount, transactionNote);
+};
 </script>
 
 <!-- Google tag (gtag.js) -->
