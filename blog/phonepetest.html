@@ -15,8 +15,9 @@ description: Submit your details and generate a UPI QR code for payment
     <label for="adhar">Aadhar Number</label>
     <input type="text" name="adhar" id="adhar" placeholder="Enter your Aadhar..." required />
 
-    <label for="phone">Phone Number</label>
-    <input type="text" name="phone" id="phone" placeholder="Enter your phone number..." required />
+    <!-- Restored id="text" for the phone input to match original script -->
+    <label for="text">Phone Number</label>
+    <input type="text" name="phone" id="text" placeholder="Enter your phone number..." required />
 
     <label for="amount" style="display: none;">Donation for Siddha Grasa</label>
     <input type="text" name="amount" id="amount" value="2000 - Donated for Siddha Grasa" style="display: none;" />
@@ -44,6 +45,7 @@ description: Submit your details and generate a UPI QR code for payment
 
 <script>
 // --- Aadhar Validation (Verhoeff Algorithm) ---
+// This section is unchanged.
 var d = [
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], [1, 2, 3, 4, 0, 6, 7, 8, 9, 5],
     [2, 3, 4, 0, 1, 7, 8, 9, 5, 6], [3, 4, 0, 1, 2, 8, 9, 5, 6, 7],
@@ -60,12 +62,8 @@ var p = [
 var inv = [0, 4, 3, 2, 1, 5, 6, 7, 8, 9];
 
 function invArray(array) {
-    if (Object.prototype.toString.call(array) == "[object Number]") {
-        array = String(array);
-    }
-    if (Object.prototype.toString.call(array) == "[object String]") {
-        array = array.split("").map(Number);
-    }
+    if (Object.prototype.toString.call(array) == "[object Number]") { array = String(array); }
+    if (Object.prototype.toString.call(array) == "[object String]") { array = array.split("").map(Number); }
     return array.reverse();
 }
 
@@ -88,25 +86,25 @@ function validate(array) {
 }
 
 function validate_adhar(adhar) {
-    if (adhar.length === 12 && /^\d+$/.test(adhar)) {
-        return validate(adhar);
-    }
-    return false;
-}
-
-// --- Form and Payment Logic ---
-let formSubmitted = false;
-
-function validateInputs() {
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const adhar = document.getElementById('adhar').value;
-    const phone = document.getElementById('phone').value;
-
-    if (!name) {
-        alert("Please enter your full name.");
+    console.clear();
+    if (adhar >= 100000000000 && adhar <= 999999999999) {
+        if (validate(adhar) == false) {
+            console.log("Invalid Aadhar Number");
+            return false;
+        } else { return true; }
+    } else {
+        console.log("Aadhar Number Should Be 12 Digits");
         return false;
     }
+}
+
+
+// --- FORM SUBMISSION LOGIC (RESTORED TO ORIGINAL) ---
+// This logic is exactly as you provided to ensure it works with your backend.
+function validateInputs() {
+    const email = document.getElementById('email').value;
+    const adhar = document.getElementById('adhar').value;
+    const phone = document.getElementById('text').value; // Using original id="text"
 
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
@@ -115,7 +113,7 @@ function validateInputs() {
     }
 
     if (!validate_adhar(adhar)) {
-        alert("Please enter a valid 12-digit Aadhar number.");
+        alert("Please enter a valid Aadhar number.");
         return false;
     }
 
@@ -127,11 +125,13 @@ function validateInputs() {
     return true;
 }
 
+let formSubmitted = false;
+
 function submitForm(event) {
-    event.preventDefault();
+    event.preventDefault(); 
     if (formSubmitted) {
-        alert("You have already submitted the form.");
-        return;
+      alert("You have already submitted the form.");
+      return;
     }
     if (!validateInputs()) return;
 
@@ -139,70 +139,58 @@ function submitForm(event) {
     const url = "https://script.google.com/macros/s/AKfycbwE3W4PdSfSve2DrhHPhXMq_7sj453UcSTqDTNjj3AtWduShhRZAk63o3JyIpUqLLrmOw/exec";
 
     fetch(url, {
-        method: "POST",
-        body: formData
+      method: "POST",
+      body: formData
     })
     .then(response => response.text())
     .then(data => {
-        formSubmitted = true;
-        document.getElementById("confirmationMessage").style.display = "block";
-        document.getElementById("paymentForm").style.display = "none";
+      formSubmitted = true;
+      document.getElementById("confirmationMessage").style.display = "block";
+      // The line that hides the form has been removed as requested.
     })
     .catch(error => {
-        console.error("Error submitting form:", error);
-        alert("There was an error submitting your details. Please try again.");
+      console.error("Error submitting form:", error);
     });
 }
 
+
+// --- PAYMENT GENERATION LOGIC (IMPROVED AND CONSOLIDATED) ---
 function openQrWindow(qrCodeUrl) {
     const qrWindow = window.open('', '_blank', 'width=500,height=600');
     qrWindow.document.write(`
-        <html>
-        <head><title>UPI Payment QR Code</title></head>
+        <html><head><title>UPI Payment QR Code</title></head>
         <body style="display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; font-family: sans-serif;">
             <div style="text-align: center;">
             <h2>Scan to Pay</h2>
             <img src="${qrCodeUrl}" alt="UPI Payment QR Code" style="width: 250px; height: 250px;"/>
             <p>Scan this code with any UPI app to pay.</p>
             </div>
-        </body>
-        </html>
+        </body></html>
     `);
 }
 
 function redirectToUPIAppOnIOS(amount, transactionNote) {
     const upiId = "govardhanylp@sbi";
-    const payeeName = "Siddha Grasa"; // URL encoded: Siddha%20Grasa
-
-    // Construct app-specific URLs
+    const payeeName = "Siddha Grasa";
     const baseUpiParams = `pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
+    
     const optionsHtml = window.open('', '_blank', 'width=600,height=800');
     optionsHtml.document.write(`
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Payment Options</title>
-            <style>
-                body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-                .payment-container { display: grid; gap: 15px; grid-template-columns: 1fr; margin: 20px auto; max-width: 90%; text-align: center; }
-                .payment-button { display: flex; align-items: center; justify-content: center; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 12px; padding: 15px; text-decoration: none; color: black; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: all 0.2s; }
-                .payment-button:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
-                .payment-button img { width: 40px; height: 40px; margin-right: 15px; }
-                .payment-button span { font-size: 1rem; font-weight: 500; }
-            </style>
-        </head>
-        <body>
-            <div class="payment-container">
-            <h1>Select a UPI App</h1>
+        <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Payment Options</title>
+        <style>
+            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+            .payment-container { display: grid; gap: 15px; grid-template-columns: 1fr; margin: 20px auto; max-width: 90%; text-align: center; }
+            .payment-button { display: flex; align-items: center; justify-content: center; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 12px; padding: 15px; text-decoration: none; color: black; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: all 0.2s; }
+            .payment-button:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+            .payment-button img { width: 40px; height: 40px; margin-right: 15px; }
+            .payment-button span { font-size: 1rem; font-weight: 500; }
+        </style></head>
+        <body><div class="payment-container"><h1>Select a UPI App</h1>
             <a href="tez://upi/pay?${baseUpiParams}" class="payment-button"><img src="/images/goooglepay.png" alt="Google Pay"><span>Google Pay</span></a>
             <a href="phonepe://pay?${baseUpiParams}" class="payment-button"><img src="/images/phonepay.png" alt="PhonePe"><span>PhonePe</span></a>
             <a href="paytmmp://upi/pay?${baseUpiParams}" class="payment-button"><img src="/images/paytm.png" alt="Paytm"><span>Paytm</span></a>
             <a href="bhim://upi/pay?${baseUpiParams}" class="payment-button"><img src="/images/bhim-upi-icon-4059309141.png" alt="BHIM"><span>BHIM UPI</span></a>
-            </div>
-        </body>
-        </html>
+        </div></body></html>
     `);
     optionsHtml.document.close();
 }
@@ -223,7 +211,6 @@ function detectDeviceAndProceed(upiData, qrCodeUrl, amount, transactionNote) {
     }
 }
 
-// --- Main Button Event Listener ---
 document.getElementById('generateQrButton').onclick = function() {
     if (!formSubmitted) {
         alert("Please submit your details first by clicking the 'Submit' button.");
@@ -233,12 +220,10 @@ document.getElementById('generateQrButton').onclick = function() {
     const donorName = document.getElementById('name').value;
     const amount = 2000;
     
-    // Standardized parameters
     const upiId = "govardhanylp@sbi";
-    const payeeName = "Siddha Grasa"; // Name of the recipient
-    const transactionNote = `Donation from ${donorName}`; // A safer, more descriptive note
+    const payeeName = "Siddha Grasa";
+    const transactionNote = `Donation from ${donorName}`; 
     
-    // Construct the universal UPI link and QR code URL
     const upiData = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${amount}&cu=INR&tn=${encodeURIComponent(transactionNote)}`;
     const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(upiData)}`;
 
