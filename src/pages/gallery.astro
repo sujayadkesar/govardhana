@@ -1,0 +1,122 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../layouts/PageHead.astro';
+
+/* Real photographs from the goshala. Each one appears once. */
+const shots = [
+  { src: '/images/causes/one-day-expense.webp', cap: 'The herd in the shed at Karadolli', span: 'wide' },
+  { src: '/images/causes/adopt-a-cow.webp',     cap: 'A cow with her calf' },
+  { src: '/images/causes/janma-dina.webp',      cap: 'Go Pooja — the cow decorated and fed' },
+  { src: '/images/causes/adopt-a-govatsa.webp', cap: 'A calf grazing in the fields', span: 'tall' },
+  { src: '/images/causes/vivaha-dina.webp',     cap: 'Blessing the herd' },
+  { src: '/images/causes/go-pooja.webp',        cap: 'Feeding by hand during pooja' },
+  { src: '/images/causes/punya-tithi.webp',     cap: 'Three of the herd' },
+  { src: '/images/causes/adopt-a-nandi.webp',   cap: 'A nandi' },
+  { src: '/images/causes/swarna-nandini.webp',  cap: 'The Swarna Nandini construction', span: 'wide' },
+];
+
+const films = [
+  { src: '/images/Govardhana.mp4', cap: 'The goshala' },
+  { src: '/images/godhooli.mp4',   cap: 'Godhooli — the hour the herd returns' },
+];
+---
+
+<Base
+  title="Gallery"
+  description="Photographs and film from Shri Govardhan Goshala at Karadolli, Yellapur."
+  image="/images/causes/one-day-expense.webp"
+>
+  <PageHead
+    eyebrow="Gallery"
+    title="The goshala, as it is"
+    lede="Photographs from Karadolli. Nothing here is stock — these are the animals your giving keeps."
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="mosaic">
+        {shots.map((s) => (
+          <figure class:list={['tile', s.span && `tile--${s.span}`]}>
+            <img src={s.src} alt={s.cap} loading="lazy" width="900" height="600" />
+            <figcaption>{s.cap}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section band--warm">
+    <div class="wrap">
+      <p class="eyebrow">Film</p>
+      <h2 class="films__h">Moving pictures</h2>
+      <div class="films">
+        {films.map((f) => (
+          <figure class="film">
+            {/* preload=none so a visit never pulls megabytes of video
+                before the viewer has asked for it */}
+            <video controls preload="none" playsinline poster="/images/causes/one-day-expense.webp">
+              <source src={f.src} type="video/mp4" />
+            </video>
+            <figcaption>{f.cap}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .mosaic {
+    display: grid;
+    gap: var(--s-4);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+    grid-auto-flow: dense;
+  }
+
+  .tile { margin: 0; position: relative; overflow: hidden; border-radius: var(--radius-lg); }
+  .tile img {
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    transition: transform 0.7s var(--ease-out);
+  }
+  .tile:hover img { transform: scale(1.04); }
+
+  .tile figcaption {
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    padding: var(--s-5) var(--s-4) var(--s-3);
+    font-size: var(--t-xs);
+    color: #FFF6E8;
+    background: linear-gradient(to top, rgba(31,17,8,0.85), transparent);
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+  .tile:hover figcaption,
+  .tile:focus-within figcaption { opacity: 1; transform: none; }
+
+  @media (min-width: 700px) {
+    .tile--wide { grid-column: span 2; }
+    .tile--wide img { aspect-ratio: 16 / 9; }
+    .tile--tall img { aspect-ratio: 3 / 4; }
+  }
+
+  /* Captions must be readable without hover on touch devices */
+  @media (hover: none) {
+    .tile figcaption { opacity: 1; transform: none; }
+  }
+
+  .films__h { margin-block: var(--s-4) var(--s-6); }
+  .films { display: grid; gap: var(--s-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); }
+  .film { margin: 0; }
+  .film video {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--rule);
+    background: var(--ink);
+    aspect-ratio: 16 / 9;
+  }
+  .film figcaption { margin-block-start: var(--s-2); font-size: var(--t-sm); color: var(--text-muted); }
+</style>

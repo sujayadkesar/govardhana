@@ -1,0 +1,162 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../layouts/PageHead.astro';
+import { site } from '../data/site';
+
+const facts = [
+  { k: 'Where',        v: 'Karadolli, Yellapur, Uttara Kannada' },
+  { k: 'Under',        v: 'Sonda Swarnavalli Mahasamsthanam' },
+  { k: 'Registration', v: site.registration },
+  { k: 'Tax status',   v: 'Eligible under section 80G' },
+];
+---
+
+<Base
+  title="The Goshala"
+  description="Shri Govardhan Goshala at Karadolli, Yellapur — who we are, which animals we take in, and how the goshala is run."
+  image="/images/hero.webp"
+>
+  <PageHead
+    eyebrow="The goshala"
+    title="Karadolli, Yellapur"
+    lede="A shelter in the Western Ghats for cattle nobody else will keep."
+    image="/images/hero.webp"
+  />
+
+  <section class="section">
+    <div class="wrap about">
+      <div class="about__main prose">
+        <p class="lede">
+          Shri Govardhan Goshala sits at Karadolli in Yellapur taluk, in the
+          hills of Uttara Kannada. It runs under the Shreemad Jagadguru
+          Shankaracharya Shree Sonda Swarnavalli Mahasamsthanam.
+        </p>
+
+        <h2>Which animals come here</h2>
+        <p>
+          Mostly the ones with no economic use left. Cows past milking, bulls
+          that no longer plough, calves whose mothers were sold, and animals
+          picked up off roads and from markets. A working animal has somebody
+          who wants it. These do not.
+        </p>
+
+        <h2>What it takes to keep them</h2>
+        <p>
+          Green fodder is brought in by jeep and tractor from the surrounding
+          fields, and dry fodder is stored for the monsoon. On top of feed
+          there is water, medicine, veterinary visits, shelter repair, and the
+          people who do the work every day of the year.
+        </p>
+        <p>
+          None of it is recovered from the animals. The goshala runs entirely
+          on what people give.
+        </p>
+
+        <h2>Go Pooja and sankalpa</h2>
+        <p>
+          Many people mark a birthday, an anniversary, or an ancestor’s tithi
+          by having a Go Pooja performed here. The pooja is done in your name
+          with sankalpa on the date you choose, and photographs are sent to you
+          afterwards.
+        </p>
+
+        <h2>The Swarna Nandini Project</h2>
+        <p>
+          New shelter buildings are being raised at Karadolli — covered housing,
+          a feed store and a room for treating sick animals. It is the largest
+          thing the goshala has undertaken, and it is being built as
+          contributions arrive.
+        </p>
+        <p>
+          <a href="/goseva/swarna-nandini">Contribute to the construction →</a>
+        </p>
+      </div>
+
+      <aside class="about__side">
+        <div class="factbox">
+          <h2 class="factbox__h">At a glance</h2>
+          <dl>
+            {facts.map((f) => (
+              <div>
+                <dt>{f.k}</dt>
+                <dd>{f.v}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+
+        <figure class="lineage">
+          <img src="/images/lineage.webp" alt="The Swamijis of Sonda Swarnavalli Mahasamsthanam"
+               loading="lazy" width="900" height="1600" />
+          <figcaption>Sonda Swarnavalli Mahasamsthanam</figcaption>
+        </figure>
+
+        <a href="/goseva" class="btn btn--primary btn--block">Ways to give</a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section band--warm">
+    <div class="wrap wrap--tight" style="text-align:center">
+      <p class="shloka">
+        आत्माहार प्रमाणेन प्रत्यहं गोषु दीयते ।<br />
+        अकृत्वा स्वयमाहारं कुर्वन् प्राप्नोति दुर्गतिम् ॥
+      </p>
+      <p class="shloka-gloss">
+        Give to the cows each day in the measure you feed yourself.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .about { display: grid; gap: var(--s-8); }
+  @media (min-width: 900px) {
+    .about { grid-template-columns: minmax(0, 1fr) 320px; gap: var(--s-8); align-items: start; }
+    .about__side { position: sticky; top: 92px; }
+  }
+
+  .about__main h2 { font-size: var(--t-lg); }
+
+  .about__side { display: grid; gap: var(--s-5); }
+
+  .factbox {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    padding: var(--s-5);
+  }
+  .factbox__h {
+    font-family: var(--sans);
+    font-size: var(--t-xs);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--saffron);
+    margin-block-end: var(--s-4);
+  }
+  .factbox dl { display: grid; gap: var(--s-4); }
+  .factbox dt {
+    font-size: var(--t-xs);
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-block-end: 2px;
+  }
+  .factbox dd { margin: 0; font-size: var(--t-sm); color: var(--ink); font-weight: 600; }
+
+  .lineage { margin: 0; }
+  .lineage img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--rule);
+    background: var(--marigold);
+  }
+  .lineage figcaption {
+    margin-block-start: var(--s-2);
+    font-size: var(--t-xs);
+    color: var(--text-muted);
+    text-align: center;
+    font-style: italic;
+  }
+</style>

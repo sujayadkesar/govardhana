@@ -5,7 +5,7 @@ import { site } from '../data/site';
 import { causes, causeGroups, byGroup } from '../data/causes';
 import { formatINR } from '../lib/upi';
 
-const featured = ['adopt-a-cow', 'go-kanike', 'one-day-expense'].map(
+const ledger = ['adopt-a-cow', 'one-day-expense', 'go-kanike'].map(
   (s) => causes.find((c) => c.slug === s)!
 );
 ---
@@ -13,90 +13,119 @@ const featured = ['adopt-a-cow', 'go-kanike', 'one-day-expense'].map(
 <Base
   title={site.name}
   description="A goshala at Karadolli, Yellapur in Uttara Kannada, under the Sonda Swarnavalli Mahasamsthanam. Adopt a cow, feed the herd, or mark an occasion with a Go Pooja."
-  image="/images/vikas-makwana-UETquu-C_98-unsplash.webp"
+  image="/images/hero.webp"
 >
-  <!-- ============ hero ============ -->
+  <!-- ═══════════ hero ═══════════ -->
   <section class="hero">
     <div class="hero__media">
-      <img
-        src="/images/vikas-makwana-UETquu-C_98-unsplash.webp"
-        alt="Cows at the goshala in Karadolli"
-        width="1600"
-        height="1067"
-        fetchpriority="high"
-      />
+      <img src="/images/hero.webp" alt="The herd at the Karadolli goshala"
+           width="1800" height="1350" fetchpriority="high" />
     </div>
 
-    <div class="wrap hero__body">
-      <p class="hero__lineage">{site.lineage}</p>
-      <h1 class="hero__title">{site.name}</h1>
-      <p class="hero__place">
-        {site.address.line} · {site.address.district} · Reg. {site.registration}
-      </p>
+    <div class="hero__scrim"></div>
 
-      <div class="hero__verse">
-        <p class="shloka">गवां यः पूजयेत्काले मुखे तस्य वसुन्धरा।</p>
-        <p class="shloka-gloss">
-          To one who honours the cow in her time, the earth itself turns
-          toward them.
-        </p>
-      </div>
+    <div class="wrap hero__inner">
+      <p class="hero__lineage">{site.lineage}</p>
+
+      <h1 class="hero__title">
+        <span class="hero__t1">Shri Govardhan</span>
+        <span class="hero__t2">Goshala</span>
+      </h1>
+
+      <p class="hero__place">
+        {site.address.line} &nbsp;·&nbsp; {site.address.district} &nbsp;·&nbsp; Reg. {site.registration}
+      </p>
 
       <div class="hero__actions">
         <a href="/goseva" class="btn btn--accent">Ways to give</a>
-        <a href="/about" class="btn btn--ghost">See the goshala</a>
+        <a href="/about" class="btn btn--onDark">See the goshala</a>
       </div>
+    </div>
+
+    <div class="hero__count">
+      <span class="num">{causes.length}</span>
+      <span>ways to help</span>
     </div>
   </section>
 
-  <!-- ============ what it costs ============ -->
-  <section class="section">
+  <!-- ═══════════ verse ═══════════ -->
+  <section class="verse">
+    <div class="wrap wrap--tight">
+      <p class="shloka">गवां यः पूजयेत्काले मुखे तस्य वसुन्धरा।</p>
+      <p class="shloka-gloss">
+        To one who honours the cow in her time, the earth itself turns toward them.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════ why ═══════════ -->
+  <section class="why">
+    <div class="why__media">
+      <img src="/images/why-abandoned.webp" loading="lazy"
+           alt="Abandoned cattle scavenging in a street" width="1800" height="1200" />
+    </div>
+    <div class="why__body">
+      <p class="eyebrow">Why the goshala exists</p>
+      <h2>A cow that stops giving milk is usually the one turned out.</h2>
+      <p class="prose">
+        She ends up on a roadside eating plastic, or on a truck. The goshala at
+        Karadolli takes in the ones nobody wants — the old, the barren, the
+        bulls — and keeps them fed and sheltered for the rest of their lives.
+      </p>
+      <p class="prose">
+        There is no income from an animal that cannot work or milk. Every one
+        of them is kept alive by somebody choosing to pay for it.
+      </p>
+      <a href="/about" class="btn btn--ghost">More about the goshala</a>
+    </div>
+  </section>
+
+  <!-- ═══════════ ledger ═══════════ -->
+  <section class="section band--warm">
     <div class="wrap">
-      <p class="eyebrow">What your giving covers</p>
-      <h2 class="ledger__head">
-        Everything here has a real cost. These are ours.
-      </h2>
+      <p class="eyebrow">What it costs</p>
+      <h2 class="ledger__h">Everything here has a price. These are ours.</h2>
 
       <div class="ledger">
-        {featured.map((c) => (
-          <a class="ledger__row" href={`/goseva/${c.slug}`}>
-            <span class="ledger__amt num">
+        {ledger.map((c) => (
+          <a class="lrow" href={`/goseva/${c.slug}`}>
+            <span class="lrow__amt num">
               {c.amount ? formatINR(c.amount) : 'Any amount'}
             </span>
-            <span class="ledger__what">
+            <span class="lrow__body">
               <strong>{c.title}</strong>
               <span>{c.blurb}</span>
             </span>
-            <span class="ledger__go" aria-hidden="true">→</span>
+            <span class="lrow__go" aria-hidden="true">→</span>
           </a>
         ))}
       </div>
 
       <p class="ledger__note">
         Donations are eligible for exemption under section 80G. Ask for a
-        receipt when you give and we will send the certificate once the
-        donation is verified.
+        receipt when you give and we will send the certificate once your
+        payment is verified.
       </p>
     </div>
   </section>
 
-  <!-- ============ ways to give ============ -->
-  <section class="section section--sunk">
+  <!-- ═══════════ ways ═══════════ -->
+  <section class="section">
     <div class="wrap">
       <p class="eyebrow">Go Seva</p>
-      <h2>Choose how you want to help</h2>
+      <h2 class="ways__h">Choose how you want to help</h2>
       <p class="lede ways__lede">
         Adopt an animal for a year, cover a day of the goshala’s running, or
         mark a birthday or anniversary with a Go Pooja performed in your name.
       </p>
 
       {causeGroups.map((g) => (
-        <div class="ways__group">
-          <div class="ways__ghead">
+        <div class="grp">
+          <div class="grp__head">
             <h3>{g.title}</h3>
             <p>{g.blurb}</p>
           </div>
-          <div class="ways__grid">
+          <div class="grid">
             {byGroup(g.id).map((c) => <CauseCard cause={c} />)}
           </div>
         </div>
@@ -104,94 +133,83 @@ const featured = ['adopt-a-cow', 'go-kanike', 'one-day-expense'].map(
     </div>
   </section>
 
-  <!-- ============ verse ============ -->
-  <section class="verse">
-    <div class="wrap wrap--tight verse__in">
+  <!-- ═══════════ closing verse ═══════════ -->
+  <section class="closing band--deep">
+    <div class="wrap wrap--tight closing__in">
       <p class="shloka">
         गोस्पर्शनविहीनस्य गोदोहनमजानतः ।<br />
         गोपोषणविहीनस्य प्राहुर्जन्म निरर्थकम् ॥
       </p>
       <p class="shloka-gloss">
         They call it a wasted birth — to have never touched a cow, never known
-        her milking, never kept one fed. — Garuda Purana
+        her milking, never kept one fed. &nbsp;— Garuda Purana
       </p>
-    </div>
-  </section>
 
-  <!-- ============ close ============ -->
-  <section class="section closing">
-    <div class="wrap wrap--tight">
-      <h2>Can’t keep a cow? Keep one fed.</h2>
-      <p class="lede">
-        Every rupee goes to feed, shelter, medicine and the people who do the
-        work. Give once, or mark a date each year.
-      </p>
-      <a href="/goseva" class="btn btn--accent">Ways to give</a>
+      <div class="closing__cta">
+        <h2>Can’t keep a cow? Keep one fed.</h2>
+        <a href="/goseva" class="btn btn--accent">Ways to give</a>
+      </div>
     </div>
   </section>
 </Base>
 
 <style>
-  /* ---------------- hero ---------------- */
-  .hero { position: relative; }
-
-  .hero__media {
+  /* ═══════════ hero ═══════════ */
+  .hero {
     position: relative;
-    aspect-ratio: 16 / 10;
-    max-height: 62vh;
+    min-height: 92svh;
+    display: flex;
+    align-items: flex-end;
     overflow: hidden;
-    background: var(--surface-sunk);
-  }
-  .hero__media img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    object-position: center 58%;
-  }
-  .hero__media::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(
-      to bottom,
-      color-mix(in srgb, #14142B 30%, transparent) 0%,
-      color-mix(in srgb, #14142B 8%, transparent) 45%,
-      var(--paper) 100%
-    );
+    isolation: isolate;
   }
 
-  .hero__body {
-    position: relative;
-    margin-block-start: -14vh;
-    padding-block-end: var(--s-7);
-    text-align: center;
+  /* Absolutely positioned so the image always fills the section.
+     A previous version used aspect-ratio together with max-height, which
+     made the *width* collapse to height x ratio and left the photograph
+     stranded on the left of the page. */
+  .hero__media { position: absolute; inset: 0; z-index: -2; }
+  .hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: center 55%; }
+
+  .hero__scrim {
+    position: absolute; inset: 0; z-index: -1;
+    background:
+      linear-gradient(to top,
+        rgba(31, 17, 8, 0.94) 0%,
+        rgba(31, 17, 8, 0.72) 28%,
+        rgba(31, 17, 8, 0.30) 58%,
+        rgba(31, 17, 8, 0.42) 100%);
   }
-  @media (min-width: 768px) { .hero__body { margin-block-start: -18vh; } }
+
+  .hero__inner { padding-block: var(--s-8) var(--s-8); color: #FFF6E8; }
 
   .hero__lineage {
     font-family: var(--serif);
-    font-size: var(--t-sm);
     font-style: italic;
-    color: var(--ink-soft);
-    max-width: 34ch;
-    margin-inline: auto;
+    font-size: var(--t-sm);
+    color: rgba(255, 246, 232, 0.82);
+    max-width: 40ch;
+    margin-block-end: var(--s-5);
     line-height: 1.5;
   }
-  .hero__title {
-    margin-block-start: var(--s-4);
-    font-size: var(--t-3xl);
-  }
-  .hero__place {
-    margin-block-start: var(--s-3);
-    font-size: var(--t-sm);
-    color: var(--text-muted);
-    letter-spacing: 0.03em;
-  }
 
-  .hero__verse {
-    margin-block-start: var(--s-6);
-    padding-block-start: var(--s-5);
-    border-top: 1px solid var(--rule);
-    max-width: 46ch;
-    margin-inline: auto;
+  .hero__title {
+    color: #FFF6E8;
+    font-size: var(--t-4xl);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    display: flex;
+    flex-direction: column;
+  }
+  .hero__t2 { color: var(--marigold); }
+
+  .hero__place {
+    margin-block-start: var(--s-5);
+    font-size: var(--t-sm);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255, 246, 232, 0.78);
+    font-weight: 500;
   }
 
   .hero__actions {
@@ -199,59 +217,108 @@ const featured = ['adopt-a-cow', 'go-kanike', 'one-day-expense'].map(
     display: flex;
     flex-wrap: wrap;
     gap: var(--s-3);
-    justify-content: center;
   }
 
-  /* ---------------- ledger ---------------- */
-  .ledger__head { max-width: 22ch; margin-block: var(--s-3) var(--s-6); }
-
-  .ledger {
-    border-top: 1px solid var(--ink);
-    border-bottom: 1px solid var(--ink);
+  .hero__count {
+    position: absolute;
+    right: clamp(1.25rem, 4vw, 2.5rem);
+    top: var(--s-7);
+    display: none;
+    flex-direction: column;
+    align-items: flex-end;
+    color: rgba(255, 246, 232, 0.9);
+    text-align: right;
   }
-  .ledger__row {
+  .hero__count .num {
+    font-family: var(--serif);
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--marigold);
+  }
+  .hero__count span:last-child {
+    font-size: var(--t-xs);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  @media (min-width: 900px) { .hero__count { display: flex; } }
+
+  /* ═══════════ verse ═══════════ */
+  .verse {
+    padding-block: var(--s-8);
+    text-align: center;
+    background: var(--paper);
+  }
+
+  /* ═══════════ why ═══════════ */
+  .why {
+    display: grid;
+    background: var(--paper-warm);
+    border-block: 1px solid var(--rule-soft);
+  }
+  .why__media { position: relative; min-height: 44vh; }
+  .why__media img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+  .why__body {
+    padding: var(--s-8) clamp(1.25rem, 4vw, 2.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-4);
+    align-items: flex-start;
+  }
+  .why__body h2 { max-width: 18ch; }
+  .why__body .prose { font-size: var(--t-sm); color: var(--text-muted); line-height: 1.75; }
+  .why__body .btn { margin-block-start: var(--s-2); }
+
+  @media (min-width: 860px) {
+    .why { grid-template-columns: 1fr 1fr; align-items: stretch; }
+    .why__media { min-height: 100%; }
+    .why__body { padding-block: var(--s-9); justify-content: center; max-width: 620px; }
+  }
+
+  /* ═══════════ ledger ═══════════ */
+  .ledger__h { margin-block: var(--s-4) var(--s-7); max-width: 20ch; }
+  .ledger { border-top: 2px solid var(--ink); }
+
+  .lrow {
     display: grid;
     grid-template-columns: 1fr auto;
     gap: var(--s-2) var(--s-5);
     align-items: baseline;
     padding-block: var(--s-5);
+    border-bottom: 1px solid var(--rule);
     text-decoration: none;
     color: inherit;
-    border-bottom: 1px solid var(--rule-soft);
-    transition: background-color 0.16s var(--ease);
+    transition: background-color 0.2s var(--ease), padding-inline 0.2s var(--ease);
   }
-  .ledger__row:last-child { border-bottom: none; }
-  .ledger__row:hover { background: var(--surface-sunk); }
+  .lrow:hover { background: var(--surface); padding-inline: var(--s-4); }
 
-  .ledger__amt {
+  .lrow__amt {
+    grid-column: 1;
     font-family: var(--serif);
-    font-size: var(--t-xl);
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
     font-weight: 600;
     color: var(--laterite);
-    grid-column: 1;
   }
-  .ledger__what { grid-column: 1 / -1; display: grid; gap: var(--s-1); }
-  .ledger__what strong {
+  .lrow__body { grid-column: 1 / -1; display: grid; gap: var(--s-1); }
+  .lrow__body strong {
     font-family: var(--serif);
     font-size: var(--t-md);
     color: var(--ink);
     font-weight: 600;
   }
-  .ledger__what span { font-size: var(--t-sm); color: var(--text-muted); }
-  .ledger__go {
-    grid-row: 1;
-    grid-column: 2;
-    color: var(--turmeric);
+  .lrow__body span { font-size: var(--t-sm); color: var(--text-muted); }
+  .lrow__go {
+    grid-row: 1; grid-column: 2;
+    color: var(--saffron);
     font-size: var(--t-lg);
-    transition: transform 0.16s var(--ease);
+    transition: transform 0.2s var(--ease);
   }
-  .ledger__row:hover .ledger__go { transform: translateX(4px); }
+  .lrow:hover .lrow__go { transform: translateX(5px); }
 
-  @media (min-width: 700px) {
-    .ledger__row { grid-template-columns: 190px 1fr auto; align-items: center; }
-    .ledger__amt  { grid-column: 1; }
-    .ledger__what { grid-column: 2; }
-    .ledger__go   { grid-column: 3; }
+  @media (min-width: 720px) {
+    .lrow { grid-template-columns: 230px 1fr auto; align-items: center; }
+    .lrow__amt  { grid-column: 1; }
+    .lrow__body { grid-column: 2; }
+    .lrow__go   { grid-column: 3; }
   }
 
   .ledger__note {
@@ -261,39 +328,42 @@ const featured = ['adopt-a-cow', 'go-kanike', 'one-day-expense'].map(
     max-width: var(--measure);
   }
 
-  /* ---------------- ways ---------------- */
-  .section--sunk {
-    background: var(--surface-sunk);
-    border-block: 1px solid var(--rule);
-  }
-  .ways__lede { margin-block: var(--s-4) var(--s-7); max-width: 52ch; }
+  /* ═══════════ ways ═══════════ */
+  .ways__h { margin-block-start: var(--s-4); }
+  .ways__lede { margin-block: var(--s-4) var(--s-8); max-width: 52ch; }
 
-  .ways__group + .ways__group { margin-block-start: var(--s-8); }
-  .ways__ghead { margin-block-end: var(--s-5); }
-  .ways__ghead h3 { font-size: var(--t-lg); }
-  .ways__ghead p {
-    margin-block-start: var(--s-2);
-    font-size: var(--t-sm);
-    color: var(--text-muted);
-    max-width: 48ch;
+  .grp + .grp { margin-block-start: var(--s-8); }
+  .grp__head {
+    margin-block-end: var(--s-5);
+    padding-block-end: var(--s-3);
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--s-3);
   }
-  .ways__grid {
+  .grp__head h3 { font-size: var(--t-lg); }
+  .grp__head p { font-size: var(--t-sm); color: var(--text-muted); max-width: 44ch; }
+
+  .grid {
     display: grid;
-    gap: var(--s-4);
-    grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+    gap: var(--s-5);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
   }
 
-  /* ---------------- verse ---------------- */
-  .verse {
-    padding-block: var(--s-9);
-    background: var(--ink);
-    color: var(--text-onDark);
-    text-align: center;
+  /* ═══════════ closing ═══════════ */
+  .closing { padding-block: var(--s-9); text-align: center; }
+  .closing__in .shloka { color: #FFF6E8; }
+  .closing__in .shloka-gloss { color: rgba(255, 246, 232, 0.7); }
+  .closing__cta {
+    margin-block-start: var(--s-8);
+    padding-block-start: var(--s-7);
+    border-top: 1px solid rgba(255, 246, 232, 0.22);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--s-5);
   }
-  .verse .shloka { color: var(--text-onDark); }
-  .verse .shloka-gloss { color: color-mix(in srgb, var(--text-onDark) 65%, transparent); }
-
-  /* ---------------- closing ---------------- */
-  .closing { text-align: center; }
-  .closing .lede { margin-block: var(--s-4) var(--s-6); margin-inline: auto; max-width: 46ch; }
+  .closing__cta h2 { max-width: 16ch; }
 </style>

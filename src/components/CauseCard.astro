@@ -4,103 +4,157 @@ import { formatINR } from '../lib/upi';
 
 interface Props { cause: Cause; }
 const { cause } = Astro.props;
+
+/* Causes without a photograph of their own get a typographic card rather
+   than borrowing another cause's image. */
+const typographic = !cause.image;
 ---
 
-<a class="card" href={`/goseva/${cause.slug}`}>
-  <div class="card__media">
-    <img src={cause.image} alt="" loading="lazy" width="600" height="400" />
-  </div>
+<a class:list={['card', typographic && 'card--type']} href={`/goseva/${cause.slug}`}>
+  {cause.image ? (
+    <div class="card__media">
+      <img src={cause.image} alt="" loading="lazy" width="900" height="600" />
+      <span class="card__amt num">
+        {cause.amount ? formatINR(cause.amount) : 'Any amount'}
+      </span>
+    </div>
+  ) : (
+    <div class="card__plate">
+      <span class="card__plateAmt num">
+        {cause.amount ? formatINR(cause.amount) : 'Any'}
+      </span>
+      <span class="card__plateTag">{cause.tagline}</span>
+    </div>
+  )}
 
   <div class="card__body">
     <div class="card__heads">
-      <h4 class="card__title">{cause.title}</h4>
-      {cause.titleSa && <p class="card__sa">{cause.titleSa}</p>}
+      <h3 class="card__title">{cause.title}</h3>
+      {cause.titleSa && <span class="card__sa">{cause.titleSa}</span>}
     </div>
-    <p class="card__tag">{cause.tagline}</p>
-    <p class="card__amt num">
-      {cause.amount ? formatINR(cause.amount) : 'Any amount'}
-    </p>
+    <p class="card__blurb">{cause.blurb}</p>
+    <span class="card__cta">Give<span class="card__arrow" aria-hidden="true">→</span></span>
   </div>
-
-  <span class="card__cta">
-    Give <span aria-hidden="true">→</span>
-  </span>
 </a>
 
 <style>
   .card {
+    position: relative;
     display: flex;
     flex-direction: column;
     background: var(--surface);
     border: 1px solid var(--rule);
-    border-radius: var(--radius);
+    border-radius: var(--radius-lg);
     overflow: hidden;
     text-decoration: none;
     color: inherit;
-    transition: border-color 0.18s var(--ease),
-                box-shadow 0.18s var(--ease),
-                transform 0.18s var(--ease);
+    transition: border-color 0.25s var(--ease),
+                box-shadow 0.25s var(--ease),
+                transform 0.25s var(--ease);
   }
   .card:hover {
-    border-color: var(--turmeric);
+    border-color: var(--saffron);
     box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
   }
 
+  /* ---- photographic ---- */
   .card__media {
+    position: relative;
     aspect-ratio: 3 / 2;
-    background: var(--surface-sunk);
     overflow: hidden;
+    background: var(--surface-sunk);
   }
   .card__media img {
     width: 100%; height: 100%;
     object-fit: cover;
-    transition: transform 0.4s var(--ease);
+    transition: transform 0.6s var(--ease-out);
   }
-  .card:hover .card__media img { transform: scale(1.03); }
+  .card:hover .card__media img { transform: scale(1.045); }
 
-  .card__body {
-    padding: var(--s-4);
-    display: grid;
+  .card__amt {
+    position: absolute;
+    left: 0; bottom: var(--s-3);
+    background: var(--marigold);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 1.05rem;
+    padding: var(--s-2) var(--s-4);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* ---- typographic ---- */
+  .card__plate {
+    aspect-ratio: 3 / 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: var(--s-2);
+    padding: var(--s-5);
+    text-align: center;
+    background:
+      repeating-linear-gradient(
+        135deg,
+        transparent 0 11px,
+        rgba(255, 248, 237, 0.07) 11px 22px
+      ),
+      var(--deep);
+  }
+  .card__plateAmt {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 2.75rem);
+    font-weight: 600;
+    color: var(--marigold);
+    line-height: 1;
+  }
+  .card__plateTag {
+    font-size: var(--t-xs);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 246, 232, 0.75);
+    font-weight: 600;
+  }
+
+  /* ---- body ---- */
+  .card__body {
+    padding: var(--s-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-3);
     flex: 1;
   }
-
   .card__heads {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
     gap: var(--s-3);
   }
-  .card__title { font-size: var(--t-md); }
+  .card__title { font-size: 1.2rem; line-height: 1.2; }
   .card__sa {
     font-family: var(--deva);
     font-size: var(--t-sm);
     color: var(--text-muted);
     white-space: nowrap;
   }
-
-  .card__tag { font-size: var(--t-sm); color: var(--text-muted); }
-
-  .card__amt {
-    font-family: var(--serif);
-    font-size: var(--t-lg);
-    font-weight: 600;
-    color: var(--laterite);
-    margin-block-start: auto;
+  .card__blurb {
+    font-size: var(--t-sm);
+    color: var(--text-muted);
+    line-height: 1.6;
+    flex: 1;
   }
 
   .card__cta {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: var(--s-2);
-    padding: var(--s-3) var(--s-4);
-    border-top: 1px solid var(--rule-soft);
-    background: var(--surface-sunk);
     font-size: var(--t-sm);
-    font-weight: 600;
-    color: var(--ink);
+    font-weight: 700;
+    color: var(--saffron);
+    letter-spacing: 0.02em;
   }
-  .card__cta span { transition: transform 0.18s var(--ease); }
-  .card:hover .card__cta span { transform: translateX(3px); }
+  .card__arrow { transition: transform 0.25s var(--ease); }
+  .card:hover .card__arrow { transform: translateX(5px); }
 </style>

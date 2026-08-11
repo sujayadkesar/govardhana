@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../layouts/PageHead.astro';
+import { president, administrative, officers, showPhones } from '../data/committee';
+---
+
+<Base
+  title="Committee"
+  description="The committee and administrative officers of Shri Govardhan Goshala, Karadolli, Yellapur."
+>
+  <PageHead
+    eyebrow="Who runs it"
+    title="Committee"
+    lede="The goshala is run by a committee drawn from the surrounding villages, under the Sonda Swarnavalli Mahasamsthanam."
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <div class="pres">
+        <p class="pres__role">{president.role}</p>
+        <h2 class="pres__name">{president.name}</h2>
+        <p class="pres__seat">{president.seat}</p>
+      </div>
+
+      <div class="grp">
+        <h2 class="grp__h">Administrative members</h2>
+        <ul class="mlist">
+          {administrative.map((m) => (
+            <li class="mcard">
+              <span class="mcard__name">{m.name}</span>
+              {m.place && <span class="mcard__place">{m.place}</span>}
+              {showPhones && m.phone && (
+                <a class="mcard__ph num" href={`tel:+91${m.phone}`}>{m.phone}</a>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="grp">
+        <h2 class="grp__h">Administrative officers of the Math</h2>
+        <ul class="mlist">
+          {officers.map((m) => (
+            <li class="mcard">
+              <span class="mcard__name">{m.name}</span>
+              {m.place && <span class="mcard__place">{m.place}</span>}
+              {m.note && <span class="mcard__note">{m.note}</span>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .pres {
+    background: var(--paper-warm);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--marigold);
+    border-radius: var(--radius-lg);
+    padding: var(--s-6);
+    margin-block-end: var(--s-8);
+  }
+  .pres__role {
+    font-size: var(--t-xs);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--saffron);
+    margin-block-end: var(--s-3);
+  }
+  .pres__name { font-size: var(--t-lg); line-height: 1.35; max-width: 30ch; }
+  .pres__seat { margin-block-start: var(--s-2); font-size: var(--t-sm); color: var(--text-muted); font-style: italic; }
+
+  .grp + .grp { margin-block-start: var(--s-8); }
+  .grp__h {
+    font-size: var(--t-lg);
+    padding-block-end: var(--s-3);
+    border-bottom: 2px solid var(--ink);
+    margin-block-end: var(--s-5);
+  }
+
+  .mlist {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: var(--s-3);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  }
+  .mcard {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: var(--s-4);
+  }
+  .mcard__name { font-family: var(--serif); font-weight: 600; color: var(--ink); font-size: 1.02rem; }
+  .mcard__place { font-size: var(--t-sm); color: var(--text-muted); }
+  .mcard__note {
+    margin-block-start: var(--s-2);
+    font-size: var(--t-xs);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ghat);
+  }
+  .mcard__ph {
+    margin-block-start: var(--s-2);
+    font-size: var(--t-sm);
+    color: var(--saffron);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .mcard__ph:hover { text-decoration: underline; }
+</style>

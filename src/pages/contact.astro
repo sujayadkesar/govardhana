@@ -1,0 +1,116 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../layouts/PageHead.astro';
+import { site } from '../data/site';
+
+const maps = `https://www.google.com/maps/search/?api=1&query=${site.address.lat},${site.address.lng}`;
+---
+
+<Base
+  title="Contact"
+  description="Reach Shri Govardhan Goshala at Karadolli, Yellapur, Uttara Kannada — by email, or visit the goshala."
+>
+  <PageHead
+    eyebrow="Contact"
+    title="Come and see for yourself"
+    lede="Visitors are welcome. If you are thinking of giving, seeing the herd first is the best thing you can do."
+  />
+
+  <section class="section">
+    <div class="wrap ct">
+      <div class="ct__cards">
+        <div class="ctcard">
+          <p class="ctcard__k">Email</p>
+          <p class="ctcard__v">
+            <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+          </p>
+          <p class="ctcard__n">The fastest way to reach us.</p>
+        </div>
+
+        <div class="ctcard">
+          <p class="ctcard__k">Where we are</p>
+          <p class="ctcard__v">
+            {site.address.line}<br />
+            {site.address.district}, {site.address.state}
+          </p>
+          <p class="ctcard__n">
+            <a href={maps} target="_blank" rel="noopener noreferrer">Open in Maps →</a>
+          </p>
+        </div>
+
+        {site.contact.phone && (
+          <div class="ctcard">
+            <p class="ctcard__k">Phone</p>
+            <p class="ctcard__v"><a href={`tel:${site.contact.phone}`}>{site.contact.phone}</a></p>
+          </div>
+        )}
+
+        <div class="ctcard">
+          <p class="ctcard__k">Registration</p>
+          <p class="ctcard__v">{site.registration}</p>
+          <p class="ctcard__n">Donations eligible under section 80G.</p>
+        </div>
+      </div>
+
+      <div class="ct__note">
+        <h2>About your donation</h2>
+        <p>
+          If you have given and something looks wrong — the amount, the
+          acknowledgement, or your 80G receipt — email us with the reference
+          number shown when you paid. It begins with <code>GOV</code>. Quoting
+          it lets us find your payment straight away.
+        </p>
+        <a href="/goseva" class="btn btn--primary">Ways to give</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .ct { display: grid; gap: var(--s-8); }
+  @media (min-width: 900px) { .ct { grid-template-columns: 1.15fr 1fr; gap: var(--s-8); } }
+
+  .ct__cards { display: grid; gap: var(--s-4); grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+
+  .ctcard {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    padding: var(--s-5);
+  }
+  .ctcard__k {
+    font-size: var(--t-xs);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--saffron);
+    margin-block-end: var(--s-3);
+  }
+  .ctcard__v {
+    font-family: var(--serif);
+    font-size: var(--t-md);
+    color: var(--ink);
+    line-height: 1.4;
+    word-break: break-word;
+  }
+  .ctcard__n { margin-block-start: var(--s-3); font-size: var(--t-sm); color: var(--text-muted); }
+
+  .ct__note {
+    background: var(--paper-warm);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    padding: var(--s-6);
+    align-self: start;
+  }
+  .ct__note h2 { font-size: var(--t-lg); margin-block-end: var(--s-4); }
+  .ct__note p { font-size: var(--t-sm); color: var(--text-muted); line-height: 1.7; margin-block-end: var(--s-5); }
+  .ct__note code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--ink);
+  }
+</style>

@@ -1,0 +1,56 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  lede?: string;
+  image?: string;
+}
+const { eyebrow, title, lede, image } = Astro.props;
+---
+
+<section class:list={['phead', image && 'phead--img']}>
+  {image && (
+    <>
+      <div class="phead__media">
+        <img src={image} alt="" width="1800" height="1000" fetchpriority="high" />
+      </div>
+      <div class="phead__scrim"></div>
+    </>
+  )}
+  <div class="wrap phead__in">
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1>{title}</h1>
+    {lede && <p class="lede phead__lede">{lede}</p>}
+  </div>
+</section>
+
+<style>
+  .phead {
+    position: relative;
+    padding-block: var(--s-8) var(--s-6);
+    border-bottom: 1px solid var(--rule-soft);
+    isolation: isolate;
+  }
+  .phead__in > * + * { margin-block-start: var(--s-4); }
+  .phead__lede { max-width: 54ch; }
+
+  .phead--img {
+    min-height: 48svh;
+    display: flex;
+    align-items: flex-end;
+    padding-block: var(--s-9) var(--s-7);
+    border-bottom: none;
+  }
+  .phead__media { position: absolute; inset: 0; z-index: -2; }
+  .phead__media img { width: 100%; height: 100%; object-fit: cover; }
+  .phead__scrim {
+    position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(to top,
+      rgba(31, 17, 8, 0.92) 0%,
+      rgba(31, 17, 8, 0.62) 45%,
+      rgba(31, 17, 8, 0.35) 100%);
+  }
+  .phead--img h1 { color: #FFF6E8; }
+  .phead--img .phead__lede { color: rgba(255, 246, 232, 0.85); }
+  .phead--img .eyebrow { color: var(--marigold); }
+</style>

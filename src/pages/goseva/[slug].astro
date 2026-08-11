@@ -18,7 +18,7 @@ const suggested = cause.suggested ?? [1100, 2500, 5100];
 <Base
   title={cause.title}
   description={cause.blurb}
-  image={cause.image}
+  image={cause.image ?? '/images/hero.webp'}
 >
   <div
     class="pay"
@@ -32,9 +32,18 @@ const suggested = cause.suggested ?? [1100, 2500, 5100];
       <div class="pay__railin">
         <a href="/goseva" class="pay__back">← All ways to give</a>
 
-        <div class="pay__media">
-          <img src={cause.image} alt="" width="600" height="400" />
-        </div>
+        {cause.image ? (
+          <div class="pay__media">
+            <img src={cause.image} alt="" width="900" height="600" />
+          </div>
+        ) : (
+          <div class="pay__plate">
+            <span class="pay__plateAmt num">
+              {cause.amount ? formatINR(cause.amount) : 'Any'}
+            </span>
+            <span class="pay__plateTag">{cause.tagline}</span>
+          </div>
+        )}
 
         <div class="pay__heads">
           <h1 class="pay__title">{cause.title}</h1>
@@ -373,6 +382,38 @@ const suggested = cause.suggested ?? [1100, 2500, 5100];
   }
   .pay__media img { width: 100%; height: 100%; object-fit: cover; }
 
+  /* Causes with no photograph of their own get the same typographic plate
+     used on their card, rather than borrowing another cause's image. */
+  .pay__plate {
+    aspect-ratio: 3 / 2;
+    border-radius: var(--radius-lg);
+    margin-block-end: var(--s-4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--s-2);
+    text-align: center;
+    background:
+      repeating-linear-gradient(135deg, transparent 0 11px,
+        rgba(255, 248, 237, 0.07) 11px 22px),
+      var(--deep);
+  }
+  .pay__plateAmt {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 6vw, 2.6rem);
+    font-weight: 600;
+    color: var(--marigold);
+    line-height: 1;
+  }
+  .pay__plateTag {
+    font-size: var(--t-xs);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255, 246, 232, 0.75);
+    font-weight: 600;
+  }
+
   .pay__heads {
     display: flex;
     align-items: baseline;
@@ -384,7 +425,7 @@ const suggested = cause.suggested ?? [1100, 2500, 5100];
   .pay__tag {
     margin-block-start: var(--s-1);
     font-size: var(--t-sm);
-    color: var(--turmeric);
+    color: var(--saffron);
     font-weight: 600;
   }
   .pay__blurb {
@@ -413,7 +454,7 @@ const suggested = cause.suggested ?? [1100, 2500, 5100];
     left: 0; top: 0.55em;
     width: 6px; height: 6px;
     border-radius: 50%;
-    background: var(--turmeric-lit);
+    background: var(--marigold);
   }
 
   .pay__total {
@@ -471,7 +512,7 @@ const suggested = cause.suggested ?? [1100, 2500, 5100];
   .steps__i[aria-current='step'] .steps__n {
     background: var(--ink);
     border-color: var(--ink);
-    color: var(--text-onDark);
+    color: #FFF6E8;
   }
   .steps__i[data-done] .steps__n {
     background: var(--ok);
@@ -506,11 +547,11 @@ const suggested = cause.suggested ?? [1100, 2500, 5100];
     font-variant-numeric: tabular-nums;
     transition: all 0.15s var(--ease);
   }
-  .chip:hover { border-color: var(--turmeric); }
+  .chip:hover { border-color: var(--saffron); }
   .chip[aria-pressed='true'] {
     background: var(--ink);
     border-color: var(--ink);
-    color: var(--text-onDark);
+    color: #FFF6E8;
   }
 
   .amt { position: relative; }
@@ -602,7 +643,7 @@ const suggested = cause.suggested ?? [1100, 2500, 5100];
   .alt > summary::after {
     content: '+';
     font-size: var(--t-lg);
-    color: var(--turmeric);
+    color: var(--saffron);
     line-height: 1;
   }
   .alt[open] > summary::after { content: '−'; }
@@ -649,7 +690,7 @@ const suggested = cause.suggested ?? [1100, 2500, 5100];
     font-weight: 600;
     transition: border-color 0.15s var(--ease), background-color 0.15s var(--ease);
   }
-  .apps__btn:hover { border-color: var(--turmeric); background: var(--surface-sunk); color: var(--ink); }
+  .apps__btn:hover { border-color: var(--saffron); background: var(--surface-sunk); color: var(--ink); }
   .apps__btn img { width: 26px; height: 26px; object-fit: contain; flex: none; }
 
   .manual__dl { display: grid; gap: var(--s-3); }
@@ -683,7 +724,7 @@ const suggested = cause.suggested ?? [1100, 2500, 5100];
     cursor: pointer;
     color: var(--ink);
   }
-  .copy:hover { border-color: var(--turmeric); }
+  .copy:hover { border-color: var(--saffron); }
   .copy[data-copied] { background: var(--ok-bg); border-color: var(--ok); color: var(--ok); }
 
   [data-paid] { margin-block-end: var(--s-3); }

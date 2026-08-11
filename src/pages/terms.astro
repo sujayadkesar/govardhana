@@ -1,0 +1,116 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../layouts/PageHead.astro';
+import { site } from '../data/site';
+---
+
+<Base
+  title="Terms & conditions"
+  description="Terms of service for shrigovardhan.org — donations, receipts and use of the site."
+>
+  <PageHead eyebrow="Legal" title="Terms & conditions"
+    lede="Carried over from the previous site and corrected where it no longer described what actually happens." />
+
+  <section class="section">
+    <div class="wrap wrap--tight prose legal">
+      <p class="legal__meta">Last updated 11 August 2026</p>
+
+      <h2>1. About us</h2>
+      <p>
+        {site.name} is a charitable goshala at {site.address.line},
+        {site.address.district}, registered as {site.registration}, run under the
+        Sonda Swarnavalli Mahasamsthanam. By using {site.url} you agree to these terms.
+      </p>
+
+      <h2>2. What we offer</h2>
+      <ul>
+        <li>Adoption of a cow, nandi or calf for one year</li>
+        <li>Go Pooja performed with sankalpa on a date you choose</li>
+        <li>Fodder and daily running-cost contributions</li>
+        <li>Contributions toward the Swarna Nandini construction</li>
+        <li>80G certificates, where you have asked for one and given a PAN</li>
+      </ul>
+
+      <h2>3. Donations</h2>
+      <p>
+        All contributions are voluntary donations towards the welfare of the
+        animals — feed, medical care, shelter and the running of the goshala.
+      </p>
+      <p class="callout">
+        Donations are final and non-refundable. Money given is put to use
+        immediately, so it cannot be returned once received. If you have paid
+        the wrong amount or paid twice, write to us — see
+        <a href="/refunds">the payment policy</a>.
+      </p>
+
+      <h2>4. How payment works</h2>
+      <p>
+        Payment is by <strong>UPI only</strong>. You may pay by scanning the QR
+        code, opening a UPI app from the payment page, or copying our UPI ID
+        into your own app. We do not accept cards, net banking or wallets
+        through this website, and we never ask for your card details, PIN,
+        passwords or OTP.
+      </p>
+      <p>
+        Because UPI does not report back to us automatically, we ask you to
+        confirm your payment on the last step and give the transaction ID. That
+        is what lets us match your donation against our bank statement.
+      </p>
+
+      <h2>5. Receipts and 80G</h2>
+      <p>
+        Asking for an 80G receipt is optional. If you ask for one, we need your
+        PAN and address, because the trust reports donations against PAN and
+        that is what allows you to claim the deduction in your return.
+      </p>
+      <p>
+        Receipts are issued after your payment has been verified against our
+        bank statement, not at the moment you submit the form.
+      </p>
+
+      <h2>6. Your responsibilities</h2>
+      <ul>
+        <li>Give accurate details, particularly your email and PAN</li>
+        <li>Check the amount before confirming in your UPI app</li>
+        <li>Keep the reference number shown to you — it starts with <code>GOV</code></li>
+        <li>Tell us if your contact details change before a receipt is issued</li>
+      </ul>
+
+      <h2>7. Contact</h2>
+      <p>
+        Questions about these terms or about a donation:
+        <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>.
+        Quote your reference number if it concerns a payment.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal h2 { font-size: var(--t-lg); }
+  .legal p, .legal li { color: var(--text-muted); line-height: 1.75; }
+  .legal strong { color: var(--ink); }
+  .legal__meta {
+    font-size: var(--t-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding-block-end: var(--s-4);
+    border-bottom: 1px solid var(--rule);
+  }
+  .legal .callout {
+    background: var(--warn-bg);
+    border-left: 3px solid var(--warn);
+    padding: var(--s-4);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    color: var(--ink);
+  }
+  .legal code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--surface-sunk);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--ink);
+  }
+</style>

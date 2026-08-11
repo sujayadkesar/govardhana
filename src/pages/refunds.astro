@@ -1,0 +1,102 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHead from '../layouts/PageHead.astro';
+import { site } from '../data/site';
+---
+
+<Base
+  title="Payment & refund policy"
+  description="How payment works at Shri Govardhan Goshala, and what to do if something went wrong."
+>
+  <PageHead eyebrow="Legal" title="Payment & refunds"
+    lede="Donations are not refundable — but mistakes happen, and here is exactly what to do." />
+
+  <section class="section">
+    <div class="wrap wrap--tight prose legal">
+      <p class="legal__meta">Last updated 11 August 2026</p>
+
+      <h2>1. How you can pay</h2>
+      <p>
+        <strong>UPI only.</strong> Scan the QR code with any UPI app, tap
+        through to your app from the payment page, or copy our UPI ID
+        <code>{site.upi.vpa}</code> and pay from your own app.
+      </p>
+      <p>
+        We do not take cards, net banking or wallets on this website. Anyone
+        asking you for card details, a PIN or an OTP in our name is not us.
+      </p>
+
+      <h2>2. Donations are non-refundable</h2>
+      <p>
+        Contributions are put to use immediately — fodder is bought, medicines
+        are paid for, wages are met. Once a donation has been received it
+        cannot be returned.
+      </p>
+
+      <h2>3. If something went wrong</h2>
+      <p>These we will always look into:</p>
+      <ul>
+        <li><strong>Paid twice by mistake</strong> — tell us and we will return the duplicate</li>
+        <li><strong>Money left your account but you got no acknowledgement</strong> — send us the transaction ID and we will trace it</li>
+        <li><strong>Wrong amount entered</strong> — tell us within 7 days and we will discuss it with you</li>
+        <li><strong>You did not make the payment at all</strong> — tell us at once</li>
+      </ul>
+
+      <div class="callout">
+        <p>
+          <strong>Write to <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></strong>
+          with your reference number (it begins <code>GOV</code>), the amount,
+          the date, and the UPI transaction ID from your app. With those four
+          things we can find your payment straight away.
+        </p>
+      </div>
+
+      <h2>4. Failed and pending payments</h2>
+      <p>
+        If your UPI app shows the payment as failed but the money has left your
+        account, it is with your bank, not with us — UPI normally reverses it
+        within three to five working days. Raise it with your bank or in your
+        UPI app first. If it has not come back after five working days, write
+        to us and we will check our end.
+      </p>
+
+      <h2>5. Receipts</h2>
+      <p>
+        An 80G certificate is issued after we have verified your payment
+        against our bank statement, and only if you asked for a receipt and
+        gave a PAN. If you have not heard from us within 30 days, please chase
+        us — quoting the reference number.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal h2 { font-size: var(--t-lg); }
+  .legal p, .legal li { color: var(--text-muted); line-height: 1.75; }
+  .legal strong { color: var(--ink); }
+  .legal__meta {
+    font-size: var(--t-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding-block-end: var(--s-4);
+    border-bottom: 1px solid var(--rule);
+  }
+  .legal .callout {
+    background: var(--paper-warm);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--saffron);
+    padding: var(--s-5);
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .legal .callout p { color: var(--ink); margin: 0; }
+  .legal code {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    background: var(--surface-sunk);
+    padding: 1px 5px;
+    border-radius: 3px;
+    color: var(--ink);
+  }
+</style>
