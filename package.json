@@ -8,7 +8,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "deploy": "astro build && wrangler deploy",
+    "worker:dev": "wrangler dev"
   },
   "dependencies": {
     "@fontsource/ibm-plex-sans": "^5.1.0",
@@ -19,6 +21,8 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
-    "typescript": "^5.7.3"
+    "@cloudflare/workers-types": "^5.20260811.1",
+    "typescript": "^5.7.3",
+    "wrangler": "^4.120.1"
   }
 }

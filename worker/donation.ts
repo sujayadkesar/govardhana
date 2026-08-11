@@ -1,23 +1,18 @@
 /**
- * POST /api/donation — Cloudflare Pages Function
+ * Donation intake handler.
  *
  * This exists so the browser never sees a secret. The old site called a
  * Google Apps Script URL directly from client JavaScript, which meant the
  * endpoint was readable by anyone with DevTools — and would have stayed
- * readable even if the repository had been made private, because the code
- * ships to the visitor either way.
+ * readable even with a private repository, because the code ships to the
+ * visitor either way.
  *
- * Here the Apps Script URL and its shared token live as encrypted
- * environment variables. The browser only ever calls /api/donation on our
- * own origin.
- *
- * Environment variables (Cloudflare dashboard → Settings → Environment):
- *   APPS_SCRIPT_URL   the /exec deployment URL — rotate the old one
- *   APPS_SCRIPT_TOKEN a long random string, also set in the Apps Script
- *   NOTIFY_EMAIL      where submissions are mailed
+ * Here the Apps Script URL and its shared token live as encrypted Worker
+ * secrets. The browser only ever calls /api/donation on our own origin.
  */
 
-interface Env {
+export interface Env {
+  ASSETS: Fetcher;
   APPS_SCRIPT_URL: string;
   APPS_SCRIPT_TOKEN: string;
   NOTIFY_EMAIL: string;
@@ -29,6 +24,7 @@ type Payload = Record<string, unknown>;
 const ALLOWED_ORIGINS = [
   'https://shrigovardhan.org',
   'https://www.shrigovardhan.org',
+  'https://govardhanagoshale.govardhangoshale.workers.dev',
 ];
 
 const json = (body: unknown, status = 200) =>
@@ -37,19 +33,14 @@ const json = (body: unknown, status = 200) =>
     headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
   });
 
-/** Field allow-list. Anything not named here is dropped, not forwarded. */
-const FIELDS = {
-  intent: [
-    'ref', 'cause', 'causeTitle', 'amount', 'name', 'phone', 'email',
-    'idType', 'idNumber', 'address',
-  ],
-  confirm: ['ref', 'utr', 'cause'],
-} as const;
-
 const str = (v: unknown, max: number): string =>
   typeof v === 'string' ? v.slice(0, max).trim() : '';
 
-function validate(kind: string, body: Payload): { ok: true; clean: Payload } | { ok: false; why: string } {
+type Checked =
+  | { ok: true; clean: Payload }
+  | { ok: false; why: string };
+
+function validate(kind: string, body: Payload): Checked {
   if (kind !== 'intent' && kind !== 'confirm') return { ok: false, why: 'bad kind' };
 
   const ref = str(body.ref, 24);
@@ -111,7 +102,12 @@ async function throttled(env: Env, ip: string): Promise<boolean> {
   return false;
 }
 
-export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+export async function handleDonation(request: Request, env: Env): Promise<Response> {
+  if (request.method !== 'POST') {
+    // No data is ever returned on GET.
+    return json({ error: 'method not allowed' }, 405);
+  }
+
   const origin = request.headers.get('Origin') ?? '';
   if (origin && !ALLOWED_ORIGINS.includes(origin)) {
     return json({ error: 'forbidden' }, 403);
@@ -131,32 +127,32 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     return json({ error: 'bad json' }, 400);
   }
 
-  const kind = String(body.kind ?? '');
-  const result = validate(kind, body);
+  const result = validate(String(body.kind ?? ''), body);
   if (!result.ok) return json({ error: 'invalid', detail: result.why }, 400);
 
-  const upstream = await fetch(env.APPS_SCRIPT_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      ...result.clean,
-      token: env.APPS_SCRIPT_TOKEN, // never leaves the server
-      notify: env.NOTIFY_EMAIL,
-      receivedAt: new Date().toISOString(),
-      ua: request.headers.get('User-Agent')?.slice(0, 200) ?? '',
-      country: (request as any).cf?.country ?? '',
-    }),
-  });
-
-  if (!upstream.ok) {
-    return json({ error: 'upstream', status: upstream.status }, 502);
+  if (!env.APPS_SCRIPT_URL || !env.APPS_SCRIPT_TOKEN) {
+    return json({ error: 'not configured', detail: 'APPS_SCRIPT_URL / APPS_SCRIPT_TOKEN missing' }, 503);
   }
 
-  return json({ ok: true, ref: result.clean.ref });
-};
+  let upstream: Response;
+  try {
+    upstream = await fetch(env.APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...result.clean,
+        token: env.APPS_SCRIPT_TOKEN, // never leaves the server
+        notify: env.NOTIFY_EMAIL,
+        receivedAt: new Date().toISOString(),
+        ua: request.headers.get('User-Agent')?.slice(0, 200) ?? '',
+        country: (request as unknown as { cf?: { country?: string } }).cf?.country ?? '',
+      }),
+    });
+  } catch {
+    return json({ error: 'upstream unreachable' }, 502);
+  }
 
-/** Anything other than POST gets nothing — no data is ever returned on GET. */
-export const onRequest: PagesFunction<Env> = async ({ request }) => {
-  if (request.method === 'POST') return json({ error: 'unreachable' }, 500);
-  return json({ error: 'method not allowed' }, 405);
-};
+  if (!upstream.ok) return json({ error: 'upstream', status: upstream.status }, 502);
+
+  return json({ ok: true, ref: result.clean.ref });
+}

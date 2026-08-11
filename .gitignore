@@ -19,3 +19,7 @@ _site/
 # editor / OS
 .DS_Store
 Thumbs.db
+
+# wrangler
+.wrangler/
+.wrangler-check/

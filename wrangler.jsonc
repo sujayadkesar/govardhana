@@ -1,0 +1,28 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+
+  // Must match the Worker name in the Cloudflare dashboard.
+  "name": "govardhanagoshale",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-08-01",
+
+  // The built Astro site. The asset router runs first, so every real page is
+  // served straight from the edge and the Worker only executes for paths that
+  // are not files — i.e. /api/*. public/_redirects and the 404 page are
+  // honoured by this router.
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "404-page"
+  },
+
+  "observability": {
+    "enabled": true
+  }
+
+  // Secrets are NOT listed here — they are set in the dashboard under
+  // Settings → Variables and Secrets, or with `npx wrangler secret put`:
+  //   APPS_SCRIPT_URL     the /exec deployment URL
+  //   APPS_SCRIPT_TOKEN   shared secret, also a Script Property in Apps Script
+  //   NOTIFY_EMAIL        where donation notifications are sent
+}
