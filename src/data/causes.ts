@@ -31,7 +31,7 @@ export const causes: Cause[] = [
     titleSa: 'जन्म दिन',
     tagline: 'Go Pooja on your birthday',
     amount: null,
-    suggested: [1250, 2500, 5000],
+    suggested: [1001, 2500, 5001],
     blurb:
       'Mark the day you were born by feeding the herd. A Go Pooja is performed in your name and a sankalpa taken on your behalf.',
     includes: [
@@ -50,7 +50,7 @@ export const causes: Cause[] = [
     titleSa: 'विवाह दिन',
     tagline: 'Go Pooja on your anniversary',
     amount: null,
-    suggested: [1250, 2500, 5000],
+    suggested: [1001, 2500, 5001],
     blurb:
       'Celebrate an anniversary in a way that outlasts the day. The pooja is performed in both names.',
     includes: [
@@ -69,7 +69,7 @@ export const causes: Cause[] = [
     titleSa: 'पुण्य तिथि',
     tagline: 'In memory of your ancestors',
     amount: null,
-    suggested: [1250, 2500, 5000],
+    suggested: [1001, 2500, 5001],
     blurb:
       'Honour the memory of those who came before you. Go Pooja and Go Grasa are offered on the tithi you name.',
     includes: [
@@ -164,7 +164,7 @@ export const causes: Cause[] = [
     titleSa: 'गो कानिके',
     tagline: 'Any amount, any day',
     amount: null,
-    suggested: [500, 1100, 2100],
+    suggested: [1001, 2500, 5001],
     blurb:
       'The simplest way to give. Whatever you send goes straight into the day’s feed.',
     includes: [
@@ -253,7 +253,7 @@ export const causes: Cause[] = [
     title: 'Shri Swarna Nandini Project',
     tagline: 'New shelter construction',
     amount: null,
-    suggested: [11000, 25000, 51000],
+    suggested: [1001, 2500, 5001],
     blurb:
       'The new goshala buildings — shelter, feed store and medical room — being raised at Karadolli. Contribute any amount toward the construction.',
     includes: [

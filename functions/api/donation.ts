@@ -41,7 +41,7 @@ const json = (body: unknown, status = 200) =>
 const FIELDS = {
   intent: [
     'ref', 'cause', 'causeTitle', 'amount', 'name', 'phone', 'email',
-    'want80g', 'idType', 'idNumber', 'address',
+    'idType', 'idNumber', 'address',
   ],
   confirm: ['ref', 'utr', 'cause'],
 } as const;
@@ -74,24 +74,20 @@ function validate(kind: string, body: Payload): { ok: true; clean: Payload } | {
   if (!/^[6-9]\d{9}$/.test(phone)) return { ok: false, why: 'bad phone' };
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return { ok: false, why: 'bad email' };
 
-  const want80g = body.want80g === true;
-  let idType: string | null = null;
-  let idNumber: string | null = null;
-  let address: string | null = null;
+  // Identification is required on every donation — the trust reports each
+  // one in Form 10BD, which needs an identifier against the donor.
+  const idType = str(body.idType, 10).toUpperCase();
+  const idNumber = str(body.idNumber, 12).toUpperCase();
+  const address = str(body.address, 240);
 
-  if (want80g) {
-    idType = str(body.idType, 10).toUpperCase();
-    idNumber = str(body.idNumber, 12).toUpperCase();
-    address = str(body.address, 240);
-    const valid =
-      idType === 'PAN'
-        ? /^[A-Z]{5}[0-9]{4}[A-Z]$/.test(idNumber)
-        : idType === 'AADHAAR'
-          ? /^[2-9][0-9]{11}$/.test(idNumber)
-          : false;
-    if (!valid) return { ok: false, why: 'bad id' };
-    if (address.length < 8) return { ok: false, why: 'bad address' };
-  }
+  const validId =
+    idType === 'PAN'
+      ? /^[A-Z]{5}[0-9]{4}[A-Z]$/.test(idNumber)
+      : idType === 'AADHAAR'
+        ? /^[2-9][0-9]{11}$/.test(idNumber)
+        : false;
+  if (!validId) return { ok: false, why: 'bad id' };
+  if (address.length < 8) return { ok: false, why: 'bad address' };
 
   return {
     ok: true,
@@ -100,7 +96,7 @@ function validate(kind: string, body: Payload): { ok: true; clean: Payload } | {
       cause: str(body.cause, 40),
       causeTitle: str(body.causeTitle, 80),
       name, phone, email,
-      want80g, idType, idNumber, address,
+      idType, idNumber, address,
     },
   };
 }

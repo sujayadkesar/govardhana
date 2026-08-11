@@ -38,13 +38,16 @@ export const site = {
 } as const;
 
 /**
- * 80G is claimed by the donor against their PAN, which is what the
- * trust reports in Form 10BD. Aadhaar is a valid Form 10BD identifier
- * but does not let the donor actually claim, so PAN leads and Aadhaar
- * is offered only as a fallback with that stated plainly.
+ * Identification is required on every donation: the trust reports each one
+ * in Form 10BD, which needs an identifier against the donor.
+ *
+ * PAN is listed first deliberately. Both are valid Form 10BD identifiers,
+ * but the donor's 80G claim is matched through PAN — an Aadhaar-only record
+ * is reported correctly yet cannot be claimed in the donor's return. The
+ * hint text on the Aadhaar option says so.
  */
 export const taxReceipt = {
-  enabled: true,
+  required: true,
   idOptions: [
     {
       code: 'PAN',

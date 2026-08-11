@@ -144,25 +144,28 @@ const suggested = cause.suggested ?? [1100, 2500, 5100];
             </div>
           </div>
 
-          <!-- 80G is opt-in. The old site made a 12-digit Aadhaar mandatory
-               for every donor, including those who wanted no receipt. -->
-          <div class="opt">
-            <label class="check">
-              <input type="checkbox" id="want80g" name="want80g" />
-              <span>
-                I’d like an 80G tax receipt
-                <em>Optional — only if you plan to claim the deduction.</em>
-              </span>
-            </label>
+          <!-- Identification is required. The trust reports every donation
+               in Form 10BD, which needs an identifier against each donor. -->
+          <fieldset class="opt">
+            <legend class="opt__legend">
+              Identification
+              <em>Required — we report every donation in our statement of donations.</em>
+            </legend>
 
-            <div class="opt__body" id="taxFields" hidden>
+            <div class="opt__body">
               <div class="field">
-                <label for="idType">Identification</label>
-                <select class="input" id="idType" name="idType">
-                  {taxReceipt.idOptions.map((o) => (
-                    <option value={o.code}>{o.label}</option>
+                <label for="idType">Which document</label>
+                <div class="idpick" role="radiogroup" aria-label="Which document">
+                  {taxReceipt.idOptions.map((o, i) => (
+                    <label class="idpick__opt">
+                      <input
+                        type="radio" name="idType" value={o.code}
+                        checked={i === 0} data-idradio
+                      />
+                      <span>{o.label}</span>
+                    </label>
                   ))}
-                </select>
+                </div>
                 <p class="hint" data-idhint>{taxReceipt.idOptions[0].hint}</p>
               </div>
 
@@ -172,7 +175,7 @@ const suggested = cause.suggested ?? [1100, 2500, 5100];
                 </label>
                 <input
                   class="input" type="text" id="idNumber" name="idNumber"
-                  autocapitalize="characters" maxlength="12"
+                  autocapitalize="characters" maxlength="10" required
                   placeholder={taxReceipt.idOptions[0].placeholder}
                 />
                 <p class="field-error" data-err="idNumber"></p>
@@ -182,13 +185,13 @@ const suggested = cause.suggested ?? [1100, 2500, 5100];
                 <label for="address">Address</label>
                 <textarea
                   class="input" id="address" name="address" rows="2"
-                  autocomplete="street-address" maxlength="240"
-                  placeholder="Needed on the 80G certificate"
+                  autocomplete="street-address" maxlength="240" required
+                  placeholder="Village / town, district, PIN"
                 ></textarea>
                 <p class="field-error" data-err="address"></p>
               </div>
             </div>
-          </div>
+          </fieldset>
 
           <p class="notice notice--err" data-formerr hidden></p>
 
@@ -197,8 +200,10 @@ const suggested = cause.suggested ?? [1100, 2500, 5100];
           </button>
 
           <p class="fineprint">
-            We use your details only to acknowledge this donation and to issue a
-            receipt if you asked for one. We never share them.
+            We use your details only to acknowledge this donation, to issue your
+            80G receipt, and for the statement of donations we are required to
+            file. We never share them with anyone else.
+            <a href="/privacy">Privacy policy</a>.
           </p>
         </form>
       </section>
@@ -568,35 +573,56 @@ const suggested = cause.suggested ?? [1100, 2500, 5100];
   .amt__in::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
   .amt__in { -moz-appearance: textfield; appearance: textfield; }
 
-  /* 80G opt-in */
+  /* identification — required */
   .opt {
     border: 1px solid var(--rule);
     border-radius: var(--radius);
     background: var(--surface);
+    padding: 0 var(--s-4) var(--s-4);
+    margin: 0;
   }
-  .check {
-    display: flex;
-    gap: var(--s-3);
-    padding: var(--s-4);
-    cursor: pointer;
-    align-items: flex-start;
+  .opt__legend {
+    font-size: var(--t-sm);
+    font-weight: 700;
+    color: var(--ink);
+    padding-inline: var(--s-2);
+    margin-inline-start: calc(var(--s-2) * -1);
   }
-  .check input { margin-block-start: 0.25em; width: 18px; height: 18px; flex: none; accent-color: var(--ink); }
-  .check span { font-size: var(--t-sm); font-weight: 600; color: var(--ink); }
-  .check em {
+  .opt__legend em {
     display: block;
     font-style: normal;
     font-weight: 400;
     font-size: var(--t-xs);
     color: var(--text-muted);
     margin-block-start: 2px;
+    max-width: 46ch;
   }
   .opt__body {
     display: grid;
     gap: var(--s-4);
-    padding: 0 var(--s-4) var(--s-4);
-    border-top: 1px solid var(--rule-soft);
     padding-block-start: var(--s-4);
+  }
+
+  .idpick { display: flex; gap: var(--s-2); flex-wrap: wrap; }
+  .idpick__opt {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--s-2);
+    padding: var(--s-2) var(--s-4);
+    min-height: 44px;
+    border: 1.5px solid var(--rule);
+    border-radius: 999px;
+    background: var(--surface);
+    cursor: pointer;
+    font-size: var(--t-sm);
+    font-weight: 600;
+    transition: border-color 0.15s var(--ease), background-color 0.15s var(--ease);
+  }
+  .idpick__opt input { accent-color: var(--saffron); width: 17px; height: 17px; }
+  .idpick__opt:hover { border-color: var(--saffron); }
+  .idpick__opt:has(input:checked) {
+    border-color: var(--saffron);
+    background: var(--warn-bg);
   }
 
   .fineprint {
@@ -817,31 +843,35 @@ const suggested = cause.suggested ?? [1100, 2500, 5100];
     setAll('[data-total]', v > 0 ? formatINR(v) : '—');
   });
 
-  // ---------- 80G toggle ----------
-  const want80g = document.querySelector<HTMLInputElement>('#want80g');
-  const taxFields = document.querySelector<HTMLElement>('#taxFields');
-  want80g?.addEventListener('change', () => {
-    if (taxFields) taxFields.hidden = !want80g.checked;
-  });
-
-  const idType = document.querySelector<HTMLSelectElement>('#idType');
+  // ---------- identification ----------
+  const idRadios = [...document.querySelectorAll<HTMLInputElement>('[data-idradio]')];
   const idInput = document.querySelector<HTMLInputElement>('#idNumber');
+  const chosenIdType = () => idRadios.find((r) => r.checked)?.value ?? 'PAN';
+
   const ID_META: Record<string, { label: string; hint: string; ph: string; max: number }> = {
     PAN: {
       label: 'PAN', ph: 'ABCDE1234F', max: 10,
-      hint: 'Required to claim the deduction in your return.',
+      hint: 'Required to claim the 80G deduction in your return.',
     },
     AADHAAR: {
       label: 'Aadhaar', ph: '12 digits', max: 12,
       hint: 'We can report your donation, but claiming 80G in your return needs a PAN.',
     },
   };
-  idType?.addEventListener('change', () => {
-    const m = ID_META[idType.value];
-    document.querySelector('[data-idlabel]')!.textContent = m.label;
-    document.querySelector('[data-idhint]')!.textContent = m.hint;
-    if (idInput) { idInput.placeholder = m.ph; idInput.maxLength = m.max; idInput.value = ''; }
-  });
+
+  idRadios.forEach((r) =>
+    r.addEventListener('change', () => {
+      const m = ID_META[chosenIdType()];
+      document.querySelector('[data-idlabel]')!.textContent = m.label;
+      document.querySelector('[data-idhint]')!.textContent = m.hint;
+      if (idInput) {
+        idInput.placeholder = m.ph;
+        idInput.maxLength = m.max;
+        idInput.value = '';
+      }
+      showErr('idNumber', '');
+    })
+  );
 
   // ---------- validation ----------
   const showErr = (field: string, msg: string) => {
@@ -878,18 +908,24 @@ const suggested = cause.suggested ?? [1100, 2500, 5100];
       showErr('email', 'Enter a valid email address.'); ok = false;
     } else state.email = email;
 
-    if (want80g?.checked) {
-      const t = idType?.value ?? 'PAN';
-      const idv = v('idNumber').toUpperCase();
-      const valid =
-        t === 'PAN' ? /^[A-Z]{5}[0-9]{4}[A-Z]$/.test(idv) : /^[2-9][0-9]{11}$/.test(idv);
-      if (!valid) {
-        showErr('idNumber', t === 'PAN' ? 'Check the PAN format (ABCDE1234F).' : 'Enter a 12-digit Aadhaar number.');
-        ok = false;
-      }
-      if (v('address').length < 8) {
-        showErr('address', 'An address is needed on the certificate.'); ok = false;
-      }
+    // Identification is required for every donation, not only for receipts.
+    const t = chosenIdType();
+    const idv = v('idNumber').toUpperCase();
+    const valid =
+      t === 'PAN' ? /^[A-Z]{5}[0-9]{4}[A-Z]$/.test(idv) : /^[2-9][0-9]{11}$/.test(idv);
+    if (!valid) {
+      showErr(
+        'idNumber',
+        idv.length === 0
+          ? `Please enter your ${t === 'PAN' ? 'PAN' : 'Aadhaar number'}.`
+          : t === 'PAN'
+            ? 'Check the PAN format — five letters, four digits, one letter.'
+            : 'An Aadhaar number is 12 digits.'
+      );
+      ok = false;
+    }
+    if (v('address').length < 8) {
+      showErr('address', 'Please enter your address.'); ok = false;
     }
     return ok;
   }
@@ -929,14 +965,9 @@ const suggested = cause.suggested ?? [1100, 2500, 5100];
         name: state.name,
         phone: state.phone,
         email: state.email,
-        want80g: !!want80g?.checked,
-        idType: want80g?.checked ? idType?.value : null,
-        idNumber: want80g?.checked
-          ? (document.getElementById('idNumber') as HTMLInputElement).value.toUpperCase()
-          : null,
-        address: want80g?.checked
-          ? (document.getElementById('address') as HTMLTextAreaElement).value.trim()
-          : null,
+        idType: chosenIdType(),
+        idNumber: (document.getElementById('idNumber') as HTMLInputElement).value.toUpperCase(),
+        address: (document.getElementById('address') as HTMLTextAreaElement).value.trim(),
       });
 
       // Real result, not a setTimeout. The old site showed success after

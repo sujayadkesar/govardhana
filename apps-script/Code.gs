@@ -23,10 +23,12 @@
 var SHEET_INTENTS = 'Donations';
 var SHEET_LOG = 'Log';
 
+/* Column order matches what Form 10BD needs, so the sheet can be filtered
+   and exported for the statement of donations without rearranging. */
 var COLUMNS = [
   'receivedAt', 'ref', 'status', 'cause', 'causeTitle', 'amount',
   'name', 'phone', 'email',
-  'want80g', 'idType', 'idNumber', 'address',
+  'idType', 'idNumber', 'address',
   'utr', 'verifiedAt', 'country', 'ua',
 ];
 
@@ -86,7 +88,10 @@ function appendIntent(sheet, b) {
       case 'status': return 'pending';
       case 'utr':
       case 'verifiedAt': return '';
-      case 'want80g': return b.want80g ? 'yes' : 'no';
+      // Leading apostrophe keeps Sheets from turning a 12-digit Aadhaar
+      // into scientific notation or stripping a leading zero.
+      case 'idNumber': return b.idNumber ? "'" + b.idNumber : '';
+      case 'phone':    return b.phone ? "'" + b.phone : '';
       default: return b[c] === undefined || b[c] === null ? '' : b[c];
     }
   });
@@ -131,11 +136,12 @@ function notifyIntent(b) {
     'Phone:      ' + b.phone,
     'Email:      ' + b.email,
     '',
-    '80G receipt: ' + (b.want80g ? 'YES' : 'no'),
+    b.idType + ':' + (b.idType === 'PAN' ? '        ' : '    ') + b.idNumber,
+    'Address:    ' + b.address,
   ];
-  if (b.want80g) {
-    lines.push('  ' + b.idType + ': ' + b.idNumber);
-    lines.push('  Address: ' + b.address);
+  if (b.idType === 'AADHAAR') {
+    lines.push('', 'NOTE: Aadhaar only — this donor cannot claim 80G in their');
+    lines.push('return without a PAN. Ask for one if they want the deduction.');
   }
   lines.push('', 'Status: PENDING — payment not yet confirmed.', 'Received: ' + b.receivedAt);
 
@@ -166,8 +172,7 @@ function notifyIntent(b) {
         'quote it if you need to write to us about this donation.',
         '',
         'Once we have matched your payment against our bank statement we will',
-        'send you an acknowledgement.' +
-          (b.want80g ? ' Your 80G certificate will follow after that.' : ''),
+        'send you an acknowledgement, and your 80G certificate will follow.',
         '',
         'Shri Govardhan [R] Goshala',
         'Karadolli, Yellapur, Uttara Kannada',
