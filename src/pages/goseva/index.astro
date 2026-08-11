@@ -1,0 +1,81 @@
+---
+import Base from '../../layouts/Base.astro';
+import CauseCard from '../../components/CauseCard.astro';
+import { causeGroups, byGroup } from '../../data/causes';
+---
+
+<Base
+  title="Go Seva"
+  description="Ways to support the goshala at Karadolli — adopt a cow or a calf, cover a day of running costs, send fodder, or mark an occasion with a Go Pooja."
+>
+  <section class="head">
+    <div class="wrap">
+      <p class="eyebrow">Go Seva</p>
+      <h1>Ways to give</h1>
+      <p class="lede head__lede">
+        Every option below is a real line in the goshala’s costs. Pick the one
+        that suits you — each takes about a minute, and you can pay with any
+        UPI app.
+      </p>
+    </div>
+  </section>
+
+  {causeGroups.map((g, i) => (
+    <section class:list={['section', i % 2 === 1 && 'section--sunk']}>
+      <div class="wrap">
+        <div class="ghead">
+          <h2>{g.title}</h2>
+          <p>{g.blurb}</p>
+        </div>
+        <div class="grid">
+          {byGroup(g.id).map((c) => <CauseCard cause={c} />)}
+        </div>
+      </div>
+    </section>
+  ))}
+
+  <section class="section">
+    <div class="wrap wrap--tight g80">
+      <h2>About 80G receipts</h2>
+      <p>
+        Donations to the goshala are eligible for exemption under section 80G.
+        Tick the receipt box when you give and enter your PAN — that is what
+        lets you claim the deduction in your return, because the trust reports
+        the donation against it.
+      </p>
+      <p>
+        If you don’t have a PAN we can still record and acknowledge your
+        donation, but the deduction can’t be claimed without one.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head { padding-block: var(--s-8) var(--s-6); }
+  .head__lede { margin-block-start: var(--s-4); max-width: 54ch; }
+  .head h1 { margin-block-start: var(--s-2); }
+
+  .section--sunk {
+    background: var(--surface-sunk);
+    border-block: 1px solid var(--rule);
+  }
+
+  .ghead { margin-block-end: var(--s-6); }
+  .ghead h2 { font-size: var(--t-xl); }
+  .ghead p {
+    margin-block-start: var(--s-2);
+    color: var(--text-muted);
+    font-size: var(--t-sm);
+    max-width: 50ch;
+  }
+
+  .grid {
+    display: grid;
+    gap: var(--s-4);
+    grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+  }
+
+  .g80 > * + * { margin-block-start: var(--s-4); }
+  .g80 p { color: var(--text-muted); font-size: var(--t-sm); line-height: 1.7; }
+</style>

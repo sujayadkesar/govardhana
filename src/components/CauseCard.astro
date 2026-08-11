@@ -1,0 +1,106 @@
+---
+import type { Cause } from '../data/causes';
+import { formatINR } from '../lib/upi';
+
+interface Props { cause: Cause; }
+const { cause } = Astro.props;
+---
+
+<a class="card" href={`/goseva/${cause.slug}`}>
+  <div class="card__media">
+    <img src={cause.image} alt="" loading="lazy" width="600" height="400" />
+  </div>
+
+  <div class="card__body">
+    <div class="card__heads">
+      <h4 class="card__title">{cause.title}</h4>
+      {cause.titleSa && <p class="card__sa">{cause.titleSa}</p>}
+    </div>
+    <p class="card__tag">{cause.tagline}</p>
+    <p class="card__amt num">
+      {cause.amount ? formatINR(cause.amount) : 'Any amount'}
+    </p>
+  </div>
+
+  <span class="card__cta">
+    Give <span aria-hidden="true">→</span>
+  </span>
+</a>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.18s var(--ease),
+                box-shadow 0.18s var(--ease),
+                transform 0.18s var(--ease);
+  }
+  .card:hover {
+    border-color: var(--turmeric);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .card__media {
+    aspect-ratio: 3 / 2;
+    background: var(--surface-sunk);
+    overflow: hidden;
+  }
+  .card__media img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s var(--ease);
+  }
+  .card:hover .card__media img { transform: scale(1.03); }
+
+  .card__body {
+    padding: var(--s-4);
+    display: grid;
+    gap: var(--s-2);
+    flex: 1;
+  }
+
+  .card__heads {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--s-3);
+  }
+  .card__title { font-size: var(--t-md); }
+  .card__sa {
+    font-family: var(--deva);
+    font-size: var(--t-sm);
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  .card__tag { font-size: var(--t-sm); color: var(--text-muted); }
+
+  .card__amt {
+    font-family: var(--serif);
+    font-size: var(--t-lg);
+    font-weight: 600;
+    color: var(--laterite);
+    margin-block-start: auto;
+  }
+
+  .card__cta {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    padding: var(--s-3) var(--s-4);
+    border-top: 1px solid var(--rule-soft);
+    background: var(--surface-sunk);
+    font-size: var(--t-sm);
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .card__cta span { transition: transform 0.18s var(--ease); }
+  .card:hover .card__cta span { transform: translateX(3px); }
+</style>

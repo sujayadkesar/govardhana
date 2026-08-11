@@ -1,0 +1,37 @@
+# Cloudflare Pages redirects — real 301s.
+#
+# The old /blog/* donation URLs are frozen history: they are in printed
+# material, WhatsApp forwards and anything anyone has bookmarked. They must
+# keep working permanently. The right-hand side must match the `slug` in
+# src/data/causes.ts.
+
+/blog/janmadina                    /goseva/janma-dina        301
+/blog/vivahadina                   /goseva/vivaha-dina       301
+/blog/punyatithi                   /goseva/punya-tithi       301
+/blog/goPooja                      /goseva/go-pooja          301
+/blog/adoptacow                    /goseva/adopt-a-cow       301
+/blog/adoptANandi                  /goseva/adopt-a-nandi     301
+/blog/adoptGovatsa                 /goseva/adopt-a-govatsa   301
+/blog/gokanike                     /goseva/go-kanike         301
+/blog/SiddhaGrasa                  /goseva/siddha-grasa      301
+/blog/oneDayExpense                /goseva/one-day-expense   301
+/blog/oneJeepGrass                 /goseva/jeep-of-grass     301
+/blog/oneTractorGrass              /goseva/tractor-of-grass  301
+/blog/newconstruction              /goseva/swarna-nandini    301
+/blog/newconstruction-payment-page /goseva/swarna-nandini    301
+
+# Hub and legacy section names
+/blog                              /goseva                   301
+/goseva.html                       /goseva                   301
+/about_us                          /about                    301
+/gallary                           /gallery                  301
+
+# Retired. These were live on the old site and must not resolve:
+#   /payments.html            placeholder text
+#   /blog/try                 test page
+#   /blog/phonepetest         test page
+#   /blog/PaymentSuccess      claimed success without a payment
+/payments.html                     /goseva                   301
+/blog/try                          /goseva                   301
+/blog/phonepetest                  /goseva                   301
+/blog/PaymentSuccess               /goseva                   301

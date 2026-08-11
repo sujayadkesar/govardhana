@@ -1,4 +1,21 @@
+# build output
+dist/
+.astro/
+node_modules/
+
+# legacy Jekyll (removed once the Astro rebuild goes live)
 _site/
 .sass-cache/
 .jekyll-metadata/
 .jekyll-cache/
+
+# never commit secrets — the old repo carried _layouts/.env with a live
+# Google API key for 644 commits
+.env
+.env.*
+!.env.example
+.dev.vars
+
+# editor / OS
+.DS_Store
+Thumbs.db

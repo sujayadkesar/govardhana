@@ -1,0 +1,142 @@
+---
+import { site } from '../data/site';
+
+const cols = [
+  {
+    title: 'Give',
+    links: [
+      { label: 'All ways to give', href: '/goseva' },
+      { label: 'Adopt a cow', href: '/goseva/adopt-a-cow' },
+      { label: 'Swarna Nandini Project', href: '/goseva/swarna-nandini' },
+    ],
+  },
+  {
+    title: 'The goshala',
+    links: [
+      { label: 'About us', href: '/about' },
+      { label: 'Committee', href: '/committee' },
+      { label: 'Gallery', href: '/gallery' },
+      { label: 'Contact', href: '/contact' },
+    ],
+  },
+  {
+    title: 'Legal',
+    links: [
+      // These pointed at "#" on the old site while a real Terms page existed.
+      { label: 'Terms & conditions', href: '/terms' },
+      { label: 'Privacy policy', href: '/privacy' },
+      { label: 'Refund policy', href: '/refunds' },
+    ],
+  },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="ftr">
+  <div class="wrap ftr__in">
+    <div class="ftr__brand">
+      <img src="/images/logo.svg" alt="" width="48" height="48" />
+      <p class="ftr__name">{site.name}</p>
+      <p class="ftr__meta">
+        {site.address.line}<br />
+        {site.address.district}, {site.address.state}<br />
+        Reg. No. {site.registration}
+      </p>
+      <p class="ftr__lineage">{site.lineage}</p>
+    </div>
+
+    <nav class="ftr__cols" aria-label="Footer">
+      {cols.map((col) => (
+        <div class="ftr__col">
+          <h2 class="ftr__ctitle">{col.title}</h2>
+          <ul>
+            {col.links.map((l) => (
+              <li><a href={l.href}>{l.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </nav>
+  </div>
+
+  <div class="wrap ftr__base">
+    <p>© {year} {site.name}</p>
+    <p><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></p>
+  </div>
+</footer>
+
+<style>
+  .ftr {
+    margin-block-start: var(--s-9);
+    background: var(--surface-sunk);
+    border-top: 1px solid var(--rule);
+  }
+
+  .ftr__in {
+    display: grid;
+    gap: var(--s-7);
+    padding-block: var(--s-8) var(--s-7);
+  }
+  @media (min-width: 760px) {
+    .ftr__in { grid-template-columns: 1.2fr 2fr; gap: var(--s-8); }
+  }
+
+  .ftr__brand img { margin-block-end: var(--s-4); }
+  .ftr__name {
+    font-family: var(--serif);
+    font-weight: 600;
+    color: var(--ink);
+    font-size: var(--t-md);
+    margin-block-end: var(--s-3);
+  }
+  .ftr__meta {
+    font-size: var(--t-sm);
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+  .ftr__lineage {
+    margin-block-start: var(--s-4);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: var(--t-xs);
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 32ch;
+  }
+
+  .ftr__cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--s-6);
+  }
+  .ftr__ctitle {
+    font-family: var(--sans);
+    font-size: var(--t-xs);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--turmeric);
+    margin-block-end: var(--s-3);
+  }
+  .ftr__col ul { list-style: none; padding: 0; display: grid; gap: var(--s-2); }
+  .ftr__col a {
+    font-size: var(--t-sm);
+    color: var(--ink-soft);
+    text-decoration: none;
+  }
+  .ftr__col a:hover { color: var(--ink); text-decoration: underline; }
+
+  .ftr__base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--s-3);
+    padding-block: var(--s-4) var(--s-6);
+    border-top: 1px solid var(--rule);
+    font-size: var(--t-xs);
+    color: var(--text-muted);
+  }
+  .ftr__base a { color: var(--text-muted); }
+  .ftr__base a:hover { color: var(--ink); }
+</style>

@@ -1,0 +1,1071 @@
+---
+import Base from '../../layouts/Base.astro';
+import { causes } from '../../data/causes';
+import { site, taxReceipt } from '../../data/site';
+import { formatINR } from '../../lib/upi';
+
+export function getStaticPaths() {
+  return causes.map((cause) => ({
+    params: { slug: cause.slug },
+    props: { cause },
+  }));
+}
+
+const { cause } = Astro.props;
+const suggested = cause.suggested ?? [1100, 2500, 5100];
+---
+
+<Base
+  title={cause.title}
+  description={cause.blurb}
+  image={cause.image}
+>
+  <div
+    class="pay"
+    data-cause={cause.slug}
+    data-vpa={site.upi.vpa}
+    data-payee={site.upi.payeeName}
+    data-amount={cause.amount ?? ''}
+  >
+    <!-- ============ summary rail ============ -->
+    <aside class="pay__rail">
+      <div class="pay__railin">
+        <a href="/goseva" class="pay__back">← All ways to give</a>
+
+        <div class="pay__media">
+          <img src={cause.image} alt="" width="600" height="400" />
+        </div>
+
+        <div class="pay__heads">
+          <h1 class="pay__title">{cause.title}</h1>
+          {cause.titleSa && <p class="pay__sa">{cause.titleSa}</p>}
+        </div>
+        <p class="pay__tag">{cause.tagline}</p>
+        <p class="pay__blurb">{cause.blurb}</p>
+
+        <ul class="pay__includes">
+          {cause.includes.map((i) => <li>{i}</li>)}
+        </ul>
+
+        <div class="pay__total">
+          <span>You’re giving</span>
+          <strong class="num" data-total>
+            {cause.amount ? formatINR(cause.amount) : '—'}
+          </strong>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ============ steps ============ -->
+    <div class="pay__main">
+      <ol class="steps" aria-label="Progress">
+        <li class="steps__i" data-step-dot="1" aria-current="step">
+          <span class="steps__n">1</span> Your details
+        </li>
+        <li class="steps__i" data-step-dot="2"><span class="steps__n">2</span> Pay</li>
+        <li class="steps__i" data-step-dot="3"><span class="steps__n">3</span> Confirm</li>
+      </ol>
+
+      <!-- ---------- STEP 1 : details ---------- -->
+      <section class="panel" data-step="1">
+        <h2 class="panel__h">Your details</h2>
+        <p class="panel__sub">
+          We need these to acknowledge your donation and to find your payment
+          in our bank statement.
+        </p>
+
+        <form class="form" id="donorForm" novalidate>
+          {!cause.amount && (
+            <div class="field">
+              <label for="amount">Amount</label>
+              <div class="chips" role="group" aria-label="Suggested amounts">
+                {suggested.map((a) => (
+                  <button type="button" class="chip" data-amt={a}>
+                    {formatINR(a)}
+                  </button>
+                ))}
+              </div>
+              <div class="amt">
+                <span class="amt__r">₹</span>
+                <input
+                  class="input amt__in num"
+                  type="number"
+                  id="amount"
+                  name="amount"
+                  min="1"
+                  step="1"
+                  inputmode="numeric"
+                  placeholder="Enter an amount"
+                  required
+                />
+              </div>
+              <p class="field-error" data-err="amount"></p>
+            </div>
+          )}
+
+          <div class="field">
+            <label for="name">Full name</label>
+            <input
+              class="input" type="text" id="name" name="name"
+              autocomplete="name" required maxlength="80"
+              placeholder="As you'd like it on the receipt"
+            />
+            <p class="field-error" data-err="name"></p>
+          </div>
+
+          <div class="row2">
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input
+                class="input num" type="tel" id="phone" name="phone"
+                autocomplete="tel-national" inputmode="numeric"
+                required maxlength="10" placeholder="10 digits"
+              />
+              <p class="field-error" data-err="phone"></p>
+            </div>
+
+            <div class="field">
+              <label for="email">Email</label>
+              <input
+                class="input" type="email" id="email" name="email"
+                autocomplete="email" required maxlength="120"
+                placeholder="you@example.com"
+              />
+              <p class="field-error" data-err="email"></p>
+            </div>
+          </div>
+
+          <!-- 80G is opt-in. The old site made a 12-digit Aadhaar mandatory
+               for every donor, including those who wanted no receipt. -->
+          <div class="opt">
+            <label class="check">
+              <input type="checkbox" id="want80g" name="want80g" />
+              <span>
+                I’d like an 80G tax receipt
+                <em>Optional — only if you plan to claim the deduction.</em>
+              </span>
+            </label>
+
+            <div class="opt__body" id="taxFields" hidden>
+              <div class="field">
+                <label for="idType">Identification</label>
+                <select class="input" id="idType" name="idType">
+                  {taxReceipt.idOptions.map((o) => (
+                    <option value={o.code}>{o.label}</option>
+                  ))}
+                </select>
+                <p class="hint" data-idhint>{taxReceipt.idOptions[0].hint}</p>
+              </div>
+
+              <div class="field">
+                <label for="idNumber">
+                  <span data-idlabel>{taxReceipt.idOptions[0].label}</span> number
+                </label>
+                <input
+                  class="input" type="text" id="idNumber" name="idNumber"
+                  autocapitalize="characters" maxlength="12"
+                  placeholder={taxReceipt.idOptions[0].placeholder}
+                />
+                <p class="field-error" data-err="idNumber"></p>
+              </div>
+
+              <div class="field">
+                <label for="address">Address</label>
+                <textarea
+                  class="input" id="address" name="address" rows="2"
+                  autocomplete="street-address" maxlength="240"
+                  placeholder="Needed on the 80G certificate"
+                ></textarea>
+                <p class="field-error" data-err="address"></p>
+              </div>
+            </div>
+          </div>
+
+          <p class="notice notice--err" data-formerr hidden></p>
+
+          <button type="submit" class="btn btn--primary btn--block" data-submit>
+            Continue to payment
+          </button>
+
+          <p class="fineprint">
+            We use your details only to acknowledge this donation and to issue a
+            receipt if you asked for one. We never share them.
+          </p>
+        </form>
+      </section>
+
+      <!-- ---------- STEP 2 : pay ---------- -->
+      <section class="panel" data-step="2" hidden>
+        <h2 class="panel__h">Complete the payment</h2>
+        <p class="panel__sub">
+          Your reference is <strong class="ref num" data-ref></strong> — it will
+          appear on your bank statement.
+        </p>
+
+        <!-- Promoted path. Filled in by the client based on context. -->
+        <div data-promoted></div>
+
+        <!-- Always present, on every device. Never a dead end. -->
+        <details class="alt" data-alt>
+          <summary>Other ways to pay</summary>
+
+          <div class="alt__body">
+            <div class="qr">
+              <p class="alt__lbl">Scan this code with any UPI app</p>
+              <div class="qr__box"><canvas data-qr width="260" height="260"></canvas></div>
+            </div>
+
+            <div class="apps">
+              <p class="alt__lbl">Or open an app directly</p>
+              <div class="apps__grid" data-apps></div>
+            </div>
+
+            <div class="manual">
+              <p class="alt__lbl">Or pay manually</p>
+              <dl class="manual__dl">
+                <div>
+                  <dt>UPI ID</dt>
+                  <dd>
+                    <span class="num">{site.upi.vpa}</span>
+                    <button type="button" class="copy" data-copy={site.upi.vpa}>Copy</button>
+                  </dd>
+                </div>
+                <div>
+                  <dt>Amount</dt>
+                  <dd><span class="num" data-total></span></dd>
+                </div>
+                <div>
+                  <dt>Reference</dt>
+                  <dd>
+                    <span class="num" data-ref></span>
+                    <button type="button" class="copy" data-copyref>Copy</button>
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+        </details>
+
+        <button type="button" class="btn btn--primary btn--block" data-paid>
+          I’ve completed the payment
+        </button>
+        <button type="button" class="btn btn--ghost btn--block" data-back>
+          Back to my details
+        </button>
+      </section>
+
+      <!-- ---------- STEP 3 : confirm ---------- -->
+      <section class="panel" data-step="3" hidden>
+        <h2 class="panel__h">One last thing</h2>
+        <p class="panel__sub">
+          Paste the UPI transaction ID from your payment app. It lets us match
+          your donation in the bank statement and send your acknowledgement.
+        </p>
+
+        <form class="form" id="utrForm" novalidate>
+          <div class="field">
+            <label for="utr">UPI transaction ID / UTR</label>
+            <input
+              class="input num" type="text" id="utr" name="utr"
+              inputmode="numeric" maxlength="24"
+              placeholder="12 digits, e.g. 412345678901"
+            />
+            <p class="hint">
+              In Google Pay and PhonePe it’s on the receipt screen, listed as
+              “UPI transaction ID”.
+            </p>
+            <p class="field-error" data-err="utr"></p>
+          </div>
+
+          <button type="submit" class="btn btn--primary btn--block">
+            Send confirmation
+          </button>
+          <button type="button" class="btn btn--ghost btn--block" data-skip>
+            I don’t have it right now
+          </button>
+        </form>
+      </section>
+
+      <!-- ---------- DONE ---------- -->
+      <section class="panel done" data-step="4" hidden>
+        <div class="done__mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" width="52" height="52" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="24" cy="24" r="21" opacity="0.25" />
+            <path d="M15 24.5l6.5 6.5L33 19" />
+          </svg>
+        </div>
+
+        <h2 class="panel__h">Thank you</h2>
+        <p class="panel__sub" data-donemsg></p>
+
+        <dl class="recap">
+          <div><dt>Cause</dt><dd>{cause.title}</dd></div>
+          <div><dt>Amount</dt><dd class="num" data-total></dd></div>
+          <div><dt>Reference</dt><dd class="num" data-ref></dd></div>
+        </dl>
+
+        <p class="fineprint">
+          We’ll email you at the address you gave. If anything looks wrong,
+          write to <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+          quoting your reference.
+        </p>
+
+        <div class="done__actions">
+          <a href="/goseva" class="btn btn--ghost">Give again</a>
+          <a href="/" class="btn btn--ghost">Back to home</a>
+        </div>
+      </section>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .pay {
+    display: grid;
+    gap: 0;
+    align-items: start;
+  }
+  @media (min-width: 940px) {
+    .pay {
+      grid-template-columns: minmax(300px, 400px) 1fr;
+      max-width: var(--col);
+      margin-inline: auto;
+      gap: var(--s-8);
+      padding-inline: var(--s-5);
+    }
+  }
+
+  /* ---------------- rail ---------------- */
+  .pay__rail {
+    background: var(--surface-sunk);
+    border-bottom: 1px solid var(--rule);
+  }
+  .pay__railin {
+    padding: var(--s-5);
+    max-width: var(--col);
+    margin-inline: auto;
+  }
+  @media (min-width: 940px) {
+    .pay__rail {
+      background: transparent;
+      border-bottom: none;
+      position: sticky;
+      top: 84px;
+    }
+    .pay__railin { padding: var(--s-7) 0 0; }
+  }
+
+  .pay__back {
+    display: inline-block;
+    font-size: var(--t-sm);
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-block-end: var(--s-4);
+  }
+  .pay__back:hover { color: var(--ink); }
+
+  .pay__media {
+    aspect-ratio: 3 / 2;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--rule-soft);
+    margin-block-end: var(--s-4);
+  }
+  .pay__media img { width: 100%; height: 100%; object-fit: cover; }
+
+  .pay__heads {
+    display: flex;
+    align-items: baseline;
+    gap: var(--s-3);
+    flex-wrap: wrap;
+  }
+  .pay__title { font-size: var(--t-xl); }
+  .pay__sa { font-family: var(--deva); color: var(--text-muted); }
+  .pay__tag {
+    margin-block-start: var(--s-1);
+    font-size: var(--t-sm);
+    color: var(--turmeric);
+    font-weight: 600;
+  }
+  .pay__blurb {
+    margin-block-start: var(--s-3);
+    font-size: var(--t-sm);
+    color: var(--text-muted);
+    line-height: 1.65;
+  }
+
+  .pay__includes {
+    margin-block-start: var(--s-4);
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: var(--s-2);
+  }
+  .pay__includes li {
+    position: relative;
+    padding-inline-start: var(--s-5);
+    font-size: var(--t-sm);
+    color: var(--ink-soft);
+  }
+  .pay__includes li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0.55em;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--turmeric-lit);
+  }
+
+  .pay__total {
+    margin-block-start: var(--s-5);
+    padding-block-start: var(--s-4);
+    border-top: 1px solid var(--rule);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--s-3);
+  }
+  .pay__total span { font-size: var(--t-sm); color: var(--text-muted); }
+  .pay__total strong {
+    font-family: var(--serif);
+    font-size: var(--t-xl);
+    color: var(--laterite);
+  }
+
+  /* ---------------- main ---------------- */
+  .pay__main {
+    padding: var(--s-6) var(--s-5) var(--s-8);
+    max-width: 640px;
+    width: 100%;
+    margin-inline: auto;
+  }
+  @media (min-width: 940px) { .pay__main { padding: var(--s-7) 0 var(--s-9); } }
+
+  /* steps */
+  .steps {
+    display: flex;
+    gap: var(--s-2);
+    list-style: none;
+    padding: 0;
+    margin-block-end: var(--s-6);
+    font-size: var(--t-xs);
+    flex-wrap: wrap;
+  }
+  .steps__i {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    color: var(--text-muted);
+    padding-inline-end: var(--s-3);
+  }
+  .steps__n {
+    display: grid;
+    place-items: center;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 1px solid var(--rule);
+    font-weight: 600;
+    font-size: 0.7rem;
+  }
+  .steps__i[aria-current='step'] { color: var(--ink); font-weight: 600; }
+  .steps__i[aria-current='step'] .steps__n {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--text-onDark);
+  }
+  .steps__i[data-done] .steps__n {
+    background: var(--ok);
+    border-color: var(--ok);
+    color: #fff;
+  }
+
+  .panel__h { font-size: var(--t-xl); }
+  .panel__sub {
+    margin-block: var(--s-3) var(--s-6);
+    color: var(--text-muted);
+    font-size: var(--t-sm);
+    line-height: 1.65;
+  }
+  .ref { color: var(--ink); font-weight: 600; letter-spacing: 0.04em; }
+
+  /* form */
+  .form { display: grid; gap: var(--s-5); }
+  .row2 { display: grid; gap: var(--s-5); }
+  @media (min-width: 560px) { .row2 { grid-template-columns: 1fr 1fr; } }
+
+  .chips { display: flex; flex-wrap: wrap; gap: var(--s-2); }
+  .chip {
+    padding: var(--s-2) var(--s-4);
+    min-height: 44px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    font-size: var(--t-sm);
+    font-weight: 600;
+    cursor: pointer;
+    font-variant-numeric: tabular-nums;
+    transition: all 0.15s var(--ease);
+  }
+  .chip:hover { border-color: var(--turmeric); }
+  .chip[aria-pressed='true'] {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--text-onDark);
+  }
+
+  .amt { position: relative; }
+  .amt__r {
+    position: absolute;
+    left: var(--s-4); top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    font-size: var(--t-md);
+    pointer-events: none;
+  }
+  .amt__in { padding-inline-start: 2rem; font-size: var(--t-md); }
+  .amt__in::-webkit-outer-spin-button,
+  .amt__in::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .amt__in { -moz-appearance: textfield; appearance: textfield; }
+
+  /* 80G opt-in */
+  .opt {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .check {
+    display: flex;
+    gap: var(--s-3);
+    padding: var(--s-4);
+    cursor: pointer;
+    align-items: flex-start;
+  }
+  .check input { margin-block-start: 0.25em; width: 18px; height: 18px; flex: none; accent-color: var(--ink); }
+  .check span { font-size: var(--t-sm); font-weight: 600; color: var(--ink); }
+  .check em {
+    display: block;
+    font-style: normal;
+    font-weight: 400;
+    font-size: var(--t-xs);
+    color: var(--text-muted);
+    margin-block-start: 2px;
+  }
+  .opt__body {
+    display: grid;
+    gap: var(--s-4);
+    padding: 0 var(--s-4) var(--s-4);
+    border-top: 1px solid var(--rule-soft);
+    padding-block-start: var(--s-4);
+  }
+
+  .fineprint {
+    font-size: var(--t-xs);
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* promoted payment block */
+  .promoted {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--surface);
+    padding: var(--s-5);
+    margin-block-end: var(--s-4);
+    text-align: center;
+  }
+  .promoted__lbl {
+    font-size: var(--t-sm);
+    color: var(--text-muted);
+    margin-block-end: var(--s-4);
+  }
+  .promoted .qr__box { margin-inline: auto; }
+
+  /* alternatives */
+  .alt {
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    background: var(--surface);
+    margin-block-end: var(--s-5);
+  }
+  .alt > summary {
+    padding: var(--s-4);
+    cursor: pointer;
+    font-size: var(--t-sm);
+    font-weight: 600;
+    color: var(--ink);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .alt > summary::-webkit-details-marker { display: none; }
+  .alt > summary::after {
+    content: '+';
+    font-size: var(--t-lg);
+    color: var(--turmeric);
+    line-height: 1;
+  }
+  .alt[open] > summary::after { content: '−'; }
+  .alt__body {
+    padding: 0 var(--s-4) var(--s-4);
+    display: grid;
+    gap: var(--s-6);
+    border-top: 1px solid var(--rule-soft);
+    padding-block-start: var(--s-5);
+  }
+  .alt__lbl {
+    font-size: var(--t-xs);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-block-end: var(--s-3);
+  }
+
+  .qr { text-align: center; }
+  .qr__box {
+    display: inline-block;
+    padding: var(--s-3);
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    line-height: 0;
+  }
+  .qr__box canvas { width: 220px; height: 220px; }
+
+  .apps__grid { display: grid; gap: var(--s-2); grid-template-columns: 1fr 1fr; }
+  .apps__btn {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    padding: var(--s-3);
+    min-height: 56px;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--ink);
+    font-size: var(--t-sm);
+    font-weight: 600;
+    transition: border-color 0.15s var(--ease), background-color 0.15s var(--ease);
+  }
+  .apps__btn:hover { border-color: var(--turmeric); background: var(--surface-sunk); color: var(--ink); }
+  .apps__btn img { width: 26px; height: 26px; object-fit: contain; flex: none; }
+
+  .manual__dl { display: grid; gap: var(--s-3); }
+  .manual__dl > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-3);
+    padding-block-end: var(--s-3);
+    border-bottom: 1px solid var(--rule-soft);
+    flex-wrap: wrap;
+  }
+  .manual__dl > div:last-child { border-bottom: none; padding-block-end: 0; }
+  .manual__dl dt { font-size: var(--t-sm); color: var(--text-muted); }
+  .manual__dl dd {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .copy {
+    padding: var(--s-1) var(--s-3);
+    min-height: 32px;
+    font-size: var(--t-xs);
+    font-weight: 600;
+    background: var(--surface-sunk);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    cursor: pointer;
+    color: var(--ink);
+  }
+  .copy:hover { border-color: var(--turmeric); }
+  .copy[data-copied] { background: var(--ok-bg); border-color: var(--ok); color: var(--ok); }
+
+  [data-paid] { margin-block-end: var(--s-3); }
+
+  /* done */
+  .done { text-align: center; }
+  .done__mark { color: var(--ok); display: flex; justify-content: center; margin-block-end: var(--s-4); }
+  .recap {
+    display: grid;
+    gap: var(--s-3);
+    text-align: start;
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    padding: var(--s-4);
+    margin-block-end: var(--s-5);
+  }
+  .recap > div { display: flex; justify-content: space-between; gap: var(--s-4); }
+  .recap dt { color: var(--text-muted); font-size: var(--t-sm); }
+  .recap dd { margin: 0; font-weight: 600; color: var(--ink); }
+  .done__actions {
+    display: flex;
+    gap: var(--s-3);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-block-start: var(--s-5);
+  }
+</style>
+
+<script>
+  import {
+    buildUpiUri, makeRef, detectContext, launchIntent,
+    copyText, formatINR, IOS_APPS, SCHEMES,
+  } from '../../lib/upi';
+  import QRCode from 'qrcode';
+
+  const root = document.querySelector<HTMLElement>('.pay')!;
+  const causeSlug = root.dataset.cause!;
+  const causeTitle = document.querySelector('.pay__title')!.textContent!.trim();
+
+  // Payee details come from src/data/site.ts via data attributes — one
+  // source of truth, rather than the 200+ hardcoded copies the old site had.
+  const VPA = root.dataset.vpa!;
+  const PAYEE = root.dataset.payee!;
+
+  // Fixed-amount causes carry the figure in the markup; custom ones have an input.
+  const amountInput = document.querySelector<HTMLInputElement>('#amount');
+  const fixedAmount = root.dataset.amount ? Number(root.dataset.amount) : null;
+
+  const state = {
+    ref: '',
+    amount: fixedAmount ?? 0,
+    name: '', phone: '', email: '',
+  };
+
+  // ---------- step machine ----------
+  const panels = [...document.querySelectorAll<HTMLElement>('[data-step]')];
+  const dots = [...document.querySelectorAll<HTMLElement>('[data-step-dot]')];
+
+  function goStep(n: number) {
+    panels.forEach((p) => { p.hidden = Number(p.dataset.step) !== n; });
+    dots.forEach((d) => {
+      const i = Number(d.dataset.stepDot);
+      d.toggleAttribute('data-done', i < n);
+      if (i === n) d.setAttribute('aria-current', 'step');
+      else d.removeAttribute('aria-current');
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  const setAll = (sel: string, text: string) =>
+    document.querySelectorAll<HTMLElement>(sel).forEach((el) => { el.textContent = text; });
+
+  // ---------- amount chips ----------
+  document.querySelectorAll<HTMLButtonElement>('.chip').forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const v = Number(chip.dataset.amt);
+      if (amountInput) amountInput.value = String(v);
+      document.querySelectorAll('.chip').forEach((c) =>
+        c.setAttribute('aria-pressed', String(c === chip))
+      );
+      state.amount = v;
+      setAll('[data-total]', formatINR(v));
+    });
+  });
+  amountInput?.addEventListener('input', () => {
+    document.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', 'false'));
+    const v = Number(amountInput.value);
+    state.amount = v;
+    setAll('[data-total]', v > 0 ? formatINR(v) : '—');
+  });
+
+  // ---------- 80G toggle ----------
+  const want80g = document.querySelector<HTMLInputElement>('#want80g');
+  const taxFields = document.querySelector<HTMLElement>('#taxFields');
+  want80g?.addEventListener('change', () => {
+    if (taxFields) taxFields.hidden = !want80g.checked;
+  });
+
+  const idType = document.querySelector<HTMLSelectElement>('#idType');
+  const idInput = document.querySelector<HTMLInputElement>('#idNumber');
+  const ID_META: Record<string, { label: string; hint: string; ph: string; max: number }> = {
+    PAN: {
+      label: 'PAN', ph: 'ABCDE1234F', max: 10,
+      hint: 'Required to claim the deduction in your return.',
+    },
+    AADHAAR: {
+      label: 'Aadhaar', ph: '12 digits', max: 12,
+      hint: 'We can report your donation, but claiming 80G in your return needs a PAN.',
+    },
+  };
+  idType?.addEventListener('change', () => {
+    const m = ID_META[idType.value];
+    document.querySelector('[data-idlabel]')!.textContent = m.label;
+    document.querySelector('[data-idhint]')!.textContent = m.hint;
+    if (idInput) { idInput.placeholder = m.ph; idInput.maxLength = m.max; idInput.value = ''; }
+  });
+
+  // ---------- validation ----------
+  const showErr = (field: string, msg: string) => {
+    const el = document.querySelector<HTMLElement>(`[data-err="${field}"]`);
+    if (el) el.textContent = msg;
+    document.getElementById(field)?.setAttribute('aria-invalid', String(!!msg));
+  };
+  const clearErrs = () =>
+    document.querySelectorAll<HTMLElement>('[data-err]').forEach((e) => { e.textContent = ''; });
+
+  function validate(): boolean {
+    clearErrs();
+    let ok = true;
+    const v = (id: string) =>
+      (document.getElementById(id) as HTMLInputElement | null)?.value.trim() ?? '';
+
+    if (amountInput) {
+      const a = Number(amountInput.value);
+      if (!a || a < 1) { showErr('amount', 'Enter an amount.'); ok = false; }
+      else state.amount = a;
+    }
+
+    const name = v('name');
+    if (name.length < 2) { showErr('name', 'Please enter your name.'); ok = false; }
+    else state.name = name;
+
+    const phone = v('phone');
+    if (!/^[6-9]\d{9}$/.test(phone)) {
+      showErr('phone', 'Enter a 10-digit Indian mobile number.'); ok = false;
+    } else state.phone = phone;
+
+    const email = v('email');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      showErr('email', 'Enter a valid email address.'); ok = false;
+    } else state.email = email;
+
+    if (want80g?.checked) {
+      const t = idType?.value ?? 'PAN';
+      const idv = v('idNumber').toUpperCase();
+      const valid =
+        t === 'PAN' ? /^[A-Z]{5}[0-9]{4}[A-Z]$/.test(idv) : /^[2-9][0-9]{11}$/.test(idv);
+      if (!valid) {
+        showErr('idNumber', t === 'PAN' ? 'Check the PAN format (ABCDE1234F).' : 'Enter a 12-digit Aadhaar number.');
+        ok = false;
+      }
+      if (v('address').length < 8) {
+        showErr('address', 'An address is needed on the certificate.'); ok = false;
+      }
+    }
+    return ok;
+  }
+
+  // ---------- submit ----------
+  const form = document.querySelector<HTMLFormElement>('#donorForm')!;
+  const submitBtn = document.querySelector<HTMLButtonElement>('[data-submit]')!;
+  const formErr = document.querySelector<HTMLElement>('[data-formerr]')!;
+
+  async function post(payload: Record<string, unknown>) {
+    const res = await fetch('/api/donation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Saving your details…';
+    formErr.hidden = true;
+
+    state.ref = makeRef();
+
+    try {
+      await post({
+        kind: 'intent',
+        ref: state.ref,
+        cause: causeSlug,
+        causeTitle,
+        amount: state.amount,
+        name: state.name,
+        phone: state.phone,
+        email: state.email,
+        want80g: !!want80g?.checked,
+        idType: want80g?.checked ? idType?.value : null,
+        idNumber: want80g?.checked
+          ? (document.getElementById('idNumber') as HTMLInputElement).value.toUpperCase()
+          : null,
+        address: want80g?.checked
+          ? (document.getElementById('address') as HTMLTextAreaElement).value.trim()
+          : null,
+      });
+
+      // Real result, not a setTimeout. The old site showed success after
+      // three seconds whether or not the request had succeeded.
+      setAll('[data-ref]', state.ref);
+      setAll('[data-total]', formatINR(state.amount));
+      buildPayStep();
+      goStep(2);
+      window.gtag?.('event', 'donation_intent', {
+        cause: causeSlug, value: state.amount, currency: 'INR',
+      });
+    } catch (err) {
+      formErr.hidden = false;
+      formErr.innerHTML =
+        `We couldn’t save your details just now. Check your connection and try again — ` +
+        `or write to us and we’ll take them by email.`;
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Continue to payment';
+    }
+  });
+
+  // ---------- pay step ----------
+  function upi(scheme: keyof typeof SCHEMES = 'upi') {
+    return buildUpiUri(
+      {
+        vpa: VPA, payeeName: PAYEE,
+        amount: state.amount, ref: state.ref,
+        note: `${causeTitle} ${state.ref}`,
+      },
+      scheme
+    );
+  }
+
+  async function buildPayStep() {
+    // QR — generated in the browser. Nothing about the donor reaches a
+    // third-party image service, which is how the old site did it.
+    const canvas = document.querySelector<HTMLCanvasElement>('[data-qr]');
+    if (canvas) {
+      await QRCode.toCanvas(canvas, upi('upi'), {
+        width: 260, margin: 1,
+        color: { dark: '#14142B', light: '#FFFFFF' },
+        errorCorrectionLevel: 'M',
+      });
+    }
+
+    // App list — same builder, so no path can drift.
+    const appsWrap = document.querySelector<HTMLElement>('[data-apps]');
+    if (appsWrap) {
+      appsWrap.innerHTML = IOS_APPS.map(
+        (a) =>
+          `<a class="apps__btn" href="${upi(a.key)}">` +
+          `<img src="${a.icon}" alt="" /><span>${a.name}</span></a>`
+      ).join('');
+    }
+
+    renderPromoted();
+  }
+
+  function renderPromoted() {
+    const slot = document.querySelector<HTMLElement>('[data-promoted]')!;
+    const ctx = detectContext();
+    const alt = document.querySelector<HTMLDetailsElement>('[data-alt]')!;
+
+    if (ctx === 'android') {
+      slot.innerHTML =
+        `<div class="promoted">` +
+        `<p class="promoted__lbl">We’ll open your UPI app with the amount already filled in.</p>` +
+        `<button type="button" class="btn btn--accent btn--block" data-launch>Pay ${formatINR(state.amount)}</button>` +
+        `</div>`;
+      slot.querySelector('[data-launch]')!.addEventListener('click', () => {
+        launchIntent(upi('upi'), () => {
+          // Nothing opened — no UPI app, or a webview swallowed it.
+          alt.open = true;
+          slot.innerHTML =
+            `<div class="notice notice--warn">` +
+            `We couldn’t open a UPI app on this device. Scan the QR below with ` +
+            `any UPI app, or copy the UPI ID and pay manually.</div>`;
+        });
+      });
+      return;
+    }
+
+    if (ctx === 'ios') {
+      slot.innerHTML =
+        `<div class="promoted">` +
+        `<p class="promoted__lbl">Open the app you use — the amount and reference are filled in.</p>` +
+        `<div class="apps__grid">` +
+        IOS_APPS.map(
+          (a) =>
+            `<a class="apps__btn" href="${upi(a.key)}">` +
+            `<img src="${a.icon}" alt="" /><span>${a.name}</span></a>`
+        ).join('') +
+        `</div></div>`;
+      return;
+    }
+
+    if (ctx === 'webview') {
+      alt.open = true;
+      slot.innerHTML =
+        `<div class="notice notice--warn">` +
+        `You’re browsing inside another app, where payment links often don’t ` +
+        `open. Scan the QR below with your UPI app, or open this page in your ` +
+        `browser.</div>`;
+      return;
+    }
+
+    // desktop and anything unrecognised
+    slot.innerHTML =
+      `<div class="promoted">` +
+      `<p class="promoted__lbl">Scan with any UPI app on your phone</p>` +
+      `<div class="qr__box"><canvas data-qr-main width="260" height="260"></canvas></div>` +
+      `</div>`;
+    const c = slot.querySelector<HTMLCanvasElement>('[data-qr-main]');
+    if (c) {
+      QRCode.toCanvas(c, upi('upi'), {
+        width: 260, margin: 1,
+        color: { dark: '#14142B', light: '#FFFFFF' },
+        errorCorrectionLevel: 'M',
+      });
+    }
+  }
+
+  // ---------- copy ----------
+  document.querySelectorAll<HTMLButtonElement>('[data-copy], [data-copyref]').forEach((b) => {
+    b.addEventListener('click', async () => {
+      const text = b.hasAttribute('data-copyref') ? state.ref : b.dataset.copy!;
+      if (await copyText(text)) {
+        const prev = b.textContent;
+        b.textContent = 'Copied';
+        b.setAttribute('data-copied', '');
+        setTimeout(() => { b.textContent = prev; b.removeAttribute('data-copied'); }, 1800);
+      }
+    });
+  });
+
+  // ---------- navigation ----------
+  document.querySelector('[data-back]')?.addEventListener('click', () => goStep(1));
+  document.querySelector('[data-paid]')?.addEventListener('click', () => {
+    goStep(3);
+    window.gtag?.('event', 'payment_claimed', { cause: causeSlug, value: state.amount });
+  });
+
+  // ---------- confirm ----------
+  const utrForm = document.querySelector<HTMLFormElement>('#utrForm')!;
+  utrForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const utr = (document.getElementById('utr') as HTMLInputElement).value.trim();
+    if (!/^\d{6,24}$/.test(utr)) {
+      showErr('utr', 'The transaction ID is usually 12 digits.');
+      return;
+    }
+    showErr('utr', '');
+    await finish(utr);
+  });
+
+  document.querySelector('[data-skip]')?.addEventListener('click', () => finish(null));
+
+  async function finish(utr: string | null) {
+    try {
+      await post({ kind: 'confirm', ref: state.ref, utr, cause: causeSlug });
+    } catch {
+      /* The intent row is already saved; never block the donor on this. */
+    }
+    document.querySelector('[data-donemsg]')!.textContent = utr
+      ? 'We’ve recorded your payment and will verify it against our bank statement. Your acknowledgement is on its way by email.'
+      : 'We’ve recorded your donation. Once we spot it in our bank statement we’ll email your acknowledgement.';
+    goStep(4);
+    window.gtag?.('event', 'payment_confirmed', {
+      cause: causeSlug, value: state.amount, currency: 'INR', has_utr: !!utr,
+    });
+  }
+</script>

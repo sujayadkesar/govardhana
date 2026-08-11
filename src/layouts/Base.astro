@@ -1,0 +1,116 @@
+---
+import '@fontsource/ibm-plex-serif/400.css';
+import '@fontsource/ibm-plex-serif/600.css';
+import '@fontsource/ibm-plex-serif/400-italic.css';
+import '@fontsource/ibm-plex-sans/400.css';
+import '@fontsource/ibm-plex-sans/500.css';
+import '@fontsource/ibm-plex-sans/600.css';
+import '@fontsource/ibm-plex-sans-devanagari/400.css';
+
+import '../styles/tokens.css';
+import '../styles/global.css';
+
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Absolute path to a social preview image */
+  image?: string;
+  /** Hide the header/footer chrome — used by the payment screen */
+  bare?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = '/images/og-default.jpg',
+  bare = false,
+} = Astro.props;
+
+const fullTitle =
+  title === site.name ? title : `${title} — ${site.name}`;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <!-- Correct on every page. The old site shipped width=1024 on seven
+         pages including the homepage and the donation hub. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <meta name="theme-color" content="#14142B" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#FAF7F0" media="(prefers-color-scheme: light)" />
+
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'NGO',
+        name: site.name,
+        url: site.url,
+        email: site.contact.email,
+        address: {
+          '@type': 'PostalAddress',
+          streetAddress: site.address.line,
+          addressRegion: site.address.state,
+          addressCountry: 'IN',
+        },
+      })}
+    />
+
+    <!-- Theme is resolved before first paint so there is no flash. -->
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t) document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    {!bare && <Header />}
+    <main id="main">
+      <slot />
+    </main>
+    {!bare && <Footer />}
+
+    <!-- GA4, once, from the layout. The old site loaded a dead Universal
+         Analytics tag site-wide plus GA4 pasted per page. -->
+    <script
+      is:inline
+      defer
+      src={`https://www.googletagmanager.com/gtag/js?id=${site.analytics.ga4}`}
+    ></script>
+    <script is:inline define:vars={{ gaId: site.analytics.ga4 }}>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { window.dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', gaId);
+    </script>
+  </body>
+</html>

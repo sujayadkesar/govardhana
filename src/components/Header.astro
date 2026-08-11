@@ -1,0 +1,199 @@
+---
+import { site } from '../data/site';
+
+const nav = [
+  { label: 'Go Seva', href: '/goseva' },
+  { label: 'The Goshala', href: '/about' },
+  { label: 'Gallery', href: '/gallery' },
+  { label: 'Contact', href: '/contact' },
+];
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCurrent = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+---
+
+<header class="hdr">
+  <div class="wrap hdr__in">
+    <a class="hdr__brand" href="/">
+      <img src="/images/logo.svg" alt="" width="40" height="40" class="hdr__mark" />
+      <span class="hdr__names">
+        <span class="hdr__name">{site.name}</span>
+        <span class="hdr__where">{site.address.line} · {site.address.district}</span>
+      </span>
+    </a>
+
+    <nav class="hdr__nav" aria-label="Main">
+      <ul class="hdr__list">
+        {nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="hdr__link"
+              aria-current={isCurrent(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <a href="/goseva" class="btn btn--accent hdr__cta">Donate</a>
+
+    <button
+      class="hdr__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+    >
+      <span class="sr-only">Menu</span>
+      <span class="hdr__bars" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <div class="hdr__mobile" id="mobile-nav" hidden>
+    <ul class="hdr__mlist">
+      {nav.map((item) => (
+        <li>
+          <a href={item.href} aria-current={isCurrent(item.href) ? 'page' : undefined}>
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</header>
+
+<style>
+  .hdr {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule-soft);
+  }
+
+  .hdr__in {
+    display: flex;
+    align-items: center;
+    gap: var(--s-5);
+    min-height: 68px;
+  }
+
+  .hdr__brand {
+    display: flex;
+    align-items: center;
+    gap: var(--s-3);
+    text-decoration: none;
+    color: inherit;
+    margin-inline-end: auto;
+    min-width: 0;
+  }
+  .hdr__mark { flex: none; border-radius: 3px; }
+  .hdr__names { display: flex; flex-direction: column; min-width: 0; }
+  .hdr__name {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 0.975rem;
+    line-height: 1.2;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .hdr__where {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .hdr__nav { display: none; }
+  .hdr__list {
+    display: flex;
+    gap: var(--s-5);
+    list-style: none;
+    padding: 0;
+  }
+  .hdr__link {
+    font-size: var(--t-sm);
+    font-weight: 500;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding-block: var(--s-2);
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+  }
+  .hdr__link:hover { color: var(--ink); border-bottom-color: var(--rule); }
+  .hdr__link[aria-current='page'] {
+    color: var(--ink);
+    border-bottom-color: var(--turmeric-lit);
+  }
+
+  .hdr__cta { display: none; padding-inline: var(--s-4); min-height: 42px; }
+
+  .hdr__toggle {
+    display: grid;
+    place-items: center;
+    width: 44px; height: 44px;
+    background: none;
+    border: 1px solid var(--rule);
+    border-radius: var(--radius);
+    cursor: pointer;
+    flex: none;
+  }
+  .hdr__bars,
+  .hdr__bars::before,
+  .hdr__bars::after {
+    display: block;
+    width: 17px; height: 1.5px;
+    background: var(--ink);
+    transition: transform 0.2s var(--ease), opacity 0.2s var(--ease);
+  }
+  .hdr__bars { position: relative; }
+  .hdr__bars::before,
+  .hdr__bars::after { content: ''; position: absolute; left: 0; }
+  .hdr__bars::before { top: -5.5px; }
+  .hdr__bars::after  { top:  5.5px; }
+
+  .hdr__toggle[aria-expanded='true'] .hdr__bars { background: transparent; }
+  .hdr__toggle[aria-expanded='true'] .hdr__bars::before { transform: translateY(5.5px) rotate(45deg); }
+  .hdr__toggle[aria-expanded='true'] .hdr__bars::after  { transform: translateY(-5.5px) rotate(-45deg); }
+
+  .hdr__mobile {
+    border-top: 1px solid var(--rule-soft);
+    background: var(--surface);
+  }
+  .hdr__mlist { list-style: none; padding: var(--s-2) 0; margin: 0; }
+  .hdr__mlist a {
+    display: block;
+    padding: var(--s-4) var(--s-5);
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 500;
+    border-inline-start: 3px solid transparent;
+  }
+  .hdr__mlist a[aria-current='page'] {
+    border-inline-start-color: var(--turmeric-lit);
+    background: var(--surface-sunk);
+  }
+
+  @media (min-width: 880px) {
+    .hdr__nav, .hdr__cta { display: flex; }
+    .hdr__toggle, .hdr__mobile { display: none; }
+  }
+</style>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('.hdr__toggle');
+  const panel = document.querySelector<HTMLElement>('#mobile-nav');
+
+  btn?.addEventListener('click', () => {
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    if (panel) panel.hidden = open;
+  });
+</script>
