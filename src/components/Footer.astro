@@ -36,7 +36,13 @@ const year = new Date().getFullYear();
 <footer class="ftr">
   <div class="wrap ftr__in">
     <div class="ftr__brand">
-      <img src="/images/logo.svg" alt="" width="48" height="48" />
+      <img
+        src="/images/logo-192.webp"
+        srcset="/images/logo-192.webp 1x, /images/logo-384.webp 2x"
+        alt=""
+        width="72"
+        height="72"
+      />
       <p class="ftr__name">{site.name}</p>
       <p class="ftr__meta">
         {site.address.line}<br />

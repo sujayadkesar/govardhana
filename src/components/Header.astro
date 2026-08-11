@@ -16,7 +16,14 @@ const isCurrent = (href: string) =>
 <header class="hdr">
   <div class="wrap hdr__in">
     <a class="hdr__brand" href="/">
-      <img src="/images/logo.svg" alt="" width="40" height="40" class="hdr__mark" />
+      <img
+        src="/images/logo-96.webp"
+        srcset="/images/logo-96.webp 1x, /images/logo-192.webp 2x"
+        alt=""
+        width="40"
+        height="40"
+        class="hdr__mark"
+      />
       <span class="hdr__names">
         <span class="hdr__name">{site.name}</span>
         <span class="hdr__where">{site.address.line} · {site.address.district}</span>
